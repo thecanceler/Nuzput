@@ -5271,7 +5271,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
 
 u32 GetBattlerAbility(u8 battlerId)
 {
-    if (gStatuses3[battlerId] & STATUS3_GASTRO_ACID)
+    if (gStatuses3[battlerId] & STATUS3_GASTRO_ACID || gBattleMons[battlerId].item == ITEM_SUPPRESSOR)
         return ABILITY_NONE;
     else if ((((gBattleMons[gBattlerAttacker].ability == ABILITY_MOLD_BREAKER
             || gBattleMons[gBattlerAttacker].ability == ABILITY_TERAVOLT

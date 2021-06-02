@@ -3008,3 +3008,8 @@ static const u8 sUltranecroziumZDesc[] = _(
     "A crystal to turn\n"
     "fused Necrozma\n"
     "into a new form.");
+    
+static const u8 sSuppressorDesc[] = _(
+	"A held item that\n"
+    "suppresses the\n"
+    "Pokémon's ability.");

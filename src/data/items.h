@@ -7565,4 +7565,21 @@ const struct Item gItems[] =
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
         .secondaryId = 255  //signature z move
     },
+    
+    //new items
+    
+    [ITEM_SUPPRESSOR] =
+    {
+        .name = _("Suppressor"),
+        .itemId = ITEM_SUPPRESSOR,
+        .price = 5000,
+        .holdEffect = HOLD_EFFECT_SUPPRESS,
+        .holdEffectParam = 10,
+        .description = sSuppressorDesc,
+        .pocket = POCKET_BATTLE_ITEMS,
+        .type = 4,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .secondaryId = 0,
+    },
+    
 };
