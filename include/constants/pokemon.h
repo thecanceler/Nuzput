@@ -343,26 +343,6 @@
 
 #define F_SUMMARY_SCREEN_FLIP_SPRITE 0x80
 
-// Evolution types
-#define EVO_MEGA_EVOLUTION      0xffff // Not an actual evolution, used to temporarily mega evolve in battle.
-#define EVO_MOVE_MEGA_EVOLUTION 0xfffe // Mega Evolution that checks for a move instead of held item.
-#define EVO_FRIENDSHIP       1      // Pokémon levels up with friendship ≥ 220
-#define EVO_FRIENDSHIP_DAY   2      // Pokémon levels up during the day with friendship ≥ 220
-#define EVO_FRIENDSHIP_NIGHT 3      // Pokémon levels up at night with friendship ≥ 220
-#define EVO_LEVEL            4      // Pokémon reaches the specified level
-#define EVO_TRADE            5      // Pokémon is traded
-#define EVO_TRADE_ITEM       6      // Pokémon is traded while it's holding the specified item
-#define EVO_ITEM             7      // specified item is used on Pokémon
-#define EVO_LEVEL_ATK_GT_DEF 8      // Pokémon reaches the specified level with attack > defense
-#define EVO_LEVEL_ATK_EQ_DEF 9      // Pokémon reaches the specified level with attack = defense
-#define EVO_LEVEL_ATK_LT_DEF 10     // Pokémon reaches the specified level with attack < defense
-#define EVO_LEVEL_SILCOON    11     // Pokémon reaches the specified level with a Silcoon personality value
-#define EVO_LEVEL_CASCOON    12     // Pokémon reaches the specified level with a Cascoon personality value
-#define EVO_LEVEL_NINJASK    13     // Pokémon reaches the specified level (special value for Ninjask)
-#define EVO_LEVEL_SHEDINJA   14     // Pokémon reaches the specified level (special value for Shedinja)
-#define EVO_BEAUTY           15     // Pokémon levels up with beauty ≥ specified value
-
-#define EVOS_PER_MON 5
 #define EVO_MEGA_EVOLUTION                0xffff // Not an actual evolution, used to temporarily mega evolve in battle.
 #define EVO_MOVE_MEGA_EVOLUTION           0xfffe // Mega Evolution that checks for a move instead of held item.
 #define EVO_FRIENDSHIP                    1      // Pokémon levels up with friendship ≥ 220
