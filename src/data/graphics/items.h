@@ -796,6 +796,8 @@ const u32 gItemIconPalette_WiseGlasses[] = INCBIN_U32("graphics/items/icon_palet
 const u32 gItemIcon_ExpertBelt[] = INCBIN_U32("graphics/items/icons/expert_belt.4bpp.lz");
 const u32 gItemIconPalette_ExpertBelt[] = INCBIN_U32("graphics/items/icon_palettes/expert_belt.gbapal.lz");
 
+
+
 const u32 gItemIcon_LightClay[] = INCBIN_U32("graphics/items/icons/light_clay.4bpp.lz");
 const u32 gItemIconPalette_LightClay[] = INCBIN_U32("graphics/items/icon_palettes/light_clay.gbapal.lz");
 
@@ -1629,4 +1631,7 @@ const u32 gItemIconPalette_TapuniumZ[] = INCBIN_U32("graphics/items/icon_palette
 
 const u32 gItemIcon_UltranecroziumZ[] = INCBIN_U32("graphics/items/icons/ultranecrozium_z.4bpp.lz");
 const u32 gItemIconPalette_UltranecroziumZ[] = INCBIN_U32("graphics/items/icon_palettes/ultranecrozium_z.gbapal.lz");
+
+const u32 gItemIcon_Suppressor[] = INCBIN_U32("graphics/items/icons/expert_belt.4bpp.lz");
+const u32 gItemIconPalette_Suppressor[] = INCBIN_U32("graphics/items/icon_palettes/destiny_knot.gbapal.lz");
 
