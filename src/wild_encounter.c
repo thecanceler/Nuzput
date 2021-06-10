@@ -265,7 +265,7 @@ static u8 ChooseWildMonLevel(const struct WildPokemon *wildPokemon)
     return min + rand;
 }
 
-
+/*
 static u8 ChooseWildAreaLevel(const struct WildPokemon *wildPokemon)
 {
     u8 min;
@@ -273,30 +273,29 @@ static u8 ChooseWildAreaLevel(const struct WildPokemon *wildPokemon)
     u8 range;
     u8 rand;
 
-
-
-
 u8 count = gPlayerPartyCount;
-    u8 fixedLVL = 0;
 
-    while (count-- > 0)
+u8 fixedLVL = 0;
+
+
+while (count-- > 0)
     {
         if (GetMonData(&gPlayerParty[count], MON_DATA_SPECIES) != SPECIES_NONE){
             fixedLVL += (GetMonData(&gPlayerParty[count], MON_DATA_LEVEL);
         }
     }
     fixedLVL = fixedLVL / gPlayerPartyCount;
-    
 
-// Make sure minimum level is less than maximum level
+    // Make sure minimum level is less than maximum level
     {
         min = fixedLVL-3;
         max = fixedLVL+3;
     }
 	if (min <= 0)
 		min = 1;
-    range = max - min + 1; // note that range will always be equal to 7 in this case: fixedLVL+3 - (fixedLVL-3) + 1 = fixedLVL - fixedLVL + 3 +3 +1 = 7
+    range = max - min + 1;
     rand = Random() % range;
+
 
 
 
@@ -316,7 +315,7 @@ u8 count = gPlayerPartyCount;
 
     return min + rand;
 }
-
+*/
 
 static u16 GetCurrentMapWildMonHeaderId(void)
 {

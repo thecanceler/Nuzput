@@ -704,7 +704,7 @@
 #define ITEM_SOLGANIUM_Z              601
 #define ITEM_TAPUNIUM_Z               602
 #define ITEM_ULTRANECROZIUM_Z         603
-
+//new items
 #define ITEM_SUPPRESSOR		604
 
 #define ITEMS_COUNT 605

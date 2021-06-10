@@ -628,5 +628,5 @@ const u32 *const gItemIconTable[][2] =
     [ITEM_TAPUNIUM_Z] = {gItemIcon_TapuniumZ, gItemIconPalette_TapuniumZ},
     [ITEM_ULTRANECROZIUM_Z] = {gItemIcon_UltranecroziumZ, gItemIconPalette_UltranecroziumZ},
     //new item
-    [ITEM_SUPPRESSOR] = {gItemIcon_Suppressor, gItemIconPalette_Suppressor},
+    [ITEM_SUPPRESSOR] = {gItemIcon_ExpertBelt, gItemIconPalette_DestinyKnot},
 };

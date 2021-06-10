@@ -68,7 +68,7 @@ static void MovePlayerNotOnBike(u8, u16);
 static u8 CheckMovementInputNotOnBike(u8);
 static void PlayerNotOnBikeNotMoving(u8, u16);
 static void PlayerNotOnBikeTurningInPlace(u8, u16);
-static bool8 IsPlayerTryingToRun(u16 heldKeys)
+static bool8 IsPlayerTryingToRun(u16 heldKeys);
 static void PlayerNotOnBikeMoving(u8, u16);
 static u8 CheckForPlayerAvatarCollision(u8);
 static u8 sub_808B028(u8);
@@ -2276,7 +2276,8 @@ static void CreateStartSurfingTask(u8 direction)
 
     ScriptContext2_Enable();
     Overworld_ClearSavedMusic();
-    Overworld_ChangeMusicTo(MUS_NAMINORI);
+    //fix this possibly?
+    //Overworld_ChangeMusicTo(MUS_NAMINORI);
     gPlayerAvatar.flags ^= PLAYER_AVATAR_FLAG_ON_FOOT;
     gPlayerAvatar.flags |= PLAYER_AVATAR_FLAG_SURFING;
     gPlayerAvatar.preventStep = TRUE;

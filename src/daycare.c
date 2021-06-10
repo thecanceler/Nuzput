@@ -314,12 +314,12 @@ static u8 GetNumLevelsGainedForDaycareMon(struct DaycareMon *daycareMon)
 */
 static u32 GetDaycareCostForSelectedMon(struct DaycareMon *daycareMon)
 {
-    u32 cost;
-
+//    u32 cost;
+u8 cost = 200;
  //   u8 numLevelsGained = GetNumLevelsGainedFromSteps(daycareMon);
     GetBoxMonNickname(&daycareMon->mon, gStringVar1);
  //   cost = 100 + 100 * numLevelsGained;
- u8 = 200;
+ 
     ConvertIntToDecimalStringN(gStringVar2, cost, STR_CONV_MODE_LEFT_ALIGN, 5);
     return cost;
 }
@@ -634,7 +634,7 @@ static void InheritIVs(struct Pokemon *egg, struct DayCare *daycare)
 	u8 randomStat;
 	u32 motherItem = GetBoxMonData(&daycare->mons[0].mon, MON_DATA_HELD_ITEM);
 	u32 fatherItem = GetBoxMonData(&daycare->mons[1].mon, MON_DATA_HELD_ITEM);
-	u8 ivCount = (motherItem == ITEM_DESTINY_KNOT || fatherItem == ITEM_DESTINY_KNOT) ? DESTINY_KNOT_INHERITED_IV_COUNT : INHERITED_IV_COUNT;
+	u8 ivCount = (motherItem == ITEM_DESTINY_KNOT || fatherItem == ITEM_DESTINY_KNOT) ? DESTINY_KNOT_IV_COUNT : INHERITED_IV_COUNT;
 	u32 powerItems[6] = { ITEM_POWER_WEIGHT, ITEM_POWER_BRACER, ITEM_POWER_BELT, ITEM_POWER_LENS, ITEM_POWER_BAND, ITEM_POWER_ANKLET };
 	u32 motherPowerItem = -1;
 	u32 fatherPowerItem = -1;

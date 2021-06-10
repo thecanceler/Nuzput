@@ -1471,7 +1471,7 @@ void BerryTreeTimeUpdate(s32 minutes)
                     if (tree->stage == BERRY_STAGE_BERRIES)
                         tree->minutesUntilNextStage *= 4;
                 }
-            }
+            //}
         }
     }
 }

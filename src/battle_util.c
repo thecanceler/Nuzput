@@ -7848,7 +7848,7 @@ static u32 CalcDefenseStat(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType, 
 if (IS_BATTLER_OF_TYPE(battlerDef, TYPE_ICE) && WEATHER_HAS_EFFECT && gBattleWeather & WEATHER_HAIL_ANY && !usesDefStat)
         MulModifier(&modifier, UQ_4_12(1.5));
 //poison types take less damage from poisoned mons ligma
-if (IS_BATTLER_OF_TYPE(battlerDef, TYPE_POISON) && (gBattleMons[gBattlerAttacker].status1 & STATUS1_POISON)
+if ( IS_BATTLER_OF_TYPE(battlerDef, TYPE_POISON) && (gBattleMons[gBattlerAttacker].status1 & STATUS1_POISON) )
         MulModifier(&modifier, UQ_4_12(1.2));
 
 
