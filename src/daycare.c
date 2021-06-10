@@ -251,14 +251,14 @@ static u16 TakeSelectedPokemonFromDaycare(struct DaycareMon *daycareMon)
     GetBoxMonNickname(&daycareMon->mon, gStringVar1);
     species = GetBoxMonData(&daycareMon->mon, MON_DATA_SPECIES);
     BoxMonToMon(&daycareMon->mon, &pokemon);
-
+/*
     if (GetMonData(&pokemon, MON_DATA_LEVEL) != MAX_LEVEL)
     {
         experience = GetMonData(&pokemon, MON_DATA_EXP) + daycareMon->steps;
         SetMonData(&pokemon, MON_DATA_EXP, &experience);
         ApplyDaycareExperience(&pokemon);
     }
-
+*/
     gPlayerParty[PARTY_SIZE - 1] = pokemon;
     if (daycareMon->mail.message.itemId)
     {
@@ -284,7 +284,7 @@ u16 TakePokemonFromDaycare(void)
 {
     return TakeSelectedPokemonMonFromDaycareShiftSlots(&gSaveBlock1Ptr->daycare, gSpecialVar_0x8004);
 }
-
+/*
 static u8 GetLevelAfterDaycareSteps(struct BoxPokemon *mon, u32 steps)
 {
     struct BoxPokemon tempMon = *mon;
@@ -311,14 +311,15 @@ static u8 GetNumLevelsGainedForDaycareMon(struct DaycareMon *daycareMon)
     GetBoxMonNickname(&daycareMon->mon, gStringVar1);
     return numLevelsGained;
 }
-
+*/
 static u32 GetDaycareCostForSelectedMon(struct DaycareMon *daycareMon)
 {
     u32 cost;
 
-    u8 numLevelsGained = GetNumLevelsGainedFromSteps(daycareMon);
+ //   u8 numLevelsGained = GetNumLevelsGainedFromSteps(daycareMon);
     GetBoxMonNickname(&daycareMon->mon, gStringVar1);
-    cost = 100 + 100 * numLevelsGained;
+ //   cost = 100 + 100 * numLevelsGained;
+ u8 = 200;
     ConvertIntToDecimalStringN(gStringVar2, cost, STR_CONV_MODE_LEFT_ALIGN, 5);
     return cost;
 }
@@ -341,8 +342,8 @@ static void Debug_AddDaycareSteps(u16 numSteps)
 
 u8 GetNumLevelsGainedFromDaycare(void)
 {
-    if (GetBoxMonData(&gSaveBlock1Ptr->daycare.mons[gSpecialVar_0x8004], MON_DATA_SPECIES) != 0)
-        return GetNumLevelsGainedForDaycareMon(&gSaveBlock1Ptr->daycare.mons[gSpecialVar_0x8004]);
+   // if (GetBoxMonData(&gSaveBlock1Ptr->daycare.mons[gSpecialVar_0x8004], MON_DATA_SPECIES) != 0)
+   //     return GetNumLevelsGainedForDaycareMon(&gSaveBlock1Ptr->daycare.mons[gSpecialVar_0x8004]);
 
     return 0;
 }
@@ -412,7 +413,7 @@ static u16 GetEggSpecies(u16 species)
 
     return species;
 }
-
+/*
 static s32 GetParentToInheritNature(struct DayCare *daycare)
 {
     u32 species[DAYCARE_MON_COUNT];
@@ -453,17 +454,42 @@ static s32 GetParentToInheritNature(struct DayCare *daycare)
 
     return parent;
 }
+*/
+
+static u8 GetParentToInheritNature(struct DayCare *daycare)
+{
+    u16 motherItem = GetBoxMonData(&daycare->mons[0].mon, MON_DATA_HELD_ITEM);
+    u16 fatherItem = GetBoxMonData(&daycare->mons[1].mon, MON_DATA_HELD_ITEM);
+    if(motherItem == ITEM_EVERSTONE && fatherItem == ITEM_EVERSTONE)
+    {
+    	if (Random() >= USHRT_MAX / 2)
+            return 0;
+        else
+            return 1;
+    }else
+    {
+    	if(motherItem == ITEM_EVERSTONE)
+    	{
+    		return 0;
+    	}
+    	if(fatherItem == ITEM_EVERSTONE)
+    	{
+    		return 1;
+    	}
+    }
+    return 2;
+}
 
 static void _TriggerPendingDaycareEgg(struct DayCare *daycare)
 {
-    s32 parent;
+    u8 parent;
     s32 natureTries = 0;
 
     SeedRng2(gMain.vblankCounter2);
     parent = GetParentToInheritNature(daycare);
 
     // don't inherit nature
-    if (parent < 0)
+    if (parent > 1)
     {
         daycare->offspringPersonality = (Random2() << 16) | ((Random() % 0xfffe) + 1);
     }
@@ -526,7 +552,7 @@ static void RemoveIVIndexFromList(u8 *ivs, u8 selectedIv)
             ivs[j++] = temp[i];
     }
 }
-
+/*
 static void InheritIVs(struct Pokemon *egg, struct DayCare *daycare)
 {
     u8 i;
@@ -597,6 +623,211 @@ static void InheritIVs(struct Pokemon *egg, struct DayCare *daycare)
                 break;
         }
     }
+}
+
+*/
+
+static void InheritIVs(struct Pokemon *egg, struct DayCare *daycare)
+{
+	u8 i;
+	u8 iv;
+	u8 randomStat;
+	u32 motherItem = GetBoxMonData(&daycare->mons[0].mon, MON_DATA_HELD_ITEM);
+	u32 fatherItem = GetBoxMonData(&daycare->mons[1].mon, MON_DATA_HELD_ITEM);
+	u8 ivCount = (motherItem == ITEM_DESTINY_KNOT || fatherItem == ITEM_DESTINY_KNOT) ? DESTINY_KNOT_INHERITED_IV_COUNT : INHERITED_IV_COUNT;
+	u32 powerItems[6] = { ITEM_POWER_WEIGHT, ITEM_POWER_BRACER, ITEM_POWER_BELT, ITEM_POWER_LENS, ITEM_POWER_BAND, ITEM_POWER_ANKLET };
+	u32 motherPowerItem = -1;
+	u32 fatherPowerItem = -1;
+	u8 selectedIvs[ivCount];
+	u8 whichParents[ivCount];
+	u8 availableIVs[NUM_STATS];
+
+	// check for power items
+	for (i = 0; i < 6; i++)
+	{
+		if (motherItem == powerItems[i])
+		{
+			motherPowerItem = i;
+		}	
+
+		if (fatherItem == powerItems[i])
+		{
+			fatherPowerItem = i;
+		}
+	}
+
+	// Initialize a list of IV indices.
+	for (i = 0; i < NUM_STATS; i++)
+	{
+		availableIVs[i] = i;
+	}
+
+	// check if both parents have power items
+	if (motherPowerItem != -1 && fatherPowerItem != -1)
+	{
+		// inherit mother's IV
+		selectedIvs[0] = availableIVs[motherPowerItem];
+		RemoveIVIndexFromList(availableIVs, motherPowerItem);
+
+		// if mother < father, father has to be decremented to inherit correct IV
+		if (motherPowerItem < fatherPowerItem)
+		{
+			selectedIvs[1] = availableIVs[fatherPowerItem - 1];
+			RemoveIVIndexFromList(availableIVs, fatherPowerItem - 1);
+		}
+		else
+		{
+			selectedIvs[1] = availableIVs[fatherPowerItem];
+			RemoveIVIndexFromList(availableIVs, fatherPowerItem);
+		}
+
+		// make sure the IV gets inherited from the correct parents
+		whichParents[motherPowerItem] = 0;
+		whichParents[fatherPowerItem] = 1;
+
+		// if both parents have power item, no need for a loop
+		randomStat = Random() % (NUM_STATS - 2);
+		selectedIvs[2] = availableIVs[randomStat];
+		RemoveIVIndexFromList(availableIVs, randomStat);
+
+		// Determine which parent each of the selected IVs should inherit from.
+		for (i = 0; i < ivCount; i++)
+		{
+			if (i != motherPowerItem && i != fatherPowerItem)
+			{
+				whichParents[i] = Random() % DAYCARE_MON_COUNT;
+			}
+		}
+	}
+	// if just the mother has a power item
+	else if (motherPowerItem != -1)
+	{
+		selectedIvs[0] = availableIVs[motherPowerItem];
+		RemoveIVIndexFromList(availableIVs, motherPowerItem);
+
+		// loop for other inherited IVs
+		for (i = 1; i < ivCount; i++)
+		{
+			randomStat = Random() % (NUM_STATS - i);
+			selectedIvs[i] = availableIVs[randomStat];
+			RemoveIVIndexFromList(availableIVs, randomStat);
+		}
+
+		whichParents[motherPowerItem] = 0;
+
+		for (i = 0; i < ivCount; i++)
+		{
+			if (i != motherPowerItem)
+			{
+				whichParents[i] = Random() % DAYCARE_MON_COUNT;
+			}
+		}
+	}
+	// if just the father has a power item
+	else if (fatherPowerItem != -1)
+	{
+		selectedIvs[0] = availableIVs[fatherPowerItem];
+		RemoveIVIndexFromList(availableIVs, fatherPowerItem);
+
+		for (i = 1; i < ivCount; i++)
+		{
+			randomStat = Random() % (NUM_STATS - i);
+			selectedIvs[i] = availableIVs[randomStat];
+			RemoveIVIndexFromList(availableIVs, randomStat);
+		}
+
+		whichParents[fatherPowerItem] = 1;
+
+		for (i = 0; i < ivCount; i++)
+		{
+			if (i != fatherPowerItem)
+			{
+				whichParents[i] = Random() % DAYCARE_MON_COUNT;
+			}
+		}
+	}
+	// otherwise, if no parents have a power item
+	else {
+		for (i = 0; i < ivCount; i++)
+		{
+			// Randomly pick an IV from the available list and stop from being chosen again.
+			randomStat = Random() % (NUM_STATS - i);
+			selectedIvs[i] = availableIVs[randomStat];
+			RemoveIVIndexFromList(availableIVs, randomStat);
+		}
+
+		// Determine which parent each of the selected IVs should inherit from.
+		for (i = 0; i < ivCount; i++)
+		{
+			whichParents[i] = Random() % DAYCARE_MON_COUNT;
+		}
+	}
+
+	// Set each of inherited IVs on the egg mon.
+	for (i = 0; i < ivCount; i++)
+	{
+		switch (selectedIvs[i])
+		{
+		case 0:
+			iv = GetBoxMonData(&daycare->mons[whichParents[i]].mon, MON_DATA_HP_IV);
+			SetMonData(egg, MON_DATA_HP_IV, &iv);
+			break;
+		case 1:
+			iv = GetBoxMonData(&daycare->mons[whichParents[i]].mon, MON_DATA_ATK_IV);
+			SetMonData(egg, MON_DATA_ATK_IV, &iv);
+			break;
+		case 2:
+			iv = GetBoxMonData(&daycare->mons[whichParents[i]].mon, MON_DATA_DEF_IV);
+			SetMonData(egg, MON_DATA_DEF_IV, &iv);
+			break;
+		case 3:
+			iv = GetBoxMonData(&daycare->mons[whichParents[i]].mon, MON_DATA_SPATK_IV);
+			SetMonData(egg, MON_DATA_SPATK_IV, &iv);
+			break;
+		case 4:
+			iv = GetBoxMonData(&daycare->mons[whichParents[i]].mon, MON_DATA_SPDEF_IV);
+			SetMonData(egg, MON_DATA_SPDEF_IV, &iv);
+			break;
+		case 5:
+			iv = GetBoxMonData(&daycare->mons[whichParents[i]].mon, MON_DATA_SPEED_IV);
+			SetMonData(egg, MON_DATA_SPEED_IV, &iv);
+			break;
+		}
+	}
+}
+
+static u16 InheritPokeball(struct Pokemon *egg, struct DayCare *daycare)
+{
+	s32 i;
+	s32 j;
+	s32 parent = -1;
+	s32 ball;
+	for (i = 0, j=1; i < DAYCARE_MON_COUNT; i++,j--)
+	{
+		if (GetBoxMonGender(&daycare->mons[i].mon) == MON_FEMALE)
+		{
+			parent = i;
+		}else{
+			parent = j;
+		}
+
+	}
+	if(GetBoxMonData(&daycare->mons[0].mon, MON_DATA_SPECIES == SPECIES_DITTO))
+	{
+		parent = 1;
+	}
+	if (GetBoxMonData(&daycare->mons[0].mon, MON_DATA_SPECIES) ==
+		GetBoxMonData(&daycare->mons[1].mon, MON_DATA_SPECIES))
+	{
+		if (Random() >= USHRT_MAX / 2)
+			parent = 0;
+		else
+			parent = 1;
+	}
+	ball = GetBoxMonData(&daycare->mons[parent].mon, MON_DATA_POKEBALL);
+	if (ball == ITEM_MASTER_BALL || ball == ITEM_CHERISH_BALL)
+		ball = ITEM_POKE_BALL;
+	SetMonData(egg, MON_DATA_POKEBALL, &ball);
 }
 
 // Counts the number of egg moves a pokemon learns and stores the moves in
@@ -836,6 +1067,7 @@ static void _GiveEggFromDaycare(struct DayCare *daycare)
     AlterEggSpeciesWithIncenseItem(&species, daycare);
     SetInitialEggData(&egg, species, daycare);
     InheritIVs(&egg, daycare);
+    InheritPokeball(&egg, daycare);
     BuildEggMoveset(&egg, &daycare->mons[parentSlots[1]].mon, &daycare->mons[parentSlots[0]].mon);
 
     if (species == SPECIES_PICHU)
@@ -852,16 +1084,16 @@ static void _GiveEggFromDaycare(struct DayCare *daycare)
 void CreateEgg(struct Pokemon *mon, u16 species, bool8 setHotSpringsLocation)
 {
     u8 metLevel;
-    u16 ball;
+    //u16 ball;
     u8 language;
     u8 metLocation;
     u8 isEgg;
 
     CreateMon(mon, species, EGG_HATCH_LEVEL, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
     metLevel = 0;
-    ball = ITEM_POKE_BALL;
+    //ball = ITEM_POKE_BALL;
     language = LANGUAGE_JAPANESE;
-    SetMonData(mon, MON_DATA_POKEBALL, &ball);
+    //SetMonData(mon, MON_DATA_POKEBALL, &ball);
     SetMonData(mon, MON_DATA_NICKNAME, sJapaneseEggNickname);
     SetMonData(mon, MON_DATA_FRIENDSHIP, &gBaseStats[species].eggCycles);
     SetMonData(mon, MON_DATA_MET_LEVEL, &metLevel);
@@ -1183,7 +1415,7 @@ static void GetDaycareLevelMenuText(struct DayCare *daycare, u8 *dest)
     StringAppend(dest, gText_NewLine2);
     StringAppend(dest, gText_Exit4);
 }
-
+/*
 static void GetDaycareLevelMenuLevelText(struct DayCare *daycare, u8 *dest)
 {
     u8 i;
@@ -1200,7 +1432,7 @@ static void GetDaycareLevelMenuLevelText(struct DayCare *daycare, u8 *dest)
         StringAppend(dest, gText_NewLine2);
     }
 }
-
+*/
 static void DaycareAddTextPrinter(u8 windowId, const u8 *text, u32 x, u32 y)
 {
     struct TextPrinterTemplate printer;
@@ -1231,7 +1463,7 @@ static void DaycarePrintMonNickname(struct DayCare *daycare, u8 windowId, u32 da
     AppendMonGenderSymbol(nickname, &daycare->mons[daycareSlotId].mon);
     DaycareAddTextPrinter(windowId, nickname, 8, y);
 }
-
+/*
 static void DaycarePrintMonLvl(struct DayCare *daycare, u8 windowId, u32 daycareSlotId, u32 y)
 {
     u8 level;
@@ -1246,13 +1478,14 @@ static void DaycarePrintMonLvl(struct DayCare *daycare, u8 windowId, u32 daycare
     x = GetStringRightAlignXOffset(1, lvlText, 112);
     DaycareAddTextPrinter(windowId, lvlText, x, y);
 }
+*/
 
 static void DaycarePrintMonInfo(u8 windowId, s32 daycareSlotId, u8 y)
 {
     if (daycareSlotId < (unsigned) DAYCARE_MON_COUNT)
     {
         DaycarePrintMonNickname(&gSaveBlock1Ptr->daycare, windowId, daycareSlotId, y);
-        DaycarePrintMonLvl(&gSaveBlock1Ptr->daycare, windowId, daycareSlotId, y);
+       // DaycarePrintMonLvl(&gSaveBlock1Ptr->daycare, windowId, daycareSlotId, y);
     }
 }
 

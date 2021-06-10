@@ -300,7 +300,7 @@ static void CreateHatchedMon(struct Pokemon *egg, struct Pokemon *temp)
     u8 i, friendship, language, gameMet, markings, isEventLegal;
     u16 moves[MAX_MON_MOVES];
     u32 ivs[NUM_STATS];
-
+u16 ball;
 
     species = GetMonData(egg, MON_DATA_SPECIES);
 
@@ -343,7 +343,8 @@ static void CreateHatchedMon(struct Pokemon *egg, struct Pokemon *temp)
     SetMonData(temp, MON_DATA_FRIENDSHIP, &friendship);
     SetMonData(temp, MON_DATA_POKERUS, &pokerus);
     SetMonData(temp, MON_DATA_EVENT_LEGAL, &isEventLegal);
-
+	ball = GetMonData(egg, MON_DATA_POKEBALL);
+	SetMonData(temp, MON_DATA_POKEBALL, &ball);
     *egg = *temp;
 }
 
@@ -370,8 +371,8 @@ static void AddHatchedMonToParty(u8 id)
 
     GetMonNickname2(mon, gStringVar1);
 
-    ball = ITEM_POKE_BALL;
-    SetMonData(mon, MON_DATA_POKEBALL, &ball);
+    //ball = ITEM_POKE_BALL;
+    //SetMonData(mon, MON_DATA_POKEBALL, &ball);
 
     caughtLvl = 0;
     SetMonData(mon, MON_DATA_MET_LEVEL, &caughtLvl);
