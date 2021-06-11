@@ -193,9 +193,11 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
     }
     if (input->pressedSelectButton && UseRegisteredKeyItemOnField() == TRUE)
         return TRUE;
+    if (!gSaveBlock2Ptr->optionsButtonMode){
+    	if (input->pressedRButton && EnableAutoRun())
+        	return TRUE;
+    }
     
-    if (input->pressedRButton && EnableAutoRun())
-        return TRUE;
 
     return FALSE;
 }

@@ -1514,8 +1514,19 @@ void ResetPokedex(void)
     DisableNationalPokedex();
     for (i = 0; i < DEX_FLAGS_NO; i++)
     {
+       // gSaveBlock1Ptr->dexCaught[i] = 0;
+       // gSaveBlock1Ptr->dexSeen[i] = 0;
+
+        gSaveBlock2Ptr->pokedex.owned[i] = 0;
+        gSaveBlock2Ptr->pokedex.seen[i] = 0;
+        #ifndef FREE_EXTRA_SEEN_FLAGS
+       // gSaveBlock1Ptr->seen1[i] = 0;
+       // gSaveBlock1Ptr->seen2[i] = 0;
+        
         gSaveBlock1Ptr->dexCaught[i] = 0;
         gSaveBlock1Ptr->dexSeen[i] = 0;
+        
+        #endif
     }
 }
 
