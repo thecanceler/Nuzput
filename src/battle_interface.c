@@ -1055,6 +1055,7 @@ static void UpdateLvlInHealthbox(u8 healthboxSpriteId, u8 lvl)
     xPos = 4 * var1;
     xPos += var1;
 
+
     windowTileData = AddTextPrinterAndCreateWindowOnHealthbox(text, xPos, 3, 2, &windowId);
     spriteTileNum = gSprites[healthboxSpriteId].oam.tileNum * TILE_SIZE_4BPP;
 

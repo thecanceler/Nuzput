@@ -4896,8 +4896,15 @@ static void FreeResetData_ReturnToOvOrDoEvolutions(void)
 {
     if (!gPaletteFade.active)
     {
+    //possible problem
         gIsFishingEncounter = FALSE;
         gIsSurfingEncounter = FALSE;
+
+        if (gDexnavBattle && (gBattleOutcome == B_OUTCOME_WON || gBattleOutcome == B_OUTCOME_CAUGHT))
+            IncrementDexNavChain();
+        else
+            gSaveBlock1Ptr->dexNavChain = 0;
+        
         ResetSpriteData();
         if (gLeveledUpInBattle && (gBattleOutcome == B_OUTCOME_WON || gBattleOutcome == B_OUTCOME_CAUGHT))
         {
@@ -4974,7 +4981,12 @@ static void ReturnFromBattleToOverworld(void)
     if (gBattleTypeFlags & BATTLE_TYPE_ROAMER)
     {
         UpdateRoamerHPStatus(&gEnemyParty[0]);
+
+#ifndef BUGFIX
         if ((gBattleOutcome & B_OUTCOME_WON) || gBattleOutcome == B_OUTCOME_CAUGHT)
+#else
+        if ((gBattleOutcome == B_OUTCOME_WON) || gBattleOutcome == B_OUTCOME_CAUGHT) // Bug: When Roar is used by roamer, gBattleOutcome is B_OUTCOME_PLAYER_TELEPORTED (5).
+#endif                                                                               // & with B_OUTCOME_WON (1) will return TRUE and deactivates the roamer.
             SetRoamerInactive();
     }
 

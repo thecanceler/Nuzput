@@ -1851,6 +1851,7 @@ const s8 gNatureStatTable[NUM_NATURES][NUM_NATURE_STATS] =
 
 // SPECIES_NONE are ignored in the following two tables, so decrement before accessing these arrays to get the right result
 
+
 static const u8 sMonFrontAnimIdsTable[NUM_SPECIES - 1] =
 {
     [SPECIES_BULBASAUR - 1]     = ANIM_V_JUMPS_H_JUMPS,
@@ -2768,6 +2769,7 @@ static const u8 sMonFrontAnimIdsTable[NUM_SPECIES - 1] =
     [SPECIES_ROTOM_FAN - 1]     = ANIM_FIGURE_8,
     [SPECIES_ROTOM_MOW - 1]     = ANIM_V_SQUISH_AND_BOUNCE,
     [SPECIES_ROTOM_WASH - 1]    = ANIM_V_SQUISH_AND_BOUNCE,
+
 };
 
 static const u8 sMonAnimationDelayTable[NUM_SPECIES - 1] =
