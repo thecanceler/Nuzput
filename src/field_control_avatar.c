@@ -36,6 +36,9 @@
 #include "constants/songs.h"
 #include "constants/trainer_hill.h"
 
+#include "region_map.h"
+
+
 static EWRAM_DATA u8 sWildEncounterImmunitySteps = 0;
 static EWRAM_DATA u16 sPreviousPlayerMetatileBehavior = 0;
 
@@ -84,7 +87,8 @@ void FieldClearPlayerInput(struct FieldInput *input)
     input->pressedBButton = FALSE;
    // input->input_field_1_0 = FALSE;
     input->pressedRButton = FALSE;
-    input->input_field_1_1 = FALSE;
+//    input->input_field_1_1 = FALSE;
+ input->pressedLButton = FALSE;
     input->input_field_1_2 = FALSE;
     input->input_field_1_3 = FALSE;
     input->dpadDirection = 0;
@@ -110,6 +114,8 @@ void FieldGetPlayerInput(struct FieldInput *input, u16 newKeys, u16 heldKeys)
                 input->pressedBButton = TRUE;
             if (newKeys & R_BUTTON)
                 input->pressedRButton = TRUE;
+                if (newKeys & L_BUTTON)
+                input->pressedLButton = TRUE;
         }
 
         if (heldKeys & (DPAD_UP | DPAD_DOWN | DPAD_LEFT | DPAD_RIGHT))
@@ -196,6 +202,17 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
     if (!gSaveBlock2Ptr->optionsButtonMode){
     	if (input->pressedRButton && EnableAutoRun())
         	return TRUE;
+        if (input->pressedLButton && (Overworld_MapTypeAllowsTeleportAndFly(gMapHeader.mapType) == TRUE))
+        {
+        //possibly fly? pls??
+        
+    //    if (CheckBagHasItem(ITEM_HM02_FLY, 1) == FALSE)
+    //{
+    //    return FALSE;
+    //}
+        SetMainCallback2(CB2_OpenFlyMap);
+        return TRUE;
+        }
     }
     
 

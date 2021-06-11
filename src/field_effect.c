@@ -207,6 +207,8 @@ static void FlyOutFieldEffect_FlyOffWithBird(struct Task *);
 static void FlyOutFieldEffect_WaitFlyOff(struct Task *);
 static void FlyOutFieldEffect_End(struct Task *);
 
+static void FlyOutSimple(struct Task *);
+
 static u8 CreateFlyBirdSprite(void);
 static u8 GetFlyBirdAnimCompleted(u8);
 static void StartFlyBirdSwoopDown(u8);
@@ -1845,7 +1847,7 @@ static bool8 WaterfallFieldEffect_ShowMon(struct Task *task, struct ObjectEvent 
     {
         ObjectEventClearHeldMovementIfFinished(objectEvent);
         gFieldEffectArguments[0] = task->tMonId;
-        FieldEffectStart(FLDEFF_FIELD_MOVE_SHOW_MON_INIT);
+        //FieldEffectStart(FLDEFF_FIELD_MOVE_SHOW_MON_INIT);
         task->tState++;
     }
     return FALSE;
@@ -1916,7 +1918,7 @@ static bool8 DiveFieldEffect_ShowMon(struct Task *task)
 {
     ScriptContext2_Enable();
     gFieldEffectArguments[0] = task->data[15];
-    FieldEffectStart(FLDEFF_FIELD_MOVE_SHOW_MON_INIT);
+    //FieldEffectStart(FLDEFF_FIELD_MOVE_SHOW_MON_INIT);
     task->data[0]++;
     return FALSE;
 }
@@ -3157,16 +3159,28 @@ u8 FldEff_UseFly(void)
 }
 
 void (*const sFlyOutFieldEffectFuncs[])(struct Task *) = {
-    FlyOutFieldEffect_FieldMovePose,
-    FlyOutFieldEffect_ShowMon,
-    FlyOutFieldEffect_BirdLeaveBall,
-    FlyOutFieldEffect_WaitBirdLeave,
-    FlyOutFieldEffect_BirdSwoopDown,
-    FlyOutFieldEffect_JumpOnBird,
-    FlyOutFieldEffect_FlyOffWithBird,
-    FlyOutFieldEffect_WaitFlyOff,
-    FlyOutFieldEffect_End,
+  	FlyOutFieldEffect_FieldMovePose,
+  	FlyOutFieldEffect_ShowMon,
+  	FlyOutFieldEffect_BirdLeaveBall,
+  	FlyOutFieldEffect_WaitBirdLeave,
+  	FlyOutFieldEffect_BirdSwoopDown,
+  	FlyOutFieldEffect_JumpOnBird,
+  	FlyOutFieldEffect_FlyOffWithBird,
+	FlyOutFieldEffect_WaitFlyOff,
+	FlyOutFieldEffect_End,
 };
+
+static void FlyOutSimple(struct Task *task)
+{
+struct ObjectEvent *objectEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+    if ((task->tTimer == 0 || (--task->tTimer) == 0) && ObjectEventClearHeldMovementIfFinished(objectEvent))
+    {
+        task->tState++;
+        task->tTimer = 2;
+        PlaySE(SE_M_FLY);
+        StartFlyBirdSwoopDown(task->tBirdSpriteId);
+    }
+}
 
 static void Task_FlyOut(u8 taskId)
 {
@@ -3194,7 +3208,7 @@ static void FlyOutFieldEffect_ShowMon(struct Task *task)
     {
         task->tState++;
         gFieldEffectArguments[0] = task->tMonId;
-        FieldEffectStart(FLDEFF_FIELD_MOVE_SHOW_MON_INIT);
+        //FieldEffectStart(FLDEFF_FIELD_MOVE_SHOW_MON_INIT);
     }
 }
 

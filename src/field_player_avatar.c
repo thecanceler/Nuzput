@@ -1690,6 +1690,7 @@ static void Task_WaitStopSurfing(u8 taskId)
         gPlayerAvatar.preventStep = FALSE;
         ScriptContext2_Disable();
         DestroySprite(&gSprites[playerObjEvent->fieldEffectSpriteId]);
+        playerObjEvent->triggerGroundEffectsOnMove = TRUE;
         DestroyTask(taskId);
     }
 }
@@ -2316,3 +2317,39 @@ static void Task_WaitStartSurfing(u8 taskId)
         DestroyTask(taskId);
     }
 } 
+/*
+//flying
+    void (*const sFlyLFieldEffectFuncs[])(struct Task *) = {
+    FlyOutFieldEffect_FieldMovePose,
+    FlyOutFieldEffect_BirdSwoopDown,
+    FlyOutFieldEffect_JumpOnBird,
+    FlyOutFieldEffect_FlyOffWithBird,
+    FlyOutFieldEffect_WaitFlyOff,
+    FlyOutFieldEffect_End,
+};
+static bool8 CanStartFlight(s16 x, s16 y, u8 direction)
+{
+    if (CheckBagHasItem(ITEM_HM02_FLY, 1) == FALSE)
+    {
+        return FALSE;
+    }
+
+    if ((gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_ON_FOOT)
+     && MapGridGetZCoordAt(x, y) == 1
+     && GetObjectEventIdByXYZ(x, y, 1) == OBJECT_EVENTS_COUNT)
+    {
+        CreateStartSurfingTask(direction);
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
+   
+    //gPartyMenu.exitCallback = CB2_OpenFlyMap;
+      //          Task_ClosePartyMenu(taskId);
+      SetMainCallback2(CB2_OpenFlyMap);
+                
+    
+
+} */

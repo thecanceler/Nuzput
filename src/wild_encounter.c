@@ -319,7 +319,7 @@ while (count-- > 0)
 */
 
 //static u16 GetCurrentMapWildMonHeaderId(void)
-
+//perhaps?
 u16 GetCurrentMapWildMonHeaderId(void)
 {
     u16 i;
