@@ -101,8 +101,13 @@ static void SetDefaultOptions(void)
 static void ClearPokedexFlags(void)
 {
     gUnusedPokedexU8 = 0;
+    
+    #ifndef FREE_EXTRA_SEEN_FLAGS
     memset(&gSaveBlock1Ptr->dexCaught, 0, sizeof(gSaveBlock1Ptr->dexCaught));
     memset(&gSaveBlock1Ptr->dexSeen, 0, sizeof(gSaveBlock1Ptr->dexSeen));
+    #endif
+    
+    
 }
 
 void ClearAllContestWinnerPics(void)

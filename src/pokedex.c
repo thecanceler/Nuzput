@@ -1516,15 +1516,15 @@ void ResetPokedex(void)
     {
        // gSaveBlock1Ptr->dexCaught[i] = 0;
        // gSaveBlock1Ptr->dexSeen[i] = 0;
-
-        gSaveBlock2Ptr->pokedex.owned[i] = 0;
-        gSaveBlock2Ptr->pokedex.seen[i] = 0;
+	
+ //       gSaveBlock2Ptr->pokedex.owned[i] = 0;
+  //      gSaveBlock2Ptr->pokedex.seen[i] = 0;
         #ifndef FREE_EXTRA_SEEN_FLAGS
        // gSaveBlock1Ptr->seen1[i] = 0;
        // gSaveBlock1Ptr->seen2[i] = 0;
-        
         gSaveBlock1Ptr->dexCaught[i] = 0;
         gSaveBlock1Ptr->dexSeen[i] = 0;
+        
         
         #endif
     }
@@ -4254,20 +4254,32 @@ s8 GetSetPokedexFlag(u16 nationalDexNo, u8 caseID)
     index = nationalDexNo / 8;
     bit = nationalDexNo % 8;
     mask = 1 << bit;
-
+//come here :smirk:
     switch (caseID)
     {
     case FLAG_GET_SEEN:
+    #ifndef FREE_EXTRA_SEEN_FLAGS
         retVal = ((gSaveBlock1Ptr->dexSeen[index] & mask) != 0);
+    #else
+        retVal = 1;
+    #endif
         break;
     case FLAG_GET_CAUGHT:
+    #ifndef FREE_EXTRA_SEEN_FLAGS
          retVal = ((gSaveBlock1Ptr->dexCaught[index] & mask) != 0);
+    #else
+         retVal = 1;
+    #endif
         break;
     case FLAG_SET_SEEN:
+    #ifndef FREE_EXTRA_SEEN_FLAGS
         gSaveBlock1Ptr->dexSeen[index] |= mask;
+    #endif
         break;
     case FLAG_SET_CAUGHT:
+    #ifndef FREE_EXTRA_SEEN_FLAGS
         gSaveBlock1Ptr->dexCaught[index] |= mask;
+    #endif
         break;
     }
 
