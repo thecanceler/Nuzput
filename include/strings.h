@@ -3019,4 +3019,10 @@ extern const u8 gText_Cancel3[];
 
 extern const u8 gText_ThrowInPremierBalls[];
 
+extern const u8 gMenuText_Move[];
+extern const u8 gText_MoveItemWhere[];
+extern const u8 gText_XsYAnd[];
+extern const u8 gText_XsYWereSwapped[];
+extern const u8 gText_Nickname[];
+
 #endif // GUARD_STRINGS_H

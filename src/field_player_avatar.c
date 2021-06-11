@@ -2277,7 +2277,7 @@ static void CreateStartSurfingTask(u8 direction)
     ScriptContext2_Enable();
     Overworld_ClearSavedMusic();
     //fix this possibly?
-    //Overworld_ChangeMusicTo(MUS_NAMINORI);
+    Overworld_ChangeMusicTo(MUS_RG_SURF);//MUS_NAMINORI);
     gPlayerAvatar.flags ^= PLAYER_AVATAR_FLAG_ON_FOOT;
     gPlayerAvatar.flags |= PLAYER_AVATAR_FLAG_SURFING;
     gPlayerAvatar.preventStep = TRUE;
