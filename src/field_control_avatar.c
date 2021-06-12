@@ -35,6 +35,7 @@
 #include "constants/maps.h"
 #include "constants/songs.h"
 #include "constants/trainer_hill.h"
+#include "constants/items.h"
 
 #include "region_map.h"
 
@@ -202,7 +203,7 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
     if (!gSaveBlock2Ptr->optionsButtonMode){
     	if (input->pressedRButton && EnableAutoRun())
         	return TRUE;
-        if (input->pressedLButton && (Overworld_MapTypeAllowsTeleportAndFly(gMapHeader.mapType) == TRUE))
+        if (input->pressedLButton && (Overworld_MapTypeAllowsTeleportAndFly(gMapHeader.mapType) == TRUE) && (CheckBagHasItem(ITEM_HM02_FLY, 1) == TRUE))
         {
         //possibly fly? pls??
         

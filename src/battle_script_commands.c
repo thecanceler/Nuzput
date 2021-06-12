@@ -814,6 +814,7 @@ void (* const gBattleScriptingCommandsTable[])(void) =
     Cmd_trygetbaddreamstarget,                   //0xFD
     Cmd_tryworryseed,                            //0xFE
     Cmd_metalburstdamagecalculator,              //0xFF
+  //  Cmd_maxspattackhalvehp,//????
 };
 
 const struct StatFractions gAccuracyStageRatios[] =
@@ -1425,6 +1426,7 @@ static void Cmd_attackcanceler(void)
         gBattlescriptCurrInstr = BattleScript_MagicCoatBounce;
         return;
     }
+    //chivalry code ?
 
     for (i = 0; i < gBattlersCount; i++)
     {
@@ -10816,6 +10818,30 @@ static void Cmd_maxattackhalvehp(void) // belly drum
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
     }
 }
+/*
+static void Cmd_maxspattackhalvehp(void) // synapse fire
+{
+    u32 halfHp = gBattleMons[gBattlerAttacker].maxHP / 2;
+
+    if (!(gBattleMons[gBattlerAttacker].maxHP / 2))
+        halfHp = 1;
+
+    if (gBattleMons[gBattlerAttacker].statStages[STAT_SPATK] < MAX_STAT_STAGE
+        && gBattleMons[gBattlerAttacker].hp > halfHp)
+    {
+        gBattleMons[gBattlerAttacker].statStages[STAT_SPATK] = MAX_STAT_STAGE;
+        gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 2;
+        if (gBattleMoveDamage == 0)
+            gBattleMoveDamage = 1;
+
+        gBattlescriptCurrInstr += 5;
+    }
+    else
+    {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
+}
+*/
 
 static void Cmd_copyfoestats(void) // psych up
 {

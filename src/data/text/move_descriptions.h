@@ -2944,7 +2944,17 @@ static const u8 sEERIE_SPELLDescription[] = _(
 
 static const u8 sNotDoneYetDescription[] = _(
     "Not done yet.");
-
+    
+  //  static const u8 sPlaneShiftDescription[] =_("");
+//    static const u8 sShieldSlamDescription[] =_("");
+    static const u8 sIceSickleDescription[]=_(
+    "Brandishes a sickle of ice.\n"
+    "High critical-hit ratio.");
+  /*
+    static const u8 sFireSynapseDescription[]=_(
+    "Maximizes SP.ATK while\n"
+    "sacrificing HP.");
+*/
 // MOVE_NONE is ignored in this table. Make sure to always subtract 1 before getting the right pointer.
 const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] =
 {
@@ -3704,4 +3714,11 @@ const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] =
     [MOVE_GLACIAL_LANCE - 1] = sGLACIAL_LANCEDescription,
     [MOVE_ASTRAL_BARRAGE - 1] = sASTRAL_BARRAGEDescription,
     [MOVE_EERIE_SPELL - 1] = sEERIE_SPELLDescription,
+    
+    //new moves
+    [MOVE_PLANE_SHIFT-1] =sU_TURNDescription,
+    [MOVE_SHIELD_SLAM-1] =sBODY_PRESSDescription,
+    [MOVE_ICE_SICKLE-1] = sIceSickleDescription,
+  //  [MOVE_FIRE_SYNAPSE-1] = sFireSynapseDescription,
+    
 };

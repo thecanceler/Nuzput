@@ -255,7 +255,18 @@ static const u8 sGrimNeighDescription[] = _("KOs boost Sp. Atk stat.");
 static const u8 sAsOneIceRiderDescription[] = _("Unnerve and Chilling Neigh.");
 static const u8 sAsOneShadowRiderDescription[] = _("Unnerve and Grim Neigh.");
 
-const u8 gAbilityNames[ABILITIES_COUNT_GEN8][ABILITY_NAME_LENGTH + 1] =
+//new abilities
+static const u8 sDrainTouchDescription[] = _("Contact moves drain HP.");
+static const u8 sAuraPunchDescription[] = _("Punching moves are special.");
+static const u8 sUnscathedDescription[] = _("More damage at full HP.");
+static const u8 sChivalryDescription[] = _("Denies status moves.");//maybe change to something else .. ??
+static const u8 sHibernateDescription[] = _("Sleeping boosts Defenses.");
+static const u8 sGravitateDescription[] = _("Sets Gravity on switch.");
+static const u8 sWarpFieldDescription[] = _("Sets Trick Room on switch.");
+//static const u8 sDescription[] = _();
+
+
+const u8 gAbilityNames[ABILITIES_COUNT_CUSTOM][ABILITY_NAME_LENGTH + 1] =
 {
     [ABILITY_NONE] = _("-------"),
     [ABILITY_STENCH] = _("Stench"),
@@ -452,7 +463,7 @@ const u8 gAbilityNames[ABILITIES_COUNT_GEN8][ABILITY_NAME_LENGTH + 1] =
     [ABILITY_STAMINA] = _("Stamina"),
     [ABILITY_WIMP_OUT] = _("Wimp Out"),
     [ABILITY_EMERGENCY_EXIT] = _("EmergncyExit"),
-    [ABILITY_WATER_COMPACTION] = _("WtrCmpaction"),
+    [ABILITY_WATER_COMPACTION] = _("Compaction"),
     [ABILITY_MERCILESS] = _("Merciless"),
     [ABILITY_SHIELDS_DOWN] = _("Shields Down"),
     [ABILITY_STAKEOUT] = _("Stakeout"),
@@ -496,12 +507,12 @@ const u8 gAbilityNames[ABILITIES_COUNT_GEN8][ABILITY_NAME_LENGTH + 1] =
     [ABILITY_LIBERO] = _("Libero"),
     [ABILITY_BALL_FETCH] = _("Ball Fetch"),
     [ABILITY_COTTON_DOWN] = _("Cotton Down"),
-    [ABILITY_PROPELLER_TAIL] = _("PropellrTail"),
+    [ABILITY_PROPELLER_TAIL] = _("PropellrTail"),//change this?
     [ABILITY_MIRROR_ARMOR] = _("Mirror Armor"),
     [ABILITY_GULP_MISSILE] = _("Gulp Missile"),
     [ABILITY_STALWART] = _("Stalwart"),
     [ABILITY_STEAM_ENGINE] = _("Steam Engine"),
-    [ABILITY_PUNK_ROCK] = _("Punk Rock"),
+    [ABILITY_PUNK_ROCK] = _("Loudspeaker"),
     [ABILITY_SAND_SPIT] = _("Sand Spit"),
     [ABILITY_ICE_SCALES] = _("Ice Scales"),
     [ABILITY_RIPEN] = _("Ripen"),
@@ -509,25 +520,36 @@ const u8 gAbilityNames[ABILITIES_COUNT_GEN8][ABILITY_NAME_LENGTH + 1] =
     [ABILITY_POWER_SPOT] = _("Power Spot"),
     [ABILITY_MIMICRY] = _("Mimicry"),
     [ABILITY_SCREEN_CLEANER] = _("ScreenCleanr"),
-    [ABILITY_STEELY_SPIRIT] = _("SteelySpirit"),
+//    [ABILITY_STEELY_SPIRIT] = _("SteelySpirit"),
+    [ABILITY_STEELY_SPIRIT] = _("Steelworker"),
     [ABILITY_PERISH_BODY] = _("Perish Body"),
     [ABILITY_WANDERING_SPIRIT] = _("WandrngSprit"),
-    [ABILITY_GORILLA_TACTICS] = _("GorillaTacti"),
-    [ABILITY_NEUTRALIZING_GAS] = _("NeutrlzngGas"),
+    [ABILITY_GORILLA_TACTICS] = _("Monkey Mania"),
+    [ABILITY_NEUTRALIZING_GAS] = _("Meltdown"),
     [ABILITY_PASTEL_VEIL] = _("Pastel Veil"),
     [ABILITY_HUNGER_SWITCH] = _("HungerSwitch"),
     [ABILITY_QUICK_DRAW] = _("Quick Draw"),
     [ABILITY_UNSEEN_FIST] = _("Unseen Fist"),
     [ABILITY_CURIOUS_MEDICINE] = _("CuriusMedicn"),
     [ABILITY_TRANSISTOR] = _("Transistor"),
-    [ABILITY_DRAGONS_MAW] = _("Dragon's Maw"),
+    [ABILITY_DRAGONS_MAW] = _("Dragonforce"),
     [ABILITY_CHILLING_NEIGH] = _("ChillngNeigh"),
     [ABILITY_GRIM_NEIGH] = _("Grim Neigh"),
     [ABILITY_AS_ONE_ICE_RIDER] = _("As One"),
     [ABILITY_AS_ONE_SHADOW_RIDER] = _("As One"),
+    
+	[ABILITY_DRAIN_TOUCH]	=_("Drain Touch"),
+	[ABILITY_AURA_PUNCH]	=_("Aura Punch"),
+	[ABILITY_UNSCATHED]		=_("Unscathed"),
+	[ABILITY_CHIVALRY]		=_("Chivalry"),
+	[ABILITY_HIBERNATE]		=_("Hibernate"),
+	[ABILITY_GRAVITATE]		=_("Gravitate"),
+	[ABILITY_WARP_FIELD]	=_("Warp Field"),
+	//[ABILITY_WONDER_FIELD]	=_("Wonder Field"),
+	//[ABILITY_MAGIC_FIELD]	=_("Magic Field"),
 };
 
-const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT_GEN8] =
+const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT_CUSTOM] =
 {
     [ABILITY_NONE] = sNoneDescription,
     [ABILITY_STENCH] = sStenchDescription,
@@ -797,4 +819,11 @@ const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT_GEN8] =
     [ABILITY_GRIM_NEIGH] = sGrimNeighDescription,
     [ABILITY_AS_ONE_ICE_RIDER] = sAsOneIceRiderDescription,
     [ABILITY_AS_ONE_SHADOW_RIDER] = sAsOneShadowRiderDescription,
+	[ABILITY_DRAIN_TOUCH]	=sDrainTouchDescription,
+	[ABILITY_AURA_PUNCH]	=sAuraPunchDescription,
+	[ABILITY_UNSCATHED]		=sUnscathedDescription,
+	[ABILITY_CHIVALRY]		=sChivalryDescription,
+	[ABILITY_HIBERNATE]		=sHibernateDescription,
+	[ABILITY_GRAVITATE]		=sGravitateDescription,
+	[ABILITY_WARP_FIELD]	=sWarpFieldDescription,
 };

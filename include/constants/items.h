@@ -706,8 +706,9 @@
 #define ITEM_ULTRANECROZIUM_Z         603
 //new items
 #define ITEM_SUPPRESSOR		604
+#define ITEM_PLATE_ARMOR		605
 
-#define ITEMS_COUNT 605
+#define ITEMS_COUNT 606
 #define ITEM_FIELD_ARROW ITEMS_COUNT
 
 // Range of berries given out by various NPCS

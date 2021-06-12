@@ -7623,14 +7623,31 @@ const struct Item gItems[] =
         .name = _("Suppressor"),
         .itemId = ITEM_SUPPRESSOR,
         .price = 5000,
-        .holdEffect = HOLD_EFFECT_SUPPRESS,
+       // .holdEffect = HOLD_EFFECT_SUPPRESS,
         .holdEffectParam = 10,
         .description = sSuppressorDesc,
         //.pocket = POCKET_BATTLE_ITEMS,
         .pocket = POCKET_ITEMS,
-        .type = 4,
+        .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .secondaryId = 0,
+        //.secondaryId = 0,
     },
+    
+    [ITEM_PLATE_ARMOR] =
+    {
+        .name = _("Plate Armor"),
+        .itemId = ITEM_PLATE_ARMOR,
+        .price = 1000,
+        .holdEffect = HOLD_EFFECT_PLATE_ARMOR,
+        .holdEffectParam = 50,
+        .description = sPlateArmorDesc,
+        //.pocket = POCKET_BATTLE_ITEMS,
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        //.secondaryId = 0,
+    },
+    
+    
     
 };

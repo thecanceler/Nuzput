@@ -1710,8 +1710,9 @@ u8 TrySetCantSelectMoveBattleScript(void)
             limitations++;
         }
     }
-    else if (holdEffect == HOLD_EFFECT_ASSAULT_VEST && gBattleMoves[move].power == 0)
+    else if (((holdEffect == HOLD_EFFECT_ASSAULT_VEST) || (holdEffect == HOLD_EFFECT_PLATE_ARMOR)) && (gBattleMoves[move].power == 0))
     {
+    //add in a secondary holdeffect i guess .
         gCurrentMove = move;
         gLastUsedItem = gBattleMons[gActiveBattler].item;
         if (gBattleTypeFlags & BATTLE_TYPE_PALACE)
@@ -1767,7 +1768,7 @@ u8 CheckMoveLimitations(u8 battlerId, u8 unusableMoves, u8 check)
             unusableMoves |= gBitTable[i];
         else if (HOLD_EFFECT_CHOICE(holdEffect) && *choicedMove != 0 && *choicedMove != 0xFFFF && *choicedMove != gBattleMons[battlerId].moves[i])
             unusableMoves |= gBitTable[i];
-        else if (holdEffect == HOLD_EFFECT_ASSAULT_VEST && gBattleMoves[gBattleMons[battlerId].moves[i]].power == 0)
+        else if (((holdEffect == HOLD_EFFECT_ASSAULT_VEST) || (holdEffect == HOLD_EFFECT_PLATE_ARMOR)) && (gBattleMoves[gBattleMons[battlerId].moves[i]].power == 0))
             unusableMoves |= gBitTable[i];
         else if (IsGravityPreventingMove(gBattleMons[battlerId].moves[i]))
             unusableMoves |= gBitTable[i];
@@ -4200,7 +4201,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
             break;
             /*
         case ABILITY_WARP_FIELD:
-        
+        //effect = EFFECT_TRICK_ROOM
         if (TryChangeBattleTerrain(battler, STATUS_FIELD_PSYCHIC_TERRAIN, &gFieldTimers.psychicTerrainTimer))
             {
                 BattleScriptPushCursorAndCallback(BattleScript_PsychicSurgeActivates);
@@ -4397,7 +4398,10 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
                 if (gBattleMons[battler].status1 & STATUS1_SLEEP
                     || gBattleMons[BATTLE_OPPOSITE(battler)].status1 & STATUS1_SLEEP
                     || GetBattlerAbility(battler) == ABILITY_COMATOSE
-                    || GetBattlerAbility(BATTLE_OPPOSITE(battler)) == ABILITY_COMATOSE)
+                    || GetBattlerAbility(BATTLE_OPPOSITE(battler)) == ABILITY_COMATOSE
+                    || GetBattlerAbility(battler) != ABILITY_HIBERNATE
+                    || GetBattlerAbility(BATTLE_OPPOSITE(battler)) != ABILITY_HIBERNATE
+                    )
                 {
                     BattleScriptPushCursorAndCallback(BattleScript_BadDreamsActivates);
                     effect++;
@@ -4650,7 +4654,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
              && !(GetBattlerAbility(gBattlerAttacker) == ABILITY_SHEER_FORCE && gBattleMoves[gCurrentMove].flags & FLAG_SHEER_FORCE_BOOST)
              && gBattleMons[battler].statStages[STAT_SPATK] != MAX_STAT_STAGE)
             {
-                SET_STATCHANGER(STAT_SPATK, 1, FALSE);
+                SET_STATCHANGER(STAT_SPATK, 3, FALSE);
                 BattleScriptPushCursor();
                 gBattlescriptCurrInstr = BattleScript_TargetAbilityStatRaiseOnMoveEnd;
                 effect++;
@@ -4731,6 +4735,11 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
             }
             break;
         case ABILITY_ANGER_POINT:
+        
+        
+      //u8  bestStat = GetHighestStatId(battler);
+//        gBattleMons[battler].statStages[i]
+        
             if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
              && gIsCriticalHit
              && TARGET_TURN_DAMAGED
@@ -4739,6 +4748,9 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
             {
             //change this to possibly not atk
                 SET_STATCHANGER(STAT_ATK, MAX_STAT_STAGE - gBattleMons[battler].statStages[STAT_ATK], FALSE);
+                
+//                SET_STATCHANGER(bestStat, MAX_STAT_STAGE - gBattleMons[battler].statStages[bestStat], FALSE);
+                
                 BattleScriptPushCursor();
                 gBattlescriptCurrInstr = BattleScript_TargetsStatWasMaxedOut;
                 effect++;
@@ -5043,6 +5055,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
         }
         break;
     case ABILITYEFFECT_MOVE_END_OTHER: // Abilities that activate on *another* battler's moveend: Dancer, Soul-Heart, Receiver, Symbiosis
+    //come here for moxie, beast boost etc
         switch (GetBattlerAbility(battler))
         {
         case ABILITY_DANCER:
@@ -7613,6 +7626,12 @@ static u32 CalcAttackStat(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType, b
         if (moveType == TYPE_GRASS && gBattleMons[battlerAtk].hp <= (gBattleMons[battlerAtk].maxHP / 3))
             MulModifier(&modifier, UQ_4_12(1.5));
         break;
+        /*
+        case ABILITY_UNSCATHED:
+        if (gBattleMons[battlerAtk].hp == (gBattleMons[battlerAtk].maxHP))
+            MulModifier(&modifier, UQ_4_12(1.5));
+            break;
+          */  
     case ABILITY_PLUS:
     case ABILITY_MINUS:
         if (IsBattlerAlive(BATTLE_PARTNER(battlerAtk)))
@@ -7784,6 +7803,19 @@ static u32 CalcDefenseStat(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType, 
                 RecordAbilityBattle(battlerDef, ABILITY_FUR_COAT);
         }
         break;
+        
+        
+        case ABILITY_HIBERNATE:
+        if (gBattleMons[battlerDef].status1 & STATUS1_SLEEP)
+        {
+            //gBattleMons[battler].status2 &= ~(STATUS2_NIGHTMARE);
+            MulModifier(&modifier, UQ_4_12(1.5));
+            if (updateFlags)
+                RecordAbilityBattle(battlerDef, ABILITY_HIBERNATE);
+        }
+        break;
+        
+        
     case ABILITY_GRASS_PELT:
         if (gFieldStatuses & STATUS_FIELD_GRASSY_TERRAIN && usesDefStat)
         {
@@ -7833,12 +7865,12 @@ static u32 CalcDefenseStat(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType, 
         if (!usesDefStat)
             MulModifier(&modifier, UQ_4_12(1.5));
         break;
-        /*
-        case HOLD_EFFECT_PLATE_MAIL:
-        if (!usesDefStat)
+        
+        case HOLD_EFFECT_PLATE_ARMOR:
+        if (usesDefStat)
             MulModifier(&modifier, UQ_4_12(1.5));
         break;
-        */
+        
     }
 
     // sandstorm sp.def boost for rock types
@@ -8076,6 +8108,12 @@ static void MulByTypeEffectiveness(u16 *modifier, u16 move, u8 moveType, u8 batt
         mod = UQ_4_12(1.0);
         if (recordAbilities)
             RecordAbilityBattle(battlerAtk, ABILITY_SCRAPPY);
+    }
+    else if ((moveType == TYPE_POISON ) && defType == TYPE_STEEL && GetBattlerAbility(battlerAtk) == ABILITY_CORROSION && mod == UQ_4_12(0.0))
+    {
+        mod = UQ_4_12(1.0);
+        if (recordAbilities)
+            RecordAbilityBattle(battlerAtk, ABILITY_CORROSION);
     }
 
     if (moveType == TYPE_PSYCHIC && defType == TYPE_DARK && gStatuses3[battlerDef] & STATUS3_MIRACLE_EYED && mod == UQ_4_12(0.0))

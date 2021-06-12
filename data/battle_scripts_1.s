@@ -7952,3 +7952,19 @@ BattleScript_JabocaRowapBerryActivate_Dmg:
 	call BattleScript_HurtAttacker
 	removeitem BS_TARGET
 	return
+
+@fix this 
+
+BattleScript_ChivalryActivates::
+
+return
+
+BattleScript_GravitateActivates::
+pause 0x20
+printstring STRINGID_GRAVITYINTENSIFIED
+return
+
+BattleScript_WarpFieldActivates::
+pause 0x20
+printstring STRINGID_PKMNTWISTEDDIMENSIONS
+return

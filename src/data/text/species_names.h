@@ -1274,4 +1274,24 @@ const u8 gSpeciesNames[][POKEMON_NAME_LENGTH + 1] = {
     // Calyrex
     [SPECIES_CALYREX_ICE_RIDER] = _("Calyrex"),
     [SPECIES_CALYREX_SHADOW_RIDER] = _("Calyrex"),
+    
+    //new pokemon
+    /*
+    [SPECIES_LICKISLICK] = _("Lickislick"),
+    [SPECIES_BOREA???] = _("----"),
+    [SPECIES_MANDRATH] = ("Mandrath"),
+    [SPECIES_HOOTHOOT_AYORAN] = _("Hoothoot"),
+    [SPECIES_NOCTOWL_AYORAN] = _("Noctowl"),
+    [SPECIES_VIBRAVA_AYORAN] = _("Vibrava"),
+    [SPECIES_FLYGON_AYORAN] = _("Flygon"),
+    [SPECIES_BERGMITE_AYORAN] = _("Bergmite"),
+    [SPECIES_AVALUGG_AYORAN] = _("Avalugg"),
+    [SPECIES_TURTWIG_AYORAN] = _("Turtwig"),
+    [SPECIES_GROTLE_AYORAN] = _("Grotle"),
+    [SPECIES_TORTERRA_AYORAN] = _("Torterra"),
+    [SPECIES_ROSERADE_MEGA] = _("Roserade"),
+    [SPECIES_XATU_ZEN_MODE] = _("Xatu"),
+    [SPECIES_DWEBBLE_CORE_MODE] = _("Dwebble"),
+    [SPECIES_CRUSTLE_CORE_MODE] = _("Crustle"),
+    */
 };

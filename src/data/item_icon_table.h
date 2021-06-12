@@ -629,4 +629,6 @@ const u32 *const gItemIconTable[][2] =
     [ITEM_ULTRANECROZIUM_Z] = {gItemIcon_UltranecroziumZ, gItemIconPalette_UltranecroziumZ},
     //new item
     [ITEM_SUPPRESSOR] = {gItemIcon_ExpertBelt, gItemIconPalette_DestinyKnot},
+    [ITEM_PLATE_ARMOR] = {gItemIcon_AssaultVest, gItemIconPalette_LaggingTail},
+    
 };

@@ -2792,6 +2792,7 @@ static const struct LevelUpMove sAerodactylLevelUpLearnset[] = {
 };
 
 static const struct LevelUpMove sSnorlaxLevelUpLearnset[] = {
+   /*
     LEVEL_UP_MOVE( 1, MOVE_TACKLE),
     LEVEL_UP_MOVE( 4, MOVE_DEFENSE_CURL),
     LEVEL_UP_MOVE( 9, MOVE_AMNESIA),
@@ -2799,7 +2800,9 @@ static const struct LevelUpMove sSnorlaxLevelUpLearnset[] = {
     LEVEL_UP_MOVE(17, MOVE_CHIP_AWAY),
     LEVEL_UP_MOVE(20, MOVE_YAWN),
     LEVEL_UP_MOVE(25, MOVE_BODY_SLAM),
+    */
     LEVEL_UP_MOVE(28, MOVE_REST),
+    /*
     LEVEL_UP_MOVE(28, MOVE_SNORE),
     LEVEL_UP_MOVE(33, MOVE_SLEEP_TALK),
     LEVEL_UP_MOVE(35, MOVE_GIGA_IMPACT),
@@ -2809,6 +2812,7 @@ static const struct LevelUpMove sSnorlaxLevelUpLearnset[] = {
     LEVEL_UP_MOVE(49, MOVE_CRUNCH),
     LEVEL_UP_MOVE(50, MOVE_HEAVY_SLAM),
     LEVEL_UP_MOVE(57, MOVE_HIGH_HORSEPOWER),
+    */
     LEVEL_UP_END
 };
 

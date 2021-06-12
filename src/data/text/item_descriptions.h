@@ -3010,6 +3010,12 @@ static const u8 sUltranecroziumZDesc[] = _(
     "into a new form.");
     
 static const u8 sSuppressorDesc[] = _(
-	"A held item that\n"
+    "A held item that\n"
     "suppresses the\n"
     "Pokémon's ability.");
+    
+static const u8 sPlateArmorDesc[] = _(
+    "Raises Defense but\n"
+    "prevents the use\n"
+    "of status moves.");
+

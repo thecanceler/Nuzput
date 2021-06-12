@@ -756,4 +756,11 @@ const u8 gMoveNames[MOVES_COUNT][MOVE_NAME_LENGTH + 1] =
     [MOVE_GLACIAL_LANCE] = _("GlacialLance"),
     [MOVE_ASTRAL_BARRAGE] = _("AstrlBarrage"),
     [MOVE_EERIE_SPELL] = _("Eerie Spell"),
+    [MOVE_PLANE_SHIFT] =_("Plane Shift"),
+    [MOVE_SHIELD_SLAM] =_("Shield Slam"),
+    [MOVE_ICE_SICKLE] = _("Ice Sickle"),
+   // [MOVE_FIRE_SYNAPSE] = _("Fire Synapse"),
+    
+    
+    
 };

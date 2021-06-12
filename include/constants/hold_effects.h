@@ -152,7 +152,8 @@
 #define HOLD_EFFECT_THROAT_SPRAY        161
 
 // New hold effects
-#define HOLD_EFFECT_SUPPRESS    162
+//#define HOLD_EFFECT_SUPPRESS    162
+#define HOLD_EFFECT_PLATE_ARMOR 162
 
 #define HOLD_EFFECT_CHOICE(holdEffect)((holdEffect == HOLD_EFFECT_CHOICE_BAND || holdEffect == HOLD_EFFECT_CHOICE_SCARF || holdEffect == HOLD_EFFECT_CHOICE_SPECS))
 
