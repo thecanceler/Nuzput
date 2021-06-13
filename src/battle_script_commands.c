@@ -1627,7 +1627,7 @@ u32 GetTotalAccuracy(u32 battlerAtk, u32 battlerDef, u32 move)
         calc = (calc * 80) / 100; // 1.2 sand veil loss
     else if (defAbility == ABILITY_SNOW_CLOAK && WEATHER_HAS_EFFECT && gBattleWeather & WEATHER_HAIL_ANY)
         calc = (calc * 80) / 100; // 1.2 snow cloak loss
-    else if (defAbility == ABILITY_TANGLED_FEET && gBattleMons[battlerDef].status2 & STATUS2_CONFUSION)
+    else if (defAbility == ABILITY_BIG_PECKS && gBattleMons[battlerDef].status2 & STATUS2_CONFUSION)
         calc = (calc * 50) / 100; // 1.5 tangled feet loss
 
     if (atkAbility == ABILITY_HUSTLE && IS_MOVE_PHYSICAL(move))
@@ -1644,7 +1644,7 @@ u32 GetTotalAccuracy(u32 battlerAtk, u32 battlerDef, u32 move)
     if (gProtectStructs[battlerAtk].micle)
     {
         gProtectStructs[battlerAtk].micle = FALSE;
-        if (atkAbility == ABILITY_RIPEN)
+        if (atkAbility == ABILITY_HARVEST)
             calc = (calc * 140) / 100;  // ripen gives 40% acc boost
         else
             calc = (calc * 120) / 100;  // 20% acc boost
@@ -1793,7 +1793,7 @@ s32 CalcCritChanceStage(u8 battlerAtk, u8 battlerDef, u32 move, bool32 recordAbi
         critChance = -1;
     }
     else if (abilityDef == ABILITY_BATTLE_ARMOR || abilityDef == ABILITY_SHELL_ARMOR)
-    {
+    {//steadfast/hypercutter
         if (recordAbility)
             RecordAbilityBattle(battlerDef, abilityDef);
         critChance = -1;
@@ -2819,7 +2819,7 @@ void SetMoveEffect(bool32 primary, u32 certain)
                 }
                 break;
             case MOVE_EFFECT_FLINCH:
-                if (GetBattlerAbility(gEffectBattler) == ABILITY_INNER_FOCUS)
+                if ((GetBattlerAbility(gEffectBattler) == ABILITY_INNER_FOCUS)||(GetBattlerAbility(gEffectBattler) == ABILITY_BATTLE_ARMOR))
                 {
                     if (primary == TRUE || certain == MOVE_EFFECT_CERTAIN)
                     {
@@ -4671,8 +4671,8 @@ static void Cmd_playstatchangeanimation(void)
                         && ability != ABILITY_CLEAR_BODY
                         && ability != ABILITY_FULL_METAL_BODY
                         && ability != ABILITY_WHITE_SMOKE
-                        && !(ability == ABILITY_KEEN_EYE && currStat == STAT_ACC)
-                        && !(ability == ABILITY_HYPER_CUTTER && currStat == STAT_ATK)
+                        && !(ability == ABILITY_BIG_PECKS && currStat == STAT_ACC)//used to be keen eye
+                        && !(ability == ABILITY_BATTLE_ARMOR && currStat == STAT_ATK)//used to be hyper cutter
                         && !(ability == ABILITY_BIG_PECKS && currStat == STAT_DEF))
                 {
                     if (gBattleMons[gActiveBattler].statStages[currStat] > MIN_STAT_STAGE)
@@ -7140,7 +7140,7 @@ static bool32 ClearDefogHazards(u8 battlerAtk, bool32 clear)
 u32 IsFlowerVeilProtected(u32 battler)
 {
     if (IS_BATTLER_OF_TYPE(battler, TYPE_GRASS))
-        return IsAbilityOnSide(battler, ABILITY_FLOWER_VEIL);
+        return IsAbilityOnSide(battler, ABILITY_AROMA_VEIL);//return IsAbilityOnSide(battler, ABILITY_FLOWER_VEIL);
     else
         return 0;
 }
@@ -9056,7 +9056,8 @@ static u32 ChangeStatBuffs(s8 statValue, u32 statId, u32 flags, const u8 *BS_ptr
                     gBattleScripting.battler = gActiveBattler;
                     gBattlerAbility = index - 1;
                     gBattlescriptCurrInstr = BattleScript_FlowerVeilProtectsRet;
-                    gLastUsedAbility = ABILITY_FLOWER_VEIL;
+                    //gLastUsedAbility = ABILITY_FLOWER_VEIL;
+                    gLastUsedAbility = ABILITY_AROMA_VEIL;
                     gSpecialStatuses[gActiveBattler].statLowered = 1;
                 }
             }

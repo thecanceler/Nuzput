@@ -3116,7 +3116,7 @@ u8 AtkCanceller_UnableToUseMove(void)
                 else
                 {
                     u8 toSub;
-                    if (gBattleMons[gBattlerAttacker].ability == ABILITY_EARLY_BIRD)
+                    if (gBattleMons[gBattlerAttacker].ability == ABILITY_BIG_PECKS)//used to be early bird
                         toSub = 2;
                     else
                         toSub = 1;
@@ -4034,6 +4034,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
                 }
             }
             break;
+        case ABILITY_COMPOUND_EYES:
         case ABILITY_FRISK:
             if (!gSpecialStatuses[battler].switchInAbilityDone)
             {
@@ -4279,7 +4280,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
             gBattlerAttacker = battler;
             switch (gLastUsedAbility)
             {
-            case ABILITY_HARVEST:
+            case ABILITY_HARVEST://harvest
                 if (((WEATHER_HAS_EFFECT && gBattleWeather & WEATHER_SUN_ANY) || Random() % 2 == 0)
                  && gBattleMons[battler].item == ITEM_NONE
                  && gBattleStruct->changedItems[battler] == ITEM_NONE
@@ -4310,6 +4311,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
                 }
                 break;
             case ABILITY_HYDRATION:
+            case ABILITY_GOOEY:
                 if (WEATHER_HAS_EFFECT
                  && (gBattleWeather & WEATHER_RAIN_ANY)
                  && gBattleMons[battler].status1 & STATUS1_ANY)
@@ -4446,6 +4448,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
                     effect++;
                 }
                 break;
+            case ABILITY_PICKUP:
             case ABILITY_BALL_FETCH:
                 if (gBattleMons[battler].item == ITEM_NONE
                     && gBattleResults.catchAttempts[gLastUsedBall - ITEM_ULTRA_BALL] >= 1
@@ -4864,6 +4867,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
             break;
         POISON_POINT:
         case ABILITY_POISON_POINT:
+        case ABILITY_POISON_TOUCH:
             if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
              && gBattleMons[gBattlerAttacker].hp != 0
              && !gProtectStructs[gBattlerAttacker].confusionSelfDmg
@@ -5038,6 +5042,8 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
             }
             break;
         case ABILITY_STENCH:
+        case ABILITY_LIQUID_OOZE:
+        //liquid ooze?
             if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
              && gBattleMons[gBattlerTarget].hp != 0
              && !gProtectStructs[gBattlerAttacker].confusionSelfDmg
@@ -5432,11 +5438,11 @@ bool32 HasEnoughHpToEatBerry(u32 battlerId, u32 hpFraction, u32 itemId)
         return FALSE;
     if (gBattleMons[battlerId].hp <= gBattleMons[battlerId].maxHP / hpFraction)
         return TRUE;
-
-    if (hpFraction <= 4 && GetBattlerAbility(battlerId) == ABILITY_GLUTTONY && isBerry
+//USED TO BE GLUTTONY
+    if (hpFraction <= 4 && GetBattlerAbility(battlerId) == ABILITY_CHEEK_POUCH && isBerry
          && gBattleMons[battlerId].hp <= gBattleMons[battlerId].maxHP / 2)
     {
-        RecordAbilityBattle(battlerId, ABILITY_GLUTTONY);
+        RecordAbilityBattle(battlerId, ABILITY_CHEEK_POUCH);
         return TRUE;
     }
 
@@ -5454,7 +5460,7 @@ static u8 HealConfuseBerry(u32 battlerId, u32 itemId, u8 flavorId, bool32 end2)
             gBattleMoveDamage = 1;
         gBattleMoveDamage *= -1;
         
-        if (GetBattlerAbility(battlerId) == ABILITY_RIPEN)
+        if (GetBattlerAbility(battlerId) == ABILITY_HARVEST)
         {
             gBattleMoveDamage *= 2;
             gBattlerAbility = battlerId;
@@ -5489,7 +5495,7 @@ static u8 StatRaiseBerry(u32 battlerId, u32 itemId, u32 statId, bool32 end2)
         PREPARE_STRING_BUFFER(gBattleTextBuff2, STRINGID_STATROSE);
 
         gEffectBattler = battlerId;
-        if (GetBattlerAbility(battlerId) == ABILITY_RIPEN)
+        if (GetBattlerAbility(battlerId) == ABILITY_HARVEST)
             SET_STATCHANGER(statId, 2, FALSE);
         else
             SET_STATCHANGER(statId, 1, FALSE);
@@ -5540,7 +5546,7 @@ static u8 RandomStatRaiseBerry(u32 battlerId, u32 itemId, bool32 end2)
 
         gEffectBattler = battlerId;
         
-        if (GetBattlerAbility(battlerId) == ABILITY_RIPEN)
+        if (GetBattlerAbility(battlerId) == ABILITY_HARVEST)
             SET_STATCHANGER(i + 1, 4, FALSE);
         else
             SET_STATCHANGER(i + 1, 2, FALSE);
@@ -5595,7 +5601,7 @@ static u8 DamagedStatBoostBerryEffect(u8 battlerId, u8 statId, u8 split)
         PREPARE_STRING_BUFFER(gBattleTextBuff2, STRINGID_STATROSE);
 
         gEffectBattler = battlerId;
-        if (GetBattlerAbility(battlerId) == ABILITY_RIPEN)
+        if (GetBattlerAbility(battlerId) == ABILITY_HARVEST)
             SET_STATCHANGER(statId, 2, FALSE);
         else
             SET_STATCHANGER(statId, 1, FALSE);
@@ -5619,7 +5625,7 @@ static u8 ItemHealHp(u32 battlerId, u32 itemId, bool32 end2, bool32 percentHeal)
             gBattleMoveDamage = GetBattlerHoldEffectParam(battlerId) * -1;
         
         // check ripen
-        if (ItemId_GetPocket(itemId) == POCKET_BERRIES && GetBattlerAbility(battlerId) == ABILITY_RIPEN)
+        if (ItemId_GetPocket(itemId) == POCKET_BERRIES && GetBattlerAbility(battlerId) == ABILITY_HARVEST)
             gBattleMoveDamage *= 2;
         
         gBattlerAbility = battlerId;    // in SWSH, berry juice shows ability pop up but has no effect. This is mimicked here
@@ -5894,7 +5900,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                         u8 maxPP = CalculatePPWithBonus(move, ppBonuses, i);
                         u8 ppRestored = GetBattlerHoldEffectParam(battlerId);
                         
-                        if (GetBattlerAbility(battlerId) == ABILITY_RIPEN)
+                        if (GetBattlerAbility(battlerId) == ABILITY_HARVEST)
                         {
                             ppRestored *= 2;
                             gBattlerAbility = battlerId;
@@ -6423,7 +6429,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     effect = ITEM_STATS_CHANGE;
                     BattleScriptPushCursor();
                     gBattlescriptCurrInstr = BattleScript_TargetItemStatRaise;
-                    gBattleScripting.statChanger = SET_STATCHANGER(STAT_ATK, 1, FALSE);
+                    gBattleScripting.statChanger = SET_STATCHANGER(STAT_ATK, 2, FALSE);
                 }
                 break;
             case HOLD_EFFECT_LUMINOUS_MOSS:
@@ -6434,7 +6440,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     effect = ITEM_STATS_CHANGE;
                     BattleScriptPushCursor();
                     gBattlescriptCurrInstr = BattleScript_TargetItemStatRaise;
-                    gBattleScripting.statChanger = SET_STATCHANGER(STAT_SPDEF, 1, FALSE);
+                    gBattleScripting.statChanger = SET_STATCHANGER(STAT_SPDEF, 2, FALSE);
                 }
                 break;
             case HOLD_EFFECT_CELL_BATTERY:
@@ -6445,7 +6451,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     effect = ITEM_STATS_CHANGE;
                     BattleScriptPushCursor();
                     gBattlescriptCurrInstr = BattleScript_TargetItemStatRaise;
-                    gBattleScripting.statChanger = SET_STATCHANGER(STAT_ATK, 1, FALSE);
+                    gBattleScripting.statChanger = SET_STATCHANGER(STAT_ATK, 2, FALSE);
                 }
                 break;
             case HOLD_EFFECT_ABSORB_BULB:
@@ -6456,7 +6462,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     effect = ITEM_STATS_CHANGE;
                     BattleScriptPushCursor();
                     gBattlescriptCurrInstr = BattleScript_TargetItemStatRaise;
-                    gBattleScripting.statChanger = SET_STATCHANGER(STAT_SPATK, 1, FALSE);
+                    gBattleScripting.statChanger = SET_STATCHANGER(STAT_SPATK, 2, FALSE);
                 }
                 break;
             case HOLD_EFFECT_JABOCA_BERRY:  // consume and damage attacker if used physical move
@@ -6469,7 +6475,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 8;
                     if (gBattleMoveDamage == 0)
                         gBattleMoveDamage = 1;
-                    if (GetBattlerAbility(battlerId) == ABILITY_RIPEN)
+                    if (GetBattlerAbility(battlerId) == ABILITY_HARVEST)
                         gBattleMoveDamage *= 2;
                     
                     effect = ITEM_HP_CHANGE;
@@ -6489,7 +6495,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 8;
                     if (gBattleMoveDamage == 0)
                         gBattleMoveDamage = 1;
-                    if (GetBattlerAbility(battlerId) == ABILITY_RIPEN)
+                    if (GetBattlerAbility(battlerId) == ABILITY_HARVEST)
                         gBattleMoveDamage *= 2;
                     
                     effect = ITEM_HP_CHANGE;
@@ -7516,7 +7522,8 @@ static u32 CalcMoveBasePowerAfterModifiers(u16 move, u8 battlerAtk, u8 battlerDe
             MulModifier(&modifier, UQ_4_12(0.5));
         break;
     case EFFECT_KNOCK_OFF:
-        if (gBattleMons[battlerDef].item != ITEM_NONE && GetBattlerAbility(battlerDef) != ABILITY_STICKY_HOLD)
+        if (gBattleMons[battlerDef].item != ITEM_NONE && ((GetBattlerAbility(battlerDef) != ABILITY_STICKY_HOLD)||(GetBattlerAbility(battlerDef) != ABILITY_SUCTION_CUPS)))
+        //suction cups
             MulModifier(&modifier, UQ_4_12(1.5));
         break;
     }
@@ -7717,10 +7724,12 @@ static u32 CalcAttackStat(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType, b
 
     // The offensive stats of a Player's Pokémon are boosted by x1.1 (+10%) if they have the 1st badge and 7th badges.
     // Having the 1st badge boosts physical attack while having the 7th badge boosts special attack.
+    /*
     if (ShouldGetStatBadgeBoost(FLAG_BADGE01_GET, battlerAtk) && IS_MOVE_PHYSICAL(move))
         MulModifier(&modifier, UQ_4_12(1.1));
     if (ShouldGetStatBadgeBoost(FLAG_BADGE07_GET, battlerAtk) && IS_MOVE_SPECIAL(move))
         MulModifier(&modifier, UQ_4_12(1.1));
+        */
 
     return ApplyModifier(modifier, atkStat);
 }
@@ -8024,7 +8033,7 @@ static u32 CalcFinalDmg(u32 dmg, u16 move, u8 battlerAtk, u8 battlerDef, u8 move
         if (moveType == GetBattlerHoldEffectParam(battlerDef)
             && (moveType == TYPE_NORMAL || typeEffectivenessModifier >= UQ_4_12(2.0)))
         {
-            if (abilityDef == ABILITY_RIPEN)
+            if (abilityDef == ABILITY_HARVEST)
                 MulModifier(&finalModifier, UQ_4_12(0.25));
             else
                 MulModifier(&finalModifier, UQ_4_12(0.5));
@@ -8607,7 +8616,8 @@ static bool32 IsUnnerveAbilityOnOpposingSide(u8 battlerId)
 {
     if (IsAbilityOnOpposingSide(battlerId, ABILITY_UNNERVE)
       || IsAbilityOnOpposingSide(battlerId, ABILITY_AS_ONE_ICE_RIDER)
-      || IsAbilityOnOpposingSide(battlerId, ABILITY_AS_ONE_SHADOW_RIDER))
+      || IsAbilityOnOpposingSide(battlerId, ABILITY_AS_ONE_SHADOW_RIDER)
+      || IsAbilityOnOpposingSide(battlerId, ABILITY_PRESSURE))
         return TRUE;
     return FALSE;
 }
