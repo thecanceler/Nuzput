@@ -57,7 +57,6 @@ static bool32 TryRemoveScreens(u8 battler);
 static bool32 IsUnnerveAbilityOnOpposingSide(u8 battlerId);
 static bool32 TryChangeBattleRoom(u32 battler, u32 room, u8 *timer);
 static bool32 TrySetGravity(u32 battler, u8 *timer);
-static bool32 TrySetChivalry(u32 battler);
 
 /*
 struct FieldTimer
@@ -989,6 +988,7 @@ static const u8 sAbilitiesAffectedByMoldBreaker[] =
     [ABILITY_FLUFFY] = 1,
     [ABILITY_QUEENLY_MAJESTY] = 1,
     [ABILITY_WATER_BUBBLE] = 1,
+    [ABILITY_CHIVALRY] = 1,
 };
 
 static const u8 sAbilitiesNotTraced[ABILITIES_COUNT] =
@@ -1737,27 +1737,7 @@ u8 TrySetCantSelectMoveBattleScript(void)
             limitations++;
         }
     }
-    /*
-        else if ( (GetBattlerAbility(gActiveBattler) == ABILITY_CHIVALRY
-                    || GetBattlerAbility(BATTLE_OPPOSITE(gActiveBattler)) == ABILITY_CHIVALRY) && (gBattleMoves[move].power == 0))
-    {
-    //add in a secondary holdeffect i guess .
-        gCurrentMove = move;
-//        gLastUsedItem = gBattleMons[gActiveBattler].item;
-	gLastUsedAbility = ABILITY_CHIVALRY;
-
-        if (gBattleTypeFlags & BATTLE_TYPE_PALACE)
-        {
-            gProtectStructs[gActiveBattler].palaceUnableToUseMove = 1;
-        }
-        else
-        {
-            gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingNotAllowedMoveChivalry;
-            limitations++;
-        }
-    }
-    */
-    else if((gFieldStatuses & STATUS_FIELD_CHIVALRY)&& (gBattleMoves[move].power == 0))
+   else if((IsAbilityOnField(ABILITY_CHIVALRY))&& (gBattleMoves[move].power == 0))
     {
     	if (gBattleTypeFlags & BATTLE_TYPE_PALACE)
         {
@@ -1785,10 +1765,6 @@ u8 TrySetCantSelectMoveBattleScript(void)
         }
     }
     
-    
-    
-    
-
     if (gBattleMons[gActiveBattler].pp[moveId] == 0)
     {
         if (gBattleTypeFlags & BATTLE_TYPE_PALACE)
@@ -1831,7 +1807,7 @@ u8 CheckMoveLimitations(u8 battlerId, u8 unusableMoves, u8 check)
             unusableMoves |= gBitTable[i];
         else if (HOLD_EFFECT_CHOICE(holdEffect) && *choicedMove != 0 && *choicedMove != 0xFFFF && *choicedMove != gBattleMons[battlerId].moves[i])
             unusableMoves |= gBitTable[i];
-            else if ((gFieldStatuses & STATUS_FIELD_CHIVALRY)&& (gBattleMoves[gBattleMons[battlerId].moves[i]].power == 0))
+            else if ((IsAbilityOnField(ABILITY_CHIVALRY))&& (gBattleMoves[gBattleMons[battlerId].moves[i]].power == 0))
             unusableMoves |= gBitTable[i];
             else if (((holdEffect == HOLD_EFFECT_ASSAULT_VEST) || (holdEffect == HOLD_EFFECT_PLATE_ARMOR)) && (gBattleMoves[gBattleMons[battlerId].moves[i]].power == 0))
             unusableMoves |= gBitTable[i];
@@ -3810,17 +3786,25 @@ if (!(gFieldStatuses & statusFlag))
 
     return FALSE;
 }
-static bool32 TrySetChivalry(u32 battler)
+/*
+static bool32 TrySetChivalry(u32 battler, u8 *timer)
 {
 u32 statusFlag = STATUS_FIELD_CHIVALRY;
 if (!(gFieldStatuses & statusFlag))
     {
         gFieldStatuses |= statusFlag;
+        
+        if (GetBattlerHoldEffect(battler, TRUE) == HOLD_EFFECT_ASSAULT_VEST)//what to use here??
+            *timer = 8;
+        else
+            *timer = 5;
+        
         gBattlerAttacker = gBattleScripting.battler = battler;
         return TRUE;
     }
     return FALSE;
 }
+*/
 
 static bool32 ShouldChangeFormHpBased(u32 battler)
 {
@@ -4245,6 +4229,17 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
                 effect++;
             }
             break;
+         case ABILITY_CHIVALRY:
+           if(!gSpecialStatuses[battler].switchInAbilityDone && TrySetCantSelectMoveBattleScript())
+           {
+           	gLastUsedAbility = ABILITY_CHIVALRY;
+           	gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SWITCHIN_CHIVALRY;
+                gSpecialStatuses[battler].switchInAbilityDone = 1;
+                BattleScriptPushCursorAndCallback(BattleScript_SwitchInAbilityMsg);
+                effect++;
+            }
+		
+	break;
         case ABILITY_COMATOSE:
             if (!gSpecialStatuses[battler].switchInAbilityDone)
             {
@@ -4333,14 +4328,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
                 effect++;
             }
             break;
-	case ABILITY_CHIVALRY:
-	 if (TrySetChivalry(battler))
-            {
-                BattleScriptPushCursorAndCallback(BattleScript_ChivalryActivates);
-                effect++;
-            }
-		
-	break;
+	
         case ABILITY_INTIMIDATE:
             if (!(gSpecialStatuses[battler].intimidatedMon))
             {
@@ -4616,6 +4604,16 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
             gBattlescriptCurrInstr = BattleScript_DazzlingProtected;
             effect = 1;
         }
+        
+        else if(gLastUsedAbility == ABILITY_CHIVALRY && gBattleMoves[move].power == 0)
+        {
+//        if (gBattleMons[gBattlerAttacker].status2 & STATUS2_MULTIPLETURNS)
+               // gHitMarker |= HITMARKER_NO_PPDEDUCT;
+            gBattlescriptCurrInstr = BattleScript_SoundproofProtected;
+            effect = 1;
+        }
+        
+        
         break;
     case ABILITYEFFECT_ABSORBING: // 3
         if (move != MOVE_NONE)
@@ -5183,6 +5181,8 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
                 effect++;
             }
             break;
+            
+            //drain touch code should be here/ 
         }
         break;
     case ABILITYEFFECT_MOVE_END_OTHER: // Abilities that activate on *another* battler's moveend: Dancer, Soul-Heart, Receiver, Symbiosis

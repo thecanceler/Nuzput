@@ -76,7 +76,7 @@ const struct BaseStats gBaseStats[] =
         .eggGroup1 = EGG_GROUP_MONSTER,
         .eggGroup2 = EGG_GROUP_GRASS,
         //.abilities = {ABILITY_OVERGROW, ABILITY_NONE, ABILITY_CHLOROPHYLL},
-        .abilities = {ABILITY_GRAVITATE, ABILITY_NONE, ABILITY_CHLOROPHYLL},
+        .abilities = {ABILITY_CHIVALRY, ABILITY_NONE, ABILITY_CHLOROPHYLL},
         .bodyColor = BODY_COLOR_GREEN,
         .noFlip = FALSE,
     },
@@ -4063,7 +4063,7 @@ const struct BaseStats gBaseStats[] =
         .eggGroup1 = EGG_GROUP_MONSTER,
         .eggGroup2 = EGG_GROUP_MONSTER,
         #ifdef BATTLE_ENGINE
-            .abilities = {ABILITY_CHIVALRY, ABILITY_NONE},
+            .abilities = {ABILITY_HIBERNATE, ABILITY_NONE},
             //.abilities = {ABILITY_IMMUNITY, ABILITY_THICK_FAT, ABILITY_GLUTTONY},
         #else
             .abilities = {ABILITY_IMMUNITY, ABILITY_THICK_FAT},

@@ -2801,7 +2801,7 @@ static const struct LevelUpMove sSnorlaxLevelUpLearnset[] = {
     LEVEL_UP_MOVE(20, MOVE_YAWN),
     LEVEL_UP_MOVE(25, MOVE_BODY_SLAM),
     */
-    LEVEL_UP_MOVE(28, MOVE_REST),
+    LEVEL_UP_MOVE(28, MOVE_THUNDER_WAVE),
     /*
     LEVEL_UP_MOVE(28, MOVE_SNORE),
     LEVEL_UP_MOVE(33, MOVE_SLEEP_TALK),
