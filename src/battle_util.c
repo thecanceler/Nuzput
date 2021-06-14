@@ -3753,7 +3753,6 @@ static bool32 TrySetGravity(u32 battler, u8 *timer)
 u32 statusFlag = STATUS_FIELD_GRAVITY;
 if (!(gFieldStatuses & statusFlag))
     {
-        //gFieldStatuses &= ~(STATUS_FIELD_TRICK_ROOM | STATUS_FIELD_WONDER_ROOM | STATUS_FIELD_MAGIC_ROOM);
         gFieldStatuses |= statusFlag;
 
         if (GetBattlerHoldEffect(battler, TRUE) == HOLD_EFFECT_ROOM_EXTENDER)//what to use here??
@@ -3767,56 +3766,6 @@ if (!(gFieldStatuses & statusFlag))
 
     return FALSE;
 }
-
-/*
-
-WEATHER_HAIL_TEMPORARY
-
-STATUS_FIELD_GRASSY_TERRAIN
-
-
-        HandleRoomMove(STATUS_FIELD_TRICK_ROOM, &gFieldTimers.trickRoomTimer, 0);
-
-
-if (!(gFieldStatuses & statusFlag))
-    {
-        gFieldStatuses &= ~(STATUS_FIELD_MISTY_TERRAIN | STATUS_FIELD_GRASSY_TERRAIN | EFFECT_ELECTRIC_TERRAIN | EFFECT_PSYCHIC_TERRAIN);
-        gFieldStatuses |= statusFlag;
-
-        if (GetBattlerHoldEffect(battler, TRUE) == HOLD_EFFECT_TERRAIN_EXTENDER)
-            *timer = 8;
-        else
-            *timer = 5;
-
-        gBattlerAttacker = gBattleScripting.battler = battler;
-        return TRUE;
-    }
-
-    return FALSE;
-    */
-    
-    
-    
-    
-    /*
-    
-    static void HandleRoomMove(u32 statusFlag, u8 *timer, u8 stringId)
-{
-    if (gFieldStatuses & statusFlag)
-    {
-        gFieldStatuses &= ~(statusFlag);
-        *timer = 0;
-        gBattleCommunication[MULTISTRING_CHOOSER] = stringId + 1;
-    }
-    else
-    {
-        gFieldStatuses |= statusFlag;
-        *timer = 5;
-        gBattleCommunication[MULTISTRING_CHOOSER] = stringId;
-    }
-}
-    */
-
 
 static bool32 ShouldChangeFormHpBased(u32 battler)
 {
@@ -3921,6 +3870,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
     u32 pidAtk, pidDef;
     u32 moveType, move;
     u32 i, j;
+    u8 bestStat;
 
     if (gBattleTypeFlags & BATTLE_TYPE_SAFARI)
         return 0;
@@ -4312,7 +4262,6 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
             }
             break;
         case ABILITY_GRAVITATE:
-        //
         if (TrySetGravity(battler, &gFieldTimers.gravityTimer))
             {
                 BattleScriptPushCursorAndCallback(BattleScript_GravitateActivates);
@@ -4854,20 +4803,15 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
             break;
         case ABILITY_ANGER_POINT:
         
-        
-      //u8  bestStat = GetHighestStatId(battler);
-//        gBattleMons[battler].statStages[i]
-        
+           bestStat = STAT_ATK;//GetHighestStatId(battler);//change this by figuring out where gethigheststatid comes from
             if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
              && gIsCriticalHit
              && TARGET_TURN_DAMAGED
              && IsBattlerAlive(battler)
-             && gBattleMons[battler].statStages[STAT_ATK] != MAX_STAT_STAGE)
+             && gBattleMons[battler].statStages[bestStat] != MAX_STAT_STAGE)
             {
-            //change this to possibly not atk
-                SET_STATCHANGER(STAT_ATK, MAX_STAT_STAGE - gBattleMons[battler].statStages[STAT_ATK], FALSE);
                 
-//                SET_STATCHANGER(bestStat, MAX_STAT_STAGE - gBattleMons[battler].statStages[bestStat], FALSE);
+                SET_STATCHANGER(bestStat, MAX_STAT_STAGE - gBattleMons[battler].statStages[bestStat], FALSE);
                 
                 BattleScriptPushCursor();
                 gBattlescriptCurrInstr = BattleScript_TargetsStatWasMaxedOut;
