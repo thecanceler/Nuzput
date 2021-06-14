@@ -7965,6 +7965,10 @@ printstring STRINGID_GRAVITYINTENSIFIED
 return
 
 BattleScript_WarpFieldActivates::
-pause 0x20
-printstring STRINGID_PKMNTWISTEDDIMENSIONS
+	pause B_WAIT_TIME_SHORT
+	call BattleScript_AbilityPopUp
+	printstring STRINGID_PKMNTWISTEDDIMENSIONS
+	waitmessage B_WAIT_TIME_LONG
+	playanimation BS_SCRIPTING, B_ANIM_RESTORE_BG, NULL
+	end3
 return

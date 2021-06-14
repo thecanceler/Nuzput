@@ -55,6 +55,26 @@ functions instead of at the top of the file with the other declarations.
 
 static bool32 TryRemoveScreens(u8 battler);
 static bool32 IsUnnerveAbilityOnOpposingSide(u8 battlerId);
+static bool32 TryChangeBattleRoom(u32 battler, u32 room, u8 *timer);
+
+/*
+struct FieldTimer
+{
+    u8 mudSportTimer;
+    u8 waterSportTimer;
+    u8 wonderRoomTimer;
+    u8 magicRoomTimer;
+    u8 trickRoomTimer;
+    u8 grassyTerrainTimer;
+    u8 mistyTerrainTimer;
+    u8 electricTerrainTimer;
+    u8 psychicTerrainTimer;
+    u8 echoVoiceCounter;
+    u8 gravityTimer;
+    u8 fairyLockTimer;
+};
+*/
+
 
 extern const u8 *const gBattleScriptsForMoveEffects[];
 extern const u8 *const gBattlescriptsForBallThrow[];
@@ -3707,6 +3727,75 @@ static bool32 TryChangeBattleTerrain(u32 battler, u32 statusFlag, u8 *timer)
     return FALSE;
 }
 
+static bool32 TryChangeBattleRoom(u32 battler, u32 statusFlag, u8 *timer)
+{
+
+if (!(gFieldStatuses & statusFlag))
+    {
+        gFieldStatuses &= ~(STATUS_FIELD_TRICK_ROOM | STATUS_FIELD_WONDER_ROOM | STATUS_FIELD_MAGIC_ROOM);
+        gFieldStatuses |= statusFlag;
+
+        if (GetBattlerHoldEffect(battler, TRUE) == HOLD_EFFECT_ROOM_EXTENDER)//use room extender
+            *timer = 8;
+        else
+            *timer = 5;
+
+        gBattlerAttacker = gBattleScripting.battler = battler;
+        return TRUE;
+    }
+
+    return FALSE;
+}
+/*
+
+WEATHER_HAIL_TEMPORARY
+
+STATUS_FIELD_GRASSY_TERRAIN
+
+
+        HandleRoomMove(STATUS_FIELD_TRICK_ROOM, &gFieldTimers.trickRoomTimer, 0);
+
+
+if (!(gFieldStatuses & statusFlag))
+    {
+        gFieldStatuses &= ~(STATUS_FIELD_MISTY_TERRAIN | STATUS_FIELD_GRASSY_TERRAIN | EFFECT_ELECTRIC_TERRAIN | EFFECT_PSYCHIC_TERRAIN);
+        gFieldStatuses |= statusFlag;
+
+        if (GetBattlerHoldEffect(battler, TRUE) == HOLD_EFFECT_TERRAIN_EXTENDER)
+            *timer = 8;
+        else
+            *timer = 5;
+
+        gBattlerAttacker = gBattleScripting.battler = battler;
+        return TRUE;
+    }
+
+    return FALSE;
+    */
+    
+    
+    
+    
+    /*
+    
+    static void HandleRoomMove(u32 statusFlag, u8 *timer, u8 stringId)
+{
+    if (gFieldStatuses & statusFlag)
+    {
+        gFieldStatuses &= ~(statusFlag);
+        *timer = 0;
+        gBattleCommunication[MULTISTRING_CHOOSER] = stringId + 1;
+    }
+    else
+    {
+        gFieldStatuses |= statusFlag;
+        *timer = 5;
+        gBattleCommunication[MULTISTRING_CHOOSER] = stringId;
+    }
+}
+    */
+
+
 static bool32 ShouldChangeFormHpBased(u32 battler)
 {
     // Ability,     form >, form <=, hp divided
@@ -4200,18 +4289,17 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
                 effect++;
             }
             break;
-            /*
+        case ABILITY_GRAVITATE:
+        //
+           break;
         case ABILITY_WARP_FIELD:
-        //effect = EFFECT_TRICK_ROOM
-        if (TryChangeBattleTerrain(battler, STATUS_FIELD_PSYCHIC_TERRAIN, &gFieldTimers.psychicTerrainTimer))
+        if (TryChangeBattleRoom(battler, STATUS_FIELD_TRICK_ROOM, &gFieldTimers.trickRoomTimer))
             {
-                BattleScriptPushCursorAndCallback(BattleScript_PsychicSurgeActivates);
+                BattleScriptPushCursorAndCallback(BattleScript_WarpFieldActivates);
                 effect++;
             }
-           
-        
             break;
-            */
+
         case ABILITY_INTIMIDATE:
             if (!(gSpecialStatuses[battler].intimidatedMon))
             {
@@ -4936,6 +5024,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
              && gBattleMons[gBattlerTarget].hp != 0
              && (Random() % 3) == 0
              && GetBattlerAbility(gBattlerAttacker) != ABILITY_OBLIVIOUS
+             && GetBattlerAbility(gBattlerAttacker) != ABILITY_TANGLING_HAIR
              && !IsAbilityOnSide(gBattlerAttacker, ABILITY_AROMA_VEIL)
              && GetGenderFromSpeciesAndPersonality(speciesAtk, pidAtk) != GetGenderFromSpeciesAndPersonality(speciesDef, pidDef)
              && !(gBattleMons[gBattlerAttacker].status2 & STATUS2_INFATUATION)
@@ -5140,6 +5229,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
                 }
                 break;
             case ABILITY_OBLIVIOUS:
+            case ABILITY_TANGLING_HAIR:
                 if (gBattleMons[battler].status2 & STATUS2_INFATUATION)
                 {
                     StringCopy(gBattleTextBuff1, gStatusConditionString_LoveJpn);
