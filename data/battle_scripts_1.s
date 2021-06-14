@@ -7960,8 +7960,12 @@ BattleScript_ChivalryActivates::
 return
 
 BattleScript_GravitateActivates::
-pause 0x20
-printstring STRINGID_GRAVITYINTENSIFIED
+	pause B_WAIT_TIME_SHORT
+	call BattleScript_AbilityPopUp
+	printstring STRINGID_GRAVITYINTENSIFIED
+	waitmessage B_WAIT_TIME_LONG
+//	playanimation BS_SCRIPTING, B_ANIM_RESTORE_BG, NULL
+	end3
 return
 
 BattleScript_WarpFieldActivates::
@@ -7969,6 +7973,6 @@ BattleScript_WarpFieldActivates::
 	call BattleScript_AbilityPopUp
 	printstring STRINGID_PKMNTWISTEDDIMENSIONS
 	waitmessage B_WAIT_TIME_LONG
-	playanimation BS_SCRIPTING, B_ANIM_RESTORE_BG, NULL
+//	playanimation BS_SCRIPTING, B_ANIM_RESTORE_BG, NULL
 	end3
 return

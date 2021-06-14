@@ -56,6 +56,7 @@ functions instead of at the top of the file with the other declarations.
 static bool32 TryRemoveScreens(u8 battler);
 static bool32 IsUnnerveAbilityOnOpposingSide(u8 battlerId);
 static bool32 TryChangeBattleRoom(u32 battler, u32 room, u8 *timer);
+static bool32 TrySetGravity(u32 battler, u8 *timer);
 
 /*
 struct FieldTimer
@@ -3746,6 +3747,27 @@ if (!(gFieldStatuses & statusFlag))
 
     return FALSE;
 }
+
+static bool32 TrySetGravity(u32 battler, u8 *timer)
+{
+u32 statusFlag = STATUS_FIELD_GRAVITY;
+if (!(gFieldStatuses & statusFlag))
+    {
+        //gFieldStatuses &= ~(STATUS_FIELD_TRICK_ROOM | STATUS_FIELD_WONDER_ROOM | STATUS_FIELD_MAGIC_ROOM);
+        gFieldStatuses |= statusFlag;
+
+        if (GetBattlerHoldEffect(battler, TRUE) == HOLD_EFFECT_ROOM_EXTENDER)//what to use here??
+            *timer = 8;
+        else
+            *timer = 5;
+
+        gBattlerAttacker = gBattleScripting.battler = battler;
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
 /*
 
 WEATHER_HAIL_TEMPORARY
@@ -4291,6 +4313,11 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
             break;
         case ABILITY_GRAVITATE:
         //
+        if (TrySetGravity(battler, &gFieldTimers.gravityTimer))
+            {
+                BattleScriptPushCursorAndCallback(BattleScript_GravitateActivates);
+                effect++;
+            }
            break;
         case ABILITY_WARP_FIELD:
         if (TryChangeBattleRoom(battler, STATUS_FIELD_TRICK_ROOM, &gFieldTimers.trickRoomTimer))

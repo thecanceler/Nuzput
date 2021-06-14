@@ -76,7 +76,7 @@ const struct BaseStats gBaseStats[] =
         .eggGroup1 = EGG_GROUP_MONSTER,
         .eggGroup2 = EGG_GROUP_GRASS,
         //.abilities = {ABILITY_OVERGROW, ABILITY_NONE, ABILITY_CHLOROPHYLL},
-        .abilities = {ABILITY_WARP_FIELD, ABILITY_NONE, ABILITY_CHLOROPHYLL},
+        .abilities = {ABILITY_GRAVITATE, ABILITY_NONE, ABILITY_CHLOROPHYLL},
         .bodyColor = BODY_COLOR_GREEN,
         .noFlip = FALSE,
     },
