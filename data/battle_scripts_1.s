@@ -7953,11 +7953,22 @@ BattleScript_JabocaRowapBerryActivate_Dmg:
 	removeitem BS_TARGET
 	return
 
-@fix this 
-
+@fix this
+ 
+BattleScript_SelectingNotAllowedMoveChivalry::
+	printselectionstring STRINGID_CHIVALRYDOESNTALLOW
+	endselectionscript
+	
 BattleScript_ChivalryActivates::
-
+	pause B_WAIT_TIME_SHORT
+	call BattleScript_AbilityPopUp
+	printstring STRINGID_CHIVALRYACTIVATES
+	waitmessage B_WAIT_TIME_LONG
+//	playanimation BS_SCRIPTING, B_ANIM_RESTORE_BG, NULL
+	end3
 return
+
+
 
 BattleScript_GravitateActivates::
 	pause B_WAIT_TIME_SHORT

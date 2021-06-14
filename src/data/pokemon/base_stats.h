@@ -4063,7 +4063,7 @@ const struct BaseStats gBaseStats[] =
         .eggGroup1 = EGG_GROUP_MONSTER,
         .eggGroup2 = EGG_GROUP_MONSTER,
         #ifdef BATTLE_ENGINE
-            .abilities = {ABILITY_HIBERNATE, ABILITY_NONE},
+            .abilities = {ABILITY_CHIVALRY, ABILITY_NONE},
             //.abilities = {ABILITY_IMMUNITY, ABILITY_THICK_FAT, ABILITY_GLUTTONY},
         #else
             .abilities = {ABILITY_IMMUNITY, ABILITY_THICK_FAT},

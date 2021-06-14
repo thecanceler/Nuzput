@@ -568,11 +568,11 @@
 #define STRINGID_CURIOUSMEDICINEENTERS           564
 #define STRINGID_CANACTFASTERTHANKSTO            565
 #define STRINGID_MICLEBERRYACTIVATES             566
-//#define STRINGID_PKMNSETGRAVITY 567
-//#define STRINGID_PKMNSETTRICKROOM 568
+#define STRINGID_CHIVALRYDOESNTALLOW 567
+#define STRINGID_CHIVALRYACTIVATES 568
 
                                                  
-#define BATTLESTRINGS_COUNT                      567//569??
+#define BATTLESTRINGS_COUNT                      569
 
 // The below IDs are all indexes into battle message tables,
 // used to determine which of a set of messages to print.

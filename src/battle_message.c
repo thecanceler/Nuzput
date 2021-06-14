@@ -695,6 +695,9 @@ static const u8 sText_CuriousMedicineEnters[] = _("{B_EFF_NAME_WITH_PREFIX}'s\ns
 static const u8 sText_CanActFaster[] = _("{B_ATK_NAME_WITH_PREFIX} can act faster,\nthanks to {B_LAST_ITEM}!");
 static const u8 sText_MicleBerryActivates[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX} boosted the accuracy of its\nnext move using {B_LAST_ITEM}!");
 
+static const u8 sText_ChivalryDoesntAllow[] = _("Chivalry prevents status\nmoves from being used!\p");
+static const u8 sText_ChivalryActivates[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX} denies status\nmoves from being used!");
+
 const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT] =
 {
     [STRINGID_MICLEBERRYACTIVATES - 12] = sText_MicleBerryActivates,
@@ -1252,8 +1255,8 @@ const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT] =
     [STRINGID_AURABREAKENTERS - 12] = sText_AuraBreakActivates,
     [STRINGID_COMATOSEENTERS - 12] = sText_ComatoseActivates,
     [STRINGID_SCREENCLEANERENTERS - 12] = sText_ScreenCleanerActivates,
-   // [STRINGID_PKMNSETGRAVITY -12] = sText_ScreenCleanerActivates,
-   // [STRINGID_PKMNSETTRICKROOM - 12] = sText_Activates,
+    [STRINGID_CHIVALRYDOESNTALLOW -12] =sText_ChivalryDoesntAllow,
+    [STRINGID_CHIVALRYACTIVATES - 12] = sText_ChivalryActivates,
 };
 
 const u16 gTerrainStringIds[] =

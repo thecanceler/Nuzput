@@ -368,7 +368,9 @@ extern const u8 BattleScript_MicleBerryActivateEnd2[];
 extern const u8 BattleScript_MicleBerryActivateRet[];
 extern const u8 BattleScript_JabocaRowapBerryActivates[];
 
+extern const u8 BattleScript_SelectingNotAllowedMoveChivalry[];
 extern const u8 BattleScript_ChivalryActivates[];
+
 extern const u8 BattleScript_GravitateActivates[];
 extern const u8 BattleScript_WarpFieldActivates[];
 
