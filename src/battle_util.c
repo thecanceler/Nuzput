@@ -1751,7 +1751,6 @@ u8 TrySetCantSelectMoveBattleScript(void)
     }
     else if (((holdEffect == HOLD_EFFECT_ASSAULT_VEST) || (holdEffect == HOLD_EFFECT_PLATE_ARMOR)) && (gBattleMoves[move].power == 0))
     {
-    //add in a secondary holdeffect i guess .
         gCurrentMove = move;
         gLastUsedItem = gBattleMons[gActiveBattler].item;
         if (gBattleTypeFlags & BATTLE_TYPE_PALACE)
@@ -3786,25 +3785,6 @@ if (!(gFieldStatuses & statusFlag))
 
     return FALSE;
 }
-/*
-static bool32 TrySetChivalry(u32 battler, u8 *timer)
-{
-u32 statusFlag = STATUS_FIELD_CHIVALRY;
-if (!(gFieldStatuses & statusFlag))
-    {
-        gFieldStatuses |= statusFlag;
-        
-        if (GetBattlerHoldEffect(battler, TRUE) == HOLD_EFFECT_ASSAULT_VEST)//what to use here??
-            *timer = 8;
-        else
-            *timer = 5;
-        
-        gBattlerAttacker = gBattleScripting.battler = battler;
-        return TRUE;
-    }
-    return FALSE;
-}
-*/
 
 static bool32 ShouldChangeFormHpBased(u32 battler)
 {
@@ -4427,6 +4407,23 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
                     effect++;
                 }
                 break;
+                /*
+                case ABILITY_SUNBATHER:
+                if (WEATHER_HAS_EFFECT
+                 && (gBattleWeather & WEATHER_SUN_ANY)
+                 && !BATTLER_MAX_HP(battler)
+                 && !(gStatuses3[battler] & STATUS3_HEAL_BLOCK))
+                {
+                    BattleScriptPushCursorAndCallback(BattleScript_RainDishActivates);//SUNBATHE?
+                    gBattleMoveDamage = gBattleMons[battler].maxHP / (gLastUsedAbility == ABILITY_SUNBATHER ? 16 : 8);
+                    if (gBattleMoveDamage == 0)
+                        gBattleMoveDamage = 1;
+                    gBattleMoveDamage *= -1;
+                    effect++;
+                }
+                break;
+                */
+                
             case ABILITY_HYDRATION:
             case ABILITY_GOOEY:
                 if (WEATHER_HAS_EFFECT
@@ -4607,8 +4604,6 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
         
         else if(gLastUsedAbility == ABILITY_CHIVALRY && gBattleMoves[move].power == 0)
         {
-//        if (gBattleMons[gBattlerAttacker].status2 & STATUS2_MULTIPLETURNS)
-               // gHitMarker |= HITMARKER_NO_PPDEDUCT;
             gBattlescriptCurrInstr = BattleScript_SoundproofProtected;
             effect = 1;
         }
@@ -5038,6 +5033,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
              && TARGET_TURN_DAMAGED
              && !IS_BATTLER_OF_TYPE(gBattlerAttacker, TYPE_FIRE)
              && GetBattlerAbility(gBattlerAttacker) != ABILITY_WATER_VEIL
+             && GetBattlerAbility(gBattlerAttacker) != ABILITY_DAMP
              && !(gBattleMons[gBattlerAttacker].status1 & STATUS1_ANY)
              && !IsAbilityStatusProtected(gBattlerAttacker)
              && (Random() % 3) == 0)
@@ -5183,6 +5179,31 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
             break;
             
             //drain touch code should be here/ 
+            
+            
+             case ABILITY_DRAIN_TOUCH:
+            if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
+            && !(gStatuses3[gActiveBattler] & STATUS3_HEAL_BLOCK)
+            && !BATTLER_MAX_HP(gActiveBattler)
+             && gBattleMons[gBattlerTarget].hp != 0
+             && !gProtectStructs[gBattlerAttacker].confusionSelfDmg
+             && !IS_MOVE_STATUS(move)
+             && IsMoveMakingContact(move, gBattlerAttacker)
+             )
+            {
+            
+           // gBattleMoveDamage = GetDrainedBigRootHp(gActiveBattler, gBattleMons[gActiveBattler].maxHP / 16);
+          //      BattleScriptExecute(BattleScript_IngrainTurnHeal);
+         //       effect++;???
+//                gBattleScripting.moveEffect = EFFECT_ABSORB;
+                gBattleMoveDamage = GetDrainedBigRootHp(gActiveBattler, gBattleMons[gActiveBattler].maxHP / 16);
+                BattleScriptPushCursor();
+                SetMoveEffect(FALSE, 0);
+                BattleScriptPop();
+                effect++;
+            }
+            break;
+            
         }
         break;
     case ABILITYEFFECT_MOVE_END_OTHER: // Abilities that activate on *another* battler's moveend: Dancer, Soul-Heart, Receiver, Symbiosis
@@ -5251,6 +5272,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
                 }
                 break;
             case ABILITY_WATER_VEIL:
+            case ABILITY_DAMP:
                 if (gBattleMons[battler].status1 & STATUS1_BURN)
                 {
                     StringCopy(gBattleTextBuff1, gStatusConditionString_BurnJpn);
@@ -6660,6 +6682,7 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
             if (!gBattleMons[battlerId].status1
                 && !IS_BATTLER_OF_TYPE(battlerId, TYPE_FIRE)
                 && GetBattlerAbility(battlerId) != ABILITY_WATER_VEIL
+                && GetBattlerAbility(battlerId) != ABILITY_DAMP
                 && GetBattlerAbility(battlerId) != ABILITY_WATER_BUBBLE
                 && GetBattlerAbility(battlerId) != ABILITY_COMATOSE
                 && IsBattlerAlive)
@@ -7483,6 +7506,10 @@ static u32 CalcMoveBasePowerAfterModifiers(u16 move, u8 battlerAtk, u8 battlerDe
         if (moveType == TYPE_DRAGON)
             MulModifier(&modifier, UQ_4_12(1.5));
         break;
+    case ABILITY_AURA_PUNCH:
+    	if (IsAbilityOnField(ABILITY_DARK_AURA)||IsAbilityOnField(ABILITY_FAIRY_AURA))
+    		MulModifier(&modifier, UQ_4_12(1.25));
+    	break;
     }
 
     // field abilities
@@ -7494,6 +7521,7 @@ static u32 CalcMoveBasePowerAfterModifiers(u16 move, u8 battlerAtk, u8 battlerDe
         else
             MulModifier(&modifier, UQ_4_12(1.25));
     }
+    
 
     // attacker partner's abilities
     if (IsBattlerAlive(BATTLE_PARTNER(battlerAtk)))
@@ -7890,7 +7918,8 @@ static u32 CalcDefenseStat(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType, 
         spDef = gBattleMons[battlerDef].spDefense;
     }
 
-    if (gBattleMoves[move].effect == EFFECT_PSYSHOCK || IS_MOVE_PHYSICAL(move)) // uses defense stat instead of sp.def
+    if ((gBattleMoves[move].effect == EFFECT_PSYSHOCK || IS_MOVE_PHYSICAL(move)) 
+    || !((GetBattlerAbility(battlerAtk) == ABILITY_AURA_PUNCH) && (gBattleMoves[move].flags & FLAG_IRON_FIST_BOOST))) // uses defense stat instead of sp.def   
     {
         defStat = def;
         defStage = gBattleMons[battlerDef].statStages[STAT_DEF];
