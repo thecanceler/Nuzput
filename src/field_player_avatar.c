@@ -650,9 +650,10 @@ static void PlayerNotOnBikeMoving(u8 direction, u16 heldKeys)
         }
     }
     
-    gPlayerAvatar.creeping = FALSE;
+    //gPlayerAvatar.creeping = FALSE;
     if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_SURFING)
     {
+    /*
         if (FlagGet(FLAG_SYS_DEXNAV_SEARCH) && (heldKeys & A_BUTTON))
         {
             gPlayerAvatar.creeping = TRUE;
@@ -660,11 +661,12 @@ static void PlayerNotOnBikeMoving(u8 direction, u16 heldKeys)
         }
         else
         {
+        */
 		if (IsPlayerTryingToRun(heldKeys))
     PlayerGoSpeed4(direction);
 else
     PlayerGoSpeed2(direction);
-        }
+        //}
         return;
     }
 
@@ -675,11 +677,13 @@ else
         gPlayerAvatar.flags |= PLAYER_AVATAR_FLAG_DASH;
         return;
     }
+    /*
     else if (FlagGet(FLAG_SYS_DEXNAV_SEARCH) && (heldKeys & A_BUTTON))
     {
         gPlayerAvatar.creeping = TRUE;
         PlayerGoSlow(direction);
     }
+    */
     else
     {
         PlayerGoSpeed1(direction);
