@@ -1480,8 +1480,8 @@ void ShowEasyChatScreen(void)
         break;
     case EASY_CHAT_TYPE_TRENDY_PHRASE:
         words = (u16 *)gStringVar3;
-        words[0] = gSaveBlock1Ptr->dewfordTrends[0].words[0];
-        words[1] = gSaveBlock1Ptr->dewfordTrends[0].words[1];
+     //   words[0] = gSaveBlock1Ptr->dewfordTrends[0].words[0];
+     //   words[1] = gSaveBlock1Ptr->dewfordTrends[0].words[1];
         break;
     case EASY_CHAT_TYPE_GABBY_AND_TY:
         words = gSaveBlock1Ptr->gabbyAndTyData.quote;

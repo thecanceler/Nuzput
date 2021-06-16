@@ -38,6 +38,10 @@
 #include "constants/items.h"
 
 #include "region_map.h"
+#include "dexnav.h"
+#include "party_menu.h"
+#include "wild_encounter.h"
+#include "pokenav.h"
 
 
 static EWRAM_DATA u8 sWildEncounterImmunitySteps = 0;
@@ -74,6 +78,8 @@ static bool8 TryStartStepCountScript(u16);
 static void UpdateFriendshipStepCounter(void);
 static bool8 UpdatePoisonStepCounter(void);
 static bool8 EnableAutoRun(void);
+
+//static bool8 StartMenuDexNavCallback(void);
 
 
 void FieldClearPlayerInput(struct FieldInput *input)
@@ -200,21 +206,73 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
     }
     if (input->pressedSelectButton && UseRegisteredKeyItemOnField() == TRUE)
         return TRUE;
+   
+   /*
+   
+   if (heldKeys & R_BUTTON)
+    {
+        if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_MACH_BIKE)
+        {
+            gPlayerAvatar.flags -= PLAYER_AVATAR_FLAG_MACH_BIKE;
+            gPlayerAvatar.flags += PLAYER_AVATAR_FLAG_ACRO_BIKE;
+            SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_ACRO_BIKE);
+        }
+        else
+        {
+            gPlayerAvatar.flags -= PLAYER_AVATAR_FLAG_ACRO_BIKE;
+            gPlayerAvatar.flags += PLAYER_AVATAR_FLAG_MACH_BIKE;
+            SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_MACH_BIKE);
+        }
+        PlaySE(SE_BIKE_HOP);
+    }
+   
+   */
+   
+   
     if (!gSaveBlock2Ptr->optionsButtonMode){
-    	if (input->pressedRButton && EnableAutoRun())
-        	return TRUE;
+    		
+        if (input->pressedRButton && EnableAutoRun())
+        	return TRUE;	
+        	
         if (input->pressedLButton && (Overworld_MapTypeAllowsTeleportAndFly(gMapHeader.mapType) == TRUE) && (CheckBagHasItem(ITEM_HM02_FLY, 1) == TRUE))
         {
-        //possibly fly? pls??
-        
-    //    if (CheckBagHasItem(ITEM_HM02_FLY, 1) == FALSE)
-    //{
-    //    return FALSE;
-    //}
         SetMainCallback2(CB2_OpenFlyMap);
         return TRUE;
+        }else{
+        //SetMainCallback2(GetRegionMapCallback);
+        //return TRUE;
         }
     }
+    
+    else{
+    //headerId != 0xFFFF
+    
+    	if(input->pressedLButton){
+    	
+	    	if((DoesCurrentMapHaveEncounters()!=FALSE)
+	    	&& (FlagGet(FLAG_SYS_DEXNAV_GET)))
+	    	{
+	    	CreateTask(Task_OpenDexNavFromStartMenu, 0);
+	    	return TRUE;
+		}else if((Overworld_MapTypeAllowsTeleportAndFly(gMapHeader.mapType) == TRUE) && (CheckBagHasItem(ITEM_HM02_FLY, 1) == TRUE))
+		{
+		SetMainCallback2(CB2_OpenFlyMap);
+		return TRUE;
+		}else{
+		//SetMainCallback2(GetRegionMapCallback);
+		//return TRUE;
+		}
+    	
+    	}
+    	if (input->pressedRButton && TryStartDexnavSearch()
+    	&& (FlagGet(FLAG_SYS_DEXNAV_GET)))
+        	return TRUE;	
+    	
+    	
+    	
+    }
+    
+    
     
 
     return FALSE;

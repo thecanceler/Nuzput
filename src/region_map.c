@@ -1980,6 +1980,7 @@ static void CB_HandleFlyMapInput(void)
 
 static void CB_ExitFlyMap(void)
 {
+//its here.
     switch (sFlyMap->state)
     {
     case 0:
@@ -2017,7 +2018,8 @@ static void CB_ExitFlyMap(void)
             }
             else
             {
-                SetMainCallback2(CB2_ReturnToPartyMenuFromFlyMap);
+            	SetMainCallback2(CB2_ReturnToField);
+//                SetMainCallback2(CB2_ReturnToPartyMenuFromFlyMap);//
             }
             if (sFlyMap != NULL)
             {

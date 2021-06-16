@@ -63,7 +63,7 @@ enum
     MENU_ACTION_REST_FRONTIER,
     MENU_ACTION_RETIRE_FRONTIER,
     MENU_ACTION_PYRAMID_BAG,
-    MENU_ACTION_DEXNAV
+  //  MENU_ACTION_DEXNAV
 };
 
 // Save status
@@ -171,7 +171,7 @@ static const struct MenuAction sStartMenuItems[] =
     {gText_MenuRest, {.u8_void = StartMenuSaveCallback}},
     {gText_MenuRetire, {.u8_void = StartMenuBattlePyramidRetireCallback}},
     {gText_MenuBag, {.u8_void = StartMenuBattlePyramidBagCallback}},
-    {gText_MenuDexNav, {.u8_void = StartMenuDexNavCallback}}
+   // {gText_MenuDexNav, {.u8_void = StartMenuDexNavCallback}}
 };
 
 static const struct BgTemplate sBgTemplates_LinkBattleSave[] =
@@ -294,10 +294,10 @@ static void BuildNormalStartMenu(void)
 {    
     if (FlagGet(FLAG_SYS_POKEDEX_GET) == TRUE)
         AddStartMenuAction(MENU_ACTION_POKEDEX);
-    
+    /*
     if (FlagGet(FLAG_SYS_DEXNAV_GET))
         AddStartMenuAction(MENU_ACTION_DEXNAV);
-    
+    */
     if (FlagGet(FLAG_SYS_POKEMON_GET) == TRUE)
         AddStartMenuAction(MENU_ACTION_POKEMON);
 

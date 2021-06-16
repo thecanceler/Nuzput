@@ -50,6 +50,8 @@
 #include "constants/battle_config.h"
 #include "constants/weather.h"
 
+#include "dexnav.h"
+
 struct SpeciesItem
 {
     u16 species;
@@ -7800,6 +7802,8 @@ void HandleSetPokedexFlag(u16 nationalNum, u8 caseId, u32 personality)
             gSaveBlock2Ptr->pokedex.unownPersonality = personality;
         if (NationalPokedexNumToSpecies(nationalNum) == SPECIES_SPINDA)
             gSaveBlock2Ptr->pokedex.spindaPersonality = personality;
+        if (caseId == FLAG_SET_SEEN)
+        	TryIncrementSpeciesSearchLevel(nationalNum);    // encountering pokemon increments its search level
     }
 }
 

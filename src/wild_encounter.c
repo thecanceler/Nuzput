@@ -38,6 +38,7 @@ static void ApplyCleanseTagEncounterRateMod(u32 *encRate);
 static bool8 TryGetAbilityInfluencedWildMonIndex(const struct WildPokemon *wildMon, u8 type, u16 ability, u8 *monIndex);
 static bool8 IsAbilityAllowingEncounter(u8 level);
 
+
 // EWRAM vars
 EWRAM_DATA static u8 sWildEncountersDisabled = 0;
 EWRAM_DATA bool8 gIsFishingEncounter = 0;
@@ -112,7 +113,7 @@ static bool8 CheckFeebas(void)
         if (Random() % 100 > 49) // 50% chance of encountering Feebas
             return FALSE;
 
-        FeebasSeedRng(gSaveBlock1Ptr->dewfordTrends[0].rand);
+        FeebasSeedRng(3);//gSaveBlock1Ptr->dewfordTrends[0].rand);
         for (i = 0; i != NUM_FEEBAS_SPOTS;)
         {
             feebasSpots[i] = FeebasRandom() % 447;
@@ -844,6 +845,19 @@ bool8 DoesCurrentMapHaveFishingMons(void)
     u16 headerId = GetCurrentMapWildMonHeaderId();
 
     if (headerId != 0xFFFF && gWildMonHeaders[headerId].fishingMonsInfo != NULL)
+        return TRUE;
+    else
+        return FALSE;
+}
+
+bool8 DoesCurrentMapHaveEncounters(void)
+{
+    u16 headerId = GetCurrentMapWildMonHeaderId();
+
+    if (headerId != 0xFFFF
+    &&(gWildMonHeaders[headerId].fishingMonsInfo != NULL
+    || gWildMonHeaders[headerId].landMonsInfo != NULL
+    || gWildMonHeaders[headerId].waterMonsInfo != NULL))
         return TRUE;
     else
         return FALSE;

@@ -1113,7 +1113,7 @@ static void Task_DexNavSearch(u8 taskId)
     
    // if(gSaveBlock2Ptr->optionsButtonMode){ its over here 
     if (sDexNavSearchDataPtr->hiddenSearch && !task->tRevealed &&
-        (JOY_NEW(L_BUTTON) || (sDexNavSearchDataPtr->proximity < CREEPING_PROXIMITY)))
+        (JOY_NEW(R_BUTTON) || (sDexNavSearchDataPtr->proximity < CREEPING_PROXIMITY)))
     {
         PlaySE(SE_DEX_SEARCH);
         ClearStdWindowAndFrameToTransparent(sDexNavSearchDataPtr->windowId, FALSE);
@@ -2344,7 +2344,8 @@ void Task_OpenDexNavFromStartMenu(u8 taskId)
     if (!gPaletteFade.active)
     {
         CleanupOverworldWindowsAndTilemaps();
-        DexNavGuiInit(CB2_ReturnToFieldWithOpenMenu);
+       // DexNavGuiInit(CB2_ReturnToFieldWithOpenMenu);
+       DexNavGuiInit(CB2_ReturnToField);
         DestroyTask(taskId);
     }
 }

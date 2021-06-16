@@ -1027,7 +1027,7 @@ struct SaveBlock1
     /*0x988*/u8 filler1[0x34];
     // u8 seen1[DEX_FLAGS_NO];   //52 bytes
     #endif
-    /*0x9BC*/ u16 berryBlenderRecords[3];
+    //        /*0x9BC*/ u16 berryBlenderRecords[3];
     /*0x9C2*/ u8 field_9C2[6];
     #ifndef FREE_MATCH_CALL
     /*0x9C8*/ u16 trainerRematchStepCounter;    //104 bytes
@@ -1039,7 +1039,7 @@ struct SaveBlock1
     /*0x139C*/ u16 vars[VARS_COUNT];
     /*0x159C*/ u32 gameStats[NUM_GAME_STATS];
     /*0x169C*/ struct BerryTree berryTrees[BERRY_TREES_COUNT];
-    /*0x1A9C*/ struct SecretBase secretBases[SECRET_BASES_COUNT];
+     /*0x1A9C*/ struct SecretBase secretBases[SECRET_BASES_COUNT];
     /*0x271C*/ u8 playerRoomDecorations[DECOR_MAX_PLAYERS_HOUSE];
     /*0x2728*/ u8 playerRoomDecorationPositions[DECOR_MAX_PLAYERS_HOUSE];
     /*0x2734*/ u8 decorationDesks[10];
@@ -1071,7 +1071,7 @@ struct SaveBlock1
     /*0x2BE0*/ struct MailStruct mail[MAIL_COUNT];
     /*0x2E20*/ u8 additionalPhrases[8]; // bitfield for 33 additional phrases in easy chat system
     /*0x2E28*/ OldMan oldMan;
-    /*0x2e64*/ struct DewfordTrend dewfordTrends[SAVED_TRENDS_COUNT];
+    // /*0x2e64*/ struct DewfordTrend dewfordTrends[SAVED_TRENDS_COUNT];
     /*0x2e90*/ struct ContestWinner contestWinners[NUM_CONTEST_WINNERS]; // see CONTEST_WINNER_*
     /*0x3030*/ struct DayCare daycare;
     #ifndef FREE_LINK_BATTLE_RECORDS
@@ -1111,8 +1111,8 @@ struct SaveBlock1
     /*0x3D64*/ struct SaveTrainerHill trainerHill;  //12 bytes
     #endif
     /*0x3D70*/ struct WaldaPhrase waldaPhrase;
-               u8 dexNavSearchLevels[NUM_SPECIES];
-               u8 dexNavChain;
+    u8 dexNavSearchLevels[NUM_SPECIES];
+    u8 dexNavChain;
     // sizeof: 0x3D88
 //>>>>>>> 3f98ee25f2e4b47790fae0039e24d0b5faaba484
 };
