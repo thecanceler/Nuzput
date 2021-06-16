@@ -3,6 +3,7 @@
 #include "bike.h"
 #include "coord_event_weather.h"
 #include "daycare.h"
+#include "dexnav.h"
 #include "faraway_island.h"
 #include "event_data.h"
 #include "event_object_movement.h"
@@ -92,10 +93,8 @@ void FieldClearPlayerInput(struct FieldInput *input)
     input->heldDirection2 = FALSE;
     input->tookStep = FALSE;
     input->pressedBButton = FALSE;
-   // input->input_field_1_0 = FALSE;
     input->pressedRButton = FALSE;
-//    input->input_field_1_1 = FALSE;
- input->pressedLButton = FALSE;
+    input->pressedLButton = FALSE;
     input->input_field_1_2 = FALSE;
     input->input_field_1_3 = FALSE;
     input->dpadDirection = 0;
@@ -121,7 +120,7 @@ void FieldGetPlayerInput(struct FieldInput *input, u16 newKeys, u16 heldKeys)
                 input->pressedBButton = TRUE;
             if (newKeys & R_BUTTON)
                 input->pressedRButton = TRUE;
-                if (newKeys & L_BUTTON)
+            if (newKeys & L_BUTTON)
                 input->pressedLButton = TRUE;
         }
 
@@ -207,28 +206,6 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
     if (input->pressedSelectButton && UseRegisteredKeyItemOnField() == TRUE)
         return TRUE;
    
-   /*
-   
-   if (heldKeys & R_BUTTON)
-    {
-        if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_MACH_BIKE)
-        {
-            gPlayerAvatar.flags -= PLAYER_AVATAR_FLAG_MACH_BIKE;
-            gPlayerAvatar.flags += PLAYER_AVATAR_FLAG_ACRO_BIKE;
-            SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_ACRO_BIKE);
-        }
-        else
-        {
-            gPlayerAvatar.flags -= PLAYER_AVATAR_FLAG_ACRO_BIKE;
-            gPlayerAvatar.flags += PLAYER_AVATAR_FLAG_MACH_BIKE;
-            SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_MACH_BIKE);
-        }
-        PlaySE(SE_BIKE_HOP);
-    }
-   
-   */
-   
-   
     if (!gSaveBlock2Ptr->optionsButtonMode){
     		
         if (input->pressedRButton && EnableAutoRun())
@@ -245,8 +222,6 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
     }
     
     else{
-    //headerId != 0xFFFF
-    
     	if(input->pressedLButton){
     	
 	    	if((DoesCurrentMapHaveEncounters()!=FALSE)
@@ -271,9 +246,6 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
     	
     	
     }
-    
-    
-    
 
     return FALSE;
 }
