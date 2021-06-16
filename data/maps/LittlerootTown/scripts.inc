@@ -407,7 +407,6 @@ LittlerootTown_EventScript_GoSaveBirchTrigger:: @ 81E811F
 
 LittlerootTown_EventScript_TownSign:: @ 81E8151
 setflag FLAG_SYS_DEXNAV_GET
-call FillPokedex
 	msgbox LittlerootTown_Text_TownSign, MSGBOX_SIGN
 	end
 

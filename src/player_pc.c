@@ -608,7 +608,7 @@ static u8 GetMailboxMailCount(void)
 
 static void Mailbox_UpdateMailList(void)
 {
-    struct MailStruct mailBuffer;
+/*    struct MailStruct mailBuffer;
     u8 i, j;
 
     for (i = PARTY_SIZE; i < MAIL_COUNT - 1; i++)
@@ -623,7 +623,7 @@ static void Mailbox_UpdateMailList(void)
             }
         }
     }
-}
+*/}
 
 static void Mailbox_DrawMailboxMenu(u8 taskId)
 {
