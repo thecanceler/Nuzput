@@ -3862,7 +3862,7 @@ static void Cmd_getexp(void)
                     // get exp getter battlerId
                     if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
                     {
-                        if (!(gBattlerPartyIndexes[2] != gBattleStruct->expGetterMonId) && !(gAbsentBattlerFlags & gBitTable[2]))
+                        if (gBattlerPartyIndexes[2] == gBattleStruct->expGetterMonId && !(gAbsentBattlerFlags & gBitTable[2]))
                             gBattleStruct->expGetterBattlerId = 2;
                         else
                         {
@@ -3948,6 +3948,7 @@ static void Cmd_getexp(void)
 
                     if (gStatuses3[battlerId] & STATUS3_POWER_TRICK)
                         SWAP(gBattleMons[battlerId].attack, gBattleMons[battlerId].defense, temp);
+
                 }
 
                 gBattleScripting.getexpState = 5;
