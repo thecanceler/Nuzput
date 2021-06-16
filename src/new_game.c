@@ -103,10 +103,9 @@ static void ClearPokedexFlags(void)
 {
     gUnusedPokedexU8 = 0;
     
-    #ifndef FREE_EXTRA_SEEN_FLAGS
-    memset(&gSaveBlock1Ptr->dexCaught, 0, sizeof(gSaveBlock1Ptr->dexCaught));
-    memset(&gSaveBlock1Ptr->dexSeen, 0, sizeof(gSaveBlock1Ptr->dexSeen));
-    #endif
+    memset(&gSaveBlock2Ptr->pokedex.owned, 0, sizeof(gSaveBlock2Ptr->pokedex.owned));
+    memset(&gSaveBlock2Ptr->pokedex.seen, 0, sizeof(gSaveBlock2Ptr->pokedex.seen));
+   
     
     
 }

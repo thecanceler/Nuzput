@@ -1025,8 +1025,8 @@ struct SaveBlock1
     /*0x848*/ struct Pokeblock pokeblocks[POKEBLOCKS_COUNT];
 
     #ifndef FREE_EXTRA_SEEN_FLAGS
-    /*0x988*/u8 filler1[0x34];
-    // u8 seen1[DEX_FLAGS_NO];   //52 bytes
+    ///*0x988*/u8 filler1[0x34];
+    u8 seen1[DEX_FLAGS_NO];   //52 bytes
     #endif
     //        /*0x9BC*/ u16 berryBlenderRecords[3];
     /*0x9C2*/ u8 field_9C2[6];
