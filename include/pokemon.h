@@ -212,7 +212,6 @@ struct BaseStats
 
             u8 flags;
 
- /* 0x1A */ u8 abilityHidden;
 }; /* size = 28 */
 
 #include "constants/battle_config.h"

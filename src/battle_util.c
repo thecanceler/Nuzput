@@ -52,29 +52,13 @@ are actually part of battle_main.c. They needed to be moved to this file in orde
 match the ROM; this is also why sSoundMovesTable's declaration is in the middle of
 functions instead of at the top of the file with the other declarations.
 */
+extern struct Evolution gEvolutionTable[][EVOS_PER_MON];
 
 static bool32 TryRemoveScreens(u8 battler);
 static bool32 IsUnnerveAbilityOnOpposingSide(u8 battlerId);
 static bool32 TryChangeBattleRoom(u32 battler, u32 room, u8 *timer);
 static bool32 TrySetGravity(u32 battler, u8 *timer);
 
-/*
-struct FieldTimer
-{
-    u8 mudSportTimer;
-    u8 waterSportTimer;
-    u8 wonderRoomTimer;
-    u8 magicRoomTimer;
-    u8 trickRoomTimer;
-    u8 grassyTerrainTimer;
-    u8 mistyTerrainTimer;
-    u8 electricTerrainTimer;
-    u8 psychicTerrainTimer;
-    u8 echoVoiceCounter;
-    u8 gravityTimer;
-    u8 fairyLockTimer;
-};
-*/
 
 
 extern const u8 *const gBattleScriptsForMoveEffects[];
