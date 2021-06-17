@@ -138,6 +138,8 @@ EWRAM_DATA static u16 sStatsMovesTMHM[NUM_TECHNICAL_MACHINES + NUM_HIDDEN_MACHIN
 EWRAM_DATA static u16 sStatsMovesTMHM_ID[NUM_TECHNICAL_MACHINES + NUM_HIDDEN_MACHINES] = {0};
 EWRAM_DATA static u16 sStatsMovesTutor[TUTOR_MOVE_COUNT] = {0};
 
+extern struct Evolution gEvolutionTable[][EVOS_PER_MON];
+
 // IWRAM common
 // This is written to, but never read.
 u8 gUnusedPokedexU8;
@@ -344,9 +346,9 @@ static void SetSpriteInvisibility(u8 spriteArrayId, bool8 invisible);
 static void CreateTypeIconSprites(void);
 //Stats screen HGSS_Ui
 #define SCROLLING_MON_X 146
-#define HGSS_DECAPPED 0 //0 false, 1 true
-#define HGSS_DARK_MODE 0 //0 false, 1 true
-#define HGSS_HIDE_UNSEEN_EVOLUTION_NAMES 0 //0 false, 1 true
+#define HGSS_DECAPPED 1 //0 false, 1 true
+#define HGSS_DARK_MODE 1 //0 false, 1 true
+#define HGSS_HIDE_UNSEEN_EVOLUTION_NAMES 1 //0 false, 1 true
 static void LoadTilesetTilemapHGSS(u8 page);
 static void Task_HandleStatsScreenInput(u8 taskId);
 static void PrintMonStats(u8 taskId, u32 num, u32 value, u32 owned, u32 newEntry);
@@ -3574,7 +3576,7 @@ static void PrintInfoScreenTextSmall(const u8* str, u8 left, u8 top)
     u8 color[3];
     color[0] = TEXT_COLOR_TRANSPARENT;
     color[1] = TEXT_DYNAMIC_COLOR_6;
-    color[2] = TEXT_COLOR_LIGHT_GREY;
+    color[2] = TEXT_COLOR_LIGHT_GRAY;
 
     AddTextPrinterParameterized4(0, 0, left, top, 0, 0, color, 0, str);
 }
@@ -6349,7 +6351,7 @@ static void LoadTilesetTilemapHGSS(u8 page)
 }
 
 //PokedexPlus HGSS_Ui Stats Page
-static const u8 sStatsPageNavigationTextColor[] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GREY};
+static const u8 sStatsPageNavigationTextColor[] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY};
 static void StatsPage_PrintAToggleUpdownMoves(void)
 {
     u8 x = 9;
@@ -7413,7 +7415,7 @@ static void DestroySplitIcon(void)
 #endif
 
 //PokedexPlus HGSS_Ui Evolution Page
-static const u8 sEvoFormsPageNavigationTextColor[] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GREY};
+static const u8 sEvoFormsPageNavigationTextColor[] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY};
 static void EvoFormsPage_PrintAToggleUpdownEvos(void)
 {
     u8 x = 9;
