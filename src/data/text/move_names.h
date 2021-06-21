@@ -759,8 +759,14 @@ const u8 gMoveNames[MOVES_COUNT][MOVE_NAME_LENGTH + 1] =
     [MOVE_PLANE_SHIFT] =_("Plane Shift"),
     [MOVE_SHIELD_SLAM] =_("Shield Slam"),
     [MOVE_ICE_SICKLE] = _("Ice Sickle"),
-   // [MOVE_FIRE_SYNAPSE] = _("Fire Synapse"),
+    [MOVE_FIRE_SYNAPSE] = _("Fire Synapse"),
     
     
-    
+    [MOVE_GHOSTLY_TERRAIN] = _("GhostTerrain"),
+    [MOVE_CORRODE] = _("Corrode"),
+    [MOVE_ACID_RAIN] = _("Acid Rain"),
+    [MOVE_SLEEPER_HIT] = _("Sleeper Hit"),
+    [MOVE_SOMNA_SMACK] = _("Somna Smack"),
+    [MOVE_SOLAR_FLARE]= _("Solar Flare"),
+    [MOVE_COOLDOWN]= _("Cooldown"),
 };

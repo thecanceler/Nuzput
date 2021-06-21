@@ -630,5 +630,6 @@ const u32 *const gItemIconTable[][2] =
     //new item
     [ITEM_SUPPRESSOR] = {gItemIcon_ExpertBelt, gItemIconPalette_DestinyKnot},
     [ITEM_PLATE_ARMOR] = {gItemIcon_AssaultVest, gItemIconPalette_LaggingTail},
-    
+    [ITEM_CRITICAL_POLICY] = {gItemIcon_WeaknessPolicy,gItemIconPalette_RedCard},
+    [ITEM_ROOM_EXTENDER] = {gItemIcon_TerrainExtender,gItemIconPalette_Stick},
 };

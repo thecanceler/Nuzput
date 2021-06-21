@@ -430,6 +430,7 @@ static void Cmd_setreflect(void);
 static void Cmd_setseeded(void);
 static void Cmd_manipulatedamage(void);
 static void Cmd_trysetrest(void);
+//static void Cmd_trysetcooldown(void);
 static void Cmd_jumpifnotfirstturn(void);
 static void Cmd_setmiracleeye(void);
 static void Cmd_jumpifcantmakeasleep(void);
@@ -816,6 +817,7 @@ void (* const gBattleScriptingCommandsTable[])(void) =
     Cmd_tryworryseed,                            //0xFE
     Cmd_metalburstdamagecalculator,              //0xFF
   //  Cmd_maxspattackhalvehp,//????
+  //Cmd_trysetcooldown,
 };
 
 const struct StatFractions gAccuracyStageRatios[] =
@@ -3002,6 +3004,23 @@ void SetMoveEffect(bool32 primary, u32 certain)
                     gBattlescriptCurrInstr = BattleScript_StatDown;
                 }
                 break;
+            case MOVE_EFFECT_ATK_MINUS_6:
+            case MOVE_EFFECT_SP_ATK_MINUS_6:
+                if (ChangeStatBuffs(SET_STAT_BUFF_VALUE(6) | STAT_BUFF_NEGATIVE,
+                                    gBattleScripting.moveEffect - MOVE_EFFECT_ATK_MINUS_2 + 1,
+                                    affectsUser, 0))
+                {
+                    gBattlescriptCurrInstr++;
+                }
+                else
+                {
+                    gBattleScripting.animArg1 = gBattleScripting.moveEffect & ~(MOVE_EFFECT_AFFECTS_USER | MOVE_EFFECT_CERTAIN);
+                    gBattleScripting.animArg2 = 0;
+                    BattleScriptPush(gBattlescriptCurrInstr + 1);
+                    gBattlescriptCurrInstr = BattleScript_StatDown;
+                }
+                break;    
+            
             case MOVE_EFFECT_RECHARGE:
                 gBattleMons[gEffectBattler].status2 |= STATUS2_RECHARGE;
                 gDisableStructs[gEffectBattler].rechargeTimer = 2;
@@ -8782,6 +8801,34 @@ static void Cmd_trysetrest(void)
     }
 }
 
+/*
+
+static void Cmd_trysetcooldown(void)
+{
+    const u8 *failJump = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    gActiveBattler = gBattlerTarget = gBattlerAttacker;
+    gBattleMoveDamage = gBattleMons[gBattlerTarget].maxHP * (-1);
+
+    if (gBattleMons[gBattlerTarget].hp == gBattleMons[gBattlerTarget].maxHP)
+    {
+        gBattlescriptCurrInstr = failJump;
+    }
+    else
+    {
+        if (gBattleMons[gBattlerTarget].status1 & ((u8)(~STATUS1_FROZEN)))
+            gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_COOL_DOWN_STATUSED;
+        else
+            gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_COOL_DOWN;
+
+        gBattleMons[gBattlerTarget].status1 = STATUS1_FROZEN_TURN(3);
+        BtlController_EmitSetMonData(0, REQUEST_STATUS_BATTLE, 0, 4, &gBattleMons[gActiveBattler].status1);
+        MarkBattlerForControllerExec(gActiveBattler);
+        gBattlescriptCurrInstr += 5;
+    }
+}
+
+
+*/
 static void Cmd_jumpifnotfirstturn(void)
 {
     const u8* failJump = T1_READ_PTR(gBattlescriptCurrInstr + 1);
@@ -8804,6 +8851,20 @@ static void Cmd_setmiracleeye(void)
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
     }
 }
+/*
+static void Cmd_setcorrode(void)
+{
+    if (!(gStatuses3[gBattlerTarget] & STATUS3_CORRODED))
+    {
+        gStatuses3[gBattlerTarget] |= STATUS3_CORRODED;
+        gBattlescriptCurrInstr += 5;
+    }
+    else
+    {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
+}
+*/
 
 bool8 UproarWakeUpCheck(u8 battlerId)
 {

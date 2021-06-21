@@ -7648,6 +7648,30 @@ const struct Item gItems[] =
         //.secondaryId = 0,
     },
     
+	[ITEM_CRITICAL_POLICY] =
+	{
+        .name = _("CriticlPolicy"),
+        .itemId = ITEM_CRITICAL_POLICY,
+        .price = 1000,
+        .holdEffect = HOLD_EFFECT_CRITICAL_POLICY,
+        .holdEffectParam = 0,
+        .description = sCriticalPolicyDesc,
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+    	},
+    	
+	[ITEM_ROOM_EXTENDER] =
+	{
+        .name = _("RoomExtender"),
+        .itemId = ITEM_ROOM_EXTENDER,
+        .price = 4000,
+        .holdEffect = HOLD_EFFECT_ROOM_EXTENDER,
+        .description = sRoomExtenderDesc,
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+    },
     
     
 };

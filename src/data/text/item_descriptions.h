@@ -3019,3 +3019,12 @@ static const u8 sPlateArmorDesc[] = _(
     "prevents the use\n"
     "of status moves.");
 
+static const u8 sCriticalPolicyDesc[] = _(
+    "If hit by a critical\n"
+    "hit, ups Def\n"
+    "and Sp. Def.");
+    
+static const u8 sRoomExtenderDesc[] = _(
+    "Extends the length\n"
+    "of the active\n"
+    "battle room.");

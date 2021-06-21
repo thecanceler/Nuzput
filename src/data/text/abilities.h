@@ -263,6 +263,16 @@ static const u8 sChivalryDescription[] = _("Denies status moves.");//maybe chang
 static const u8 sHibernateDescription[] = _("Sleeping boosts Defenses.");
 static const u8 sGravitateDescription[] = _("Sets Gravity on switch.");
 static const u8 sWarpFieldDescription[] = _("Sets Trick Room on switch.");
+
+static const u8 sWonderFieldDescription[] = _("Sets Wonder Room on switch.");
+static const u8 sMagicFieldDescription[] = _("Sets Magic Room on switch.");
+static const u8 sBlitzkriegDescription[] = _("Weaker moves base off speed.");
+static const u8 sGhostlySurgeDescription[] = _("Field becomes ghostly.");
+static const u8 sAcidRainDescription[] = _("Summons acid in battle.");
+static const u8 sMementoBodyDescription[] = _("Fainting debuffs a foe.");
+
+
+
 //static const u8 sDescription[] = _();
 
 
@@ -545,8 +555,13 @@ const u8 gAbilityNames[ABILITIES_COUNT_CUSTOM][ABILITY_NAME_LENGTH + 1] =
 	[ABILITY_HIBERNATE]		=_("Hibernate"),
 	[ABILITY_GRAVITATE]		=_("Gravitate"),
 	[ABILITY_WARP_FIELD]	=_("Warp Field"),
-	//[ABILITY_WONDER_FIELD]	=_("Wonder Field"),
-	//[ABILITY_MAGIC_FIELD]	=_("Magic Field"),
+	[ABILITY_WONDER_FIELD]	=_("Wonder Field"),
+	[ABILITY_MAGIC_FIELD]	=_("Magic Field"),
+	
+	[ABILITY_BLITZKRIEG] =_("Blitzkrieg"),
+	[ABILITY_GHOSTLY_SURGE] =_("GhostlySurge"),
+	[ABILITY_ACID_RAIN] =_("Acid Rain"),
+	[ABILITY_MEMENTO_BODY] =_("Memento Body"),
 };
 
 const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT_CUSTOM] =
@@ -826,4 +841,11 @@ const u8 *const gAbilityDescriptionPointers[ABILITIES_COUNT_CUSTOM] =
 	[ABILITY_HIBERNATE]		=sHibernateDescription,
 	[ABILITY_GRAVITATE]		=sGravitateDescription,
 	[ABILITY_WARP_FIELD]	=sWarpFieldDescription,
+	[ABILITY_WONDER_FIELD] =sWonderFieldDescription,
+	[ABILITY_MAGIC_FIELD] =sMagicFieldDescription,
+	[ABILITY_BLITZKRIEG] =sBlitzkriegDescription,
+	[ABILITY_GHOSTLY_SURGE] = sGhostlySurgeDescription,
+	[ABILITY_ACID_RAIN] = sAcidRainDescription,
+	[ABILITY_MEMENTO_BODY] = sMementoBodyDescription,
+	
 };

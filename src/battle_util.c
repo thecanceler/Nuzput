@@ -1554,6 +1554,7 @@ bool32 IsHealBlockPreventingMove(u32 battler, u32 move)
     case EFFECT_MOONLIGHT:
     case EFFECT_RESTORE_HP:
     case EFFECT_REST:
+//	case EFFECT_COOL_DOWN:
     case EFFECT_ROOST:
     case EFFECT_HEALING_WISH:
     case EFFECT_WISH:
@@ -3716,7 +3717,7 @@ static bool32 TryChangeBattleTerrain(u32 battler, u32 statusFlag, u8 *timer)
 {
     if (!(gFieldStatuses & statusFlag))
     {
-        gFieldStatuses &= ~(STATUS_FIELD_MISTY_TERRAIN | STATUS_FIELD_GRASSY_TERRAIN | EFFECT_ELECTRIC_TERRAIN | EFFECT_PSYCHIC_TERRAIN);
+        gFieldStatuses &= ~(STATUS_FIELD_MISTY_TERRAIN | STATUS_FIELD_GRASSY_TERRAIN | EFFECT_ELECTRIC_TERRAIN | EFFECT_PSYCHIC_TERRAIN);// | EFFECT_GHOSTLY_TERRAIN??
         gFieldStatuses |= statusFlag;
 
         if (GetBattlerHoldEffect(battler, TRUE) == HOLD_EFFECT_TERRAIN_EXTENDER)
@@ -4914,13 +4915,34 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
              && !(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
              && gBattleMons[gBattlerTarget].hp == 0
              && IsBattlerAlive(gBattlerAttacker)
-             && IsMoveMakingContact(move, gBattlerAttacker))
+             && IsMoveMakingContact(move, gBattlerAttacker)
+             )
             {
+            
                 gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 4;
                 if (gBattleMoveDamage == 0)
                     gBattleMoveDamage = 1;
                 BattleScriptPushCursor();
                 gBattlescriptCurrInstr = BattleScript_AftermathDmg;
+                effect++;
+            }
+            break;
+        case ABILITY_MEMENTO_BODY:
+            if (!IsAbilityOnField(ABILITY_CHIVALRY)
+             && !(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
+             && gBattleMons[gBattlerTarget].hp == 0
+             && IsBattlerAlive(gBattlerAttacker)
+             && IsMoveMakingContact(move, gBattlerAttacker)
+             && gBattleMons[gBattlerAttacker].statStages[STAT_SPATK] != MIN_STAT_STAGE
+             && gBattleMons[gBattlerAttacker].statStages[STAT_ATK] != MIN_STAT_STAGE
+             )
+            {
+                gBattleScripting.moveEffect = MOVE_EFFECT_AFFECTS_USER | MOVE_EFFECT_ATK_MINUS_6;
+                gBattleScripting.moveEffect = MOVE_EFFECT_AFFECTS_USER | MOVE_EFFECT_SP_ATK_MINUS_6;
+                PREPARE_ABILITY_BUFFER(gBattleTextBuff1, gLastUsedAbility);
+                BattleScriptPushCursor();
+                gBattlescriptCurrInstr = BattleScript_AbilityStatusEffect;
+                gHitMarker |= HITMARKER_IGNORE_SAFEGUARD;
                 effect++;
             }
             break;
@@ -5444,7 +5466,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
 
 u32 GetBattlerAbility(u8 battlerId)
 {
-    if (gStatuses3[battlerId] & STATUS3_GASTRO_ACID || gBattleMons[battlerId].item == ITEM_SUPPRESSOR)
+    if ((gStatuses3[battlerId] & STATUS3_GASTRO_ACID || gBattleMons[battlerId].item == ITEM_SUPPRESSOR)||IsAbilityOnField(ABILITY_NEUTRALIZING_GAS))
         return ABILITY_NONE;
     else if ((((gBattleMons[gBattlerAttacker].ability == ABILITY_MOLD_BREAKER
             || gBattleMons[gBattlerAttacker].ability == ABILITY_TERAVOLT
@@ -6551,6 +6573,17 @@ u8 ItemBattleEffects(u8 caseID, u8 battlerId, bool8 moveTurn)
                     effect = ITEM_STATS_CHANGE;
                     BattleScriptPushCursor();
                     gBattlescriptCurrInstr = BattleScript_WeaknessPolicy;
+                }
+                break;
+            case HOLD_EFFECT_CRITICAL_POLICY:
+                if (IsBattlerAlive(battlerId)
+                    && TARGET_TURN_DAMAGED
+                    //&& gMoveResultFlags & MOVE_RESULT_SUPER_EFFECTIVE
+                    && gIsCriticalHit)
+                {
+                    effect = ITEM_STATS_CHANGE;
+                    BattleScriptPushCursor();
+                    gBattlescriptCurrInstr = BattleScript_CriticalPolicy;
                 }
                 break;
             case HOLD_EFFECT_SNOWBALL:
@@ -7704,6 +7737,19 @@ static u32 CalcAttackStat(u16 move, u8 battlerAtk, u8 battlerDef, u8 moveType, b
             atkStage = gBattleMons[battlerDef].statStages[STAT_SPATK];
         }
     }
+	if (gBattleMoves[move].effect == EFFECT_BODY_PRESS)
+    {
+        atkStat = gBattleMons[battlerAtk].defense;
+        atkStage = gBattleMons[battlerAtk].statStages[STAT_DEF];
+    }
+	
+	if ((GetBattlerAbility(battlerAtk) == ABILITY_BLITZKRIEG)&&(CalcMoveBasePower(move, battlerAtk, battlerDef)<=60))
+    {
+        atkStat = gBattleMons[battlerAtk].speed;
+        atkStage = gBattleMons[battlerAtk].statStages[STAT_SPEED];
+    }
+    
+	
     else
     {
         if (IS_MOVE_PHYSICAL(move))
@@ -8266,6 +8312,10 @@ static void MulByTypeEffectiveness(u16 *modifier, u16 move, u8 moveType, u8 batt
 
     if (moveType == TYPE_PSYCHIC && defType == TYPE_DARK && gStatuses3[battlerDef] & STATUS3_MIRACLE_EYED && mod == UQ_4_12(0.0))
         mod = UQ_4_12(1.0);
+    /*
+    if (moveType == TYPE_POISON && defType == TYPE_STEEL && gStatuses3[battlerDef] & STATUS3_CORRODED && mod == UQ_4_12(0.0))
+        mod = UQ_4_12(1.0);
+      */  
     if (gBattleMoves[move].effect == EFFECT_FREEZE_DRY && defType == TYPE_WATER)
         mod = UQ_4_12(2.0);
     if (moveType == TYPE_GROUND && defType == TYPE_FLYING && IsBattlerGrounded(battlerDef) && mod == UQ_4_12(0.0))

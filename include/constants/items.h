@@ -707,8 +707,11 @@
 //new items
 #define ITEM_SUPPRESSOR		604
 #define ITEM_PLATE_ARMOR		605
+#define ITEM_CRITICAL_POLICY		606
+#define ITEM_ROOM_EXTENDER		607
 
-#define ITEMS_COUNT 606
+
+#define ITEMS_COUNT 608
 #define ITEM_FIELD_ARROW ITEMS_COUNT
 
 // Range of berries given out by various NPCS

@@ -2945,16 +2945,38 @@ static const u8 sEERIE_SPELLDescription[] = _(
 static const u8 sNotDoneYetDescription[] = _(
     "Not done yet.");
     
-  //  static const u8 sPlaneShiftDescription[] =_("");
-//    static const u8 sShieldSlamDescription[] =_("");
-    static const u8 sIceSickleDescription[]=_(
+static const u8 sIceSickleDescription[]=_(
     "Brandishes a sickle of ice.\n"
     "High critical-hit ratio.");
-  /*
-    static const u8 sFireSynapseDescription[]=_(
+  
+static const u8 sFireSynapseDescription[]=_(
     "Maximizes SP.ATK while\n"
     "sacrificing HP.");
-*/
+
+static const u8 sGhostlyTerrainDescription[]=_(
+    "Ground becomes haunted for\n"
+    "5 turns. Torments field.");
+    
+static const u8 sCorrodeDescription[]=_(
+    "Allows Steel-type foes\n"
+    "to be poisoned.");
+static const u8 sAcidRainDescription[]=_(
+    "Summons acidic rain that\n"
+    "strikes every turn.");
+
+static const u8 sSleeperHitDescription[] = _(
+    "Attacks with a choke hold.\n"
+    "May induce sleep.");
+    
+static const u8 sSomnaSmackDescription[] = _(
+    "A strong smack that can be\n"
+    "used only while asleep.");
+    
+static const u8 sCooldownDescription[]=_(
+    "The user freezes for 2 turns,\n"
+    "restoring HP and status.");
+    
+
 // MOVE_NONE is ignored in this table. Make sure to always subtract 1 before getting the right pointer.
 const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] =
 {
@@ -3719,6 +3741,14 @@ const u8 *const gMoveDescriptionPointers[MOVES_COUNT - 1] =
     [MOVE_PLANE_SHIFT-1] =sU_TURNDescription,
     [MOVE_SHIELD_SLAM-1] =sBODY_PRESSDescription,
     [MOVE_ICE_SICKLE-1] = sIceSickleDescription,
-  //  [MOVE_FIRE_SYNAPSE-1] = sFireSynapseDescription,
+    [MOVE_FIRE_SYNAPSE-1] = sFireSynapseDescription,
     
+    [MOVE_GHOSTLY_TERRAIN-1] = sGhostlyTerrainDescription, 
+    [MOVE_CORRODE-1] = sCorrodeDescription,
+    [MOVE_ACID_RAIN-1] = sAcidRainDescription,
+    [MOVE_SLEEPER_HIT-1] = sSleeperHitDescription,
+    [MOVE_SOMNA_SMACK-1] = sSomnaSmackDescription,
+    [MOVE_SOLAR_FLARE-1]= sSolarBeamDescription,
+    [MOVE_COOLDOWN-1]= sCooldownDescription,
+
 };

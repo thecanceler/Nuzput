@@ -7987,3 +7987,29 @@ BattleScript_WarpFieldActivates::
 //	playanimation BS_SCRIPTING, B_ANIM_RESTORE_BG, NULL
 	end3
 return
+
+
+BattleScript_CriticalPolicy::
+	copybyte sBATTLER, gBattlerTarget
+	jumpifstat BS_TARGET, CMP_LESS_THAN, STAT_DEF, MAX_STAT_STAGE, BattleScript_CriticalPolicyDef
+	jumpifstat BS_TARGET, CMP_EQUAL, STAT_SPDEF, MAX_STAT_STAGE, BattleScript_CriticalPolicyEnd
+BattleScript_CriticalPolicyDef:
+	playanimation BS_TARGET, B_ANIM_HELD_ITEM_EFFECT, NULL
+	waitanimation
+	setbyte sSTAT_ANIM_PLAYED, FALSE
+	playstatchangeanimation BS_TARGET, BIT_DEF | BIT_SPDEF, STAT_CHANGE_BY_TWO
+	setstatchanger STAT_DEF, 2, FALSE
+	statbuffchange STAT_BUFF_ALLOW_PTR, BattleScript_CriticalPolicySpDef
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_INCREASE, BattleScript_CriticalPolicySpDef
+	printstring STRINGID_USINGITEMSTATOFPKMNROSE
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_CriticalPolicySpDef:
+	setstatchanger STAT_SPDEF, 2, FALSE
+	statbuffchange STAT_BUFF_ALLOW_PTR, BattleScript_CriticalPolicyRemoveItem
+	jumpifbyte CMP_EQUAL, cMULTISTRING_CHOOSER, B_MSG_STAT_WONT_INCREASE, BattleScript_CriticalPolicyRemoveItem
+	printstring STRINGID_USINGITEMSTATOFPKMNROSE
+	waitmessage B_WAIT_TIME_LONG
+BattleScript_CriticalPolicyRemoveItem:
+	removeitem BS_TARGET
+BattleScript_CriticalPolicyEnd:
+	return

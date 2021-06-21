@@ -373,5 +373,6 @@ extern const u8 BattleScript_ChivalryActivates[];
 
 extern const u8 BattleScript_GravitateActivates[];
 extern const u8 BattleScript_WarpFieldActivates[];
+extern const u8 BattleScript_CriticalPolicy[];
 
 #endif // GUARD_BATTLE_SCRIPTS_H
