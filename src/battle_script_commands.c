@@ -817,7 +817,7 @@ void (* const gBattleScriptingCommandsTable[])(void) =
     Cmd_trygetbaddreamstarget,                   //0xFD
     Cmd_tryworryseed,                            //0xFE
     Cmd_metalburstdamagecalculator,              //0xFF
-    Cmd_maxspattackhalvehp,//????
+   // Cmd_maxspattackhalvehp,//????
   //Cmd_trysetcooldown,
 };
 
