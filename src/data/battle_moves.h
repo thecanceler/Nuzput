@@ -11682,7 +11682,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT] =
     
     [MOVE_FIRE_SYNAPSE] =
     {
-        .effect = EFFECT_FIRE_SYNAPSE,
+        .effect = EFFECT_PLACEHOLDER,
         .power = 0,
         .type = TYPE_PSYCHIC,
         .accuracy = 0,
@@ -11696,7 +11696,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT] =
     
     [MOVE_CORRODE] =
     {
-        .effect = EFFECT_CORRODE,
+        .effect = EFFECT_PLACEHOLDER,
         .power = 0,
         .type = TYPE_WATER,
         .accuracy = 100,
@@ -11710,7 +11710,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT] =
     
         [MOVE_ACID_RAIN] =
     {
-        .effect = EFFECT_ACID_RAIN,
+        .effect = EFFECT_PLACEHOLDER,
         .power = 0,
         .type = TYPE_POISON,
         .accuracy = 0,
@@ -11766,7 +11766,7 @@ const struct BattleMove gBattleMoves[MOVES_COUNT] =
 
  [MOVE_COOLDOWN] =
     {
-        .effect = EFFECT_COOLDOWN,
+        .effect = EFFECT_PLACEHOLDER,
         .power = 0,
         .type = TYPE_ICE,
         .accuracy = 0,

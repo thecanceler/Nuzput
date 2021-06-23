@@ -367,7 +367,7 @@ gBattleScriptsForMoveEffects:: @ 82D86A8
 	.4byte BattleScript_EffectFairyLock
 	.4byte BattleScript_EffectAllySwitch
 	.4byte BattleScript_EffectSleepHit
-	.4byte BattleScript_EffectSynapseFire
+	//.4byte BattleScript_EffectSynapseFire
 
 BattleScript_EffectSleepHit:
 	setmoveeffect MOVE_EFFECT_SLEEP
@@ -7989,7 +7989,7 @@ BattleScript_WarpFieldActivates::
 	end3
 return
 
-
+/*
 BattleScript_EffectSynapseFire::
 	attackcanceler
 	attackstring
@@ -8003,7 +8003,7 @@ BattleScript_EffectSynapseFire::
 	printstring STRINGID_PKMNCUTHPMAXEDSPATTACK
 	waitmessage B_WAIT_TIME_LONG
 	goto BattleScript_MoveEnd
-
+*/
 
 BattleScript_CriticalPolicy::
 	copybyte sBATTLER, gBattlerTarget

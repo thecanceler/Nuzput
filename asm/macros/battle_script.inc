@@ -1894,8 +1894,5 @@
 	1:
 	.endm
 	
-	.macro maxspattackhalvehp param0:req
-	.byte 0xbc
-	.4byte \param0
-	.endm
+	
 

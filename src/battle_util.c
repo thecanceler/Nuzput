@@ -4954,8 +4954,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
              && !(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
              && gBattleMons[gBattlerTarget].hp == 0
              && IsBattlerAlive(gBattlerAttacker)
-             && IsMoveMakingContact(move, gBattlerAttacker)
-             )
+             && IsMoveMakingContact(move, gBattlerAttacker))
             {
             
                 gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 4;
@@ -4966,6 +4965,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
                 effect++;
             }
             break;
+        /*
         case ABILITY_MEMENTO_BODY:
             if (!IsAbilityOnField(ABILITY_CHIVALRY)
              && !(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
@@ -4985,6 +4985,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
                 effect++;
             }
             break;
+            */
         case ABILITY_INNARDS_OUT:
             if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
              && gBattleMons[gBattlerTarget].hp == 0
@@ -5505,7 +5506,10 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
 
 u32 GetBattlerAbility(u8 battlerId)
 {
-    if ((gStatuses3[battlerId] & STATUS3_GASTRO_ACID || gBattleMons[battlerId].item == ITEM_SUPPRESSOR)||IsAbilityOnField(ABILITY_NEUTRALIZING_GAS))
+    if (gStatuses3[battlerId] & STATUS3_GASTRO_ACID
+    || gBattleMons[battlerId].item == ITEM_SUPPRESSOR)
+    //||IsAbilityOnField(ABILITY_NEUTRALIZING_GAS))
+    //if ((gStatuses3[battlerId] & STATUS3_GASTRO_ACID || gBattleMons[battlerId].item == ITEM_SUPPRESSOR)||IsAbilityOnField(ABILITY_NEUTRALIZING_GAS))
         return ABILITY_NONE;
     else if ((((gBattleMons[gBattlerAttacker].ability == ABILITY_MOLD_BREAKER
             || gBattleMons[gBattlerAttacker].ability == ABILITY_TERAVOLT
