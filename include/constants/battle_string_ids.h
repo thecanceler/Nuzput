@@ -570,9 +570,10 @@
 #define STRINGID_MICLEBERRYACTIVATES             566
 #define STRINGID_CHIVALRYDOESNTALLOW 567
 #define STRINGID_CHIVALRYACTIVATES 568
+#define STRINGID_PKMNCUTHPMAXEDSPATTACK            569
 
                                                  
-#define BATTLESTRINGS_COUNT                      569
+#define BATTLESTRINGS_COUNT                      570
 
 // The below IDs are all indexes into battle message tables,
 // used to determine which of a set of messages to print.

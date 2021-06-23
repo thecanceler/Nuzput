@@ -697,6 +697,8 @@ static const u8 sText_MicleBerryActivates[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX}
 
 static const u8 sText_ChivalryDoesntAllow[] = _("Chivalry prevents status\nmoves from being used!\p");
 static const u8 sText_ChivalryActivates[] = _("{B_SCR_ACTIVE_NAME_WITH_PREFIX} denies status\nmoves from being used!");
+static const u8 sText_PkmnCutHPMaxedSpAttack[] = _("{B_ATK_NAME_WITH_PREFIX} cut its own HP\nand maximized SP.ATK!");
+
 
 const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT] =
 {
@@ -1257,6 +1259,7 @@ const u8 *const gBattleStringsTable[BATTLESTRINGS_COUNT] =
     [STRINGID_SCREENCLEANERENTERS - 12] = sText_ScreenCleanerActivates,
     [STRINGID_CHIVALRYDOESNTALLOW -12] =sText_ChivalryDoesntAllow,
     [STRINGID_CHIVALRYACTIVATES - 12] = sText_ChivalryActivates,
+    [STRINGID_PKMNCUTHPMAXEDSPATTACK - 12] = sText_PkmnCutHPMaxedSpAttack,
 };
 
 const u16 gTerrainStringIds[] =

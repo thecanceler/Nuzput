@@ -557,6 +557,7 @@ static void Cmd_jumpifoppositegenders(void);
 static void Cmd_trygetbaddreamstarget(void);
 static void Cmd_tryworryseed(void);
 static void Cmd_metalburstdamagecalculator(void);
+static void Cmd_maxspattackhalvehp(void);
 
 void (* const gBattleScriptingCommandsTable[])(void) =
 {
@@ -816,7 +817,7 @@ void (* const gBattleScriptingCommandsTable[])(void) =
     Cmd_trygetbaddreamstarget,                   //0xFD
     Cmd_tryworryseed,                            //0xFE
     Cmd_metalburstdamagecalculator,              //0xFF
-  //  Cmd_maxspattackhalvehp,//????
+    Cmd_maxspattackhalvehp,//????
   //Cmd_trysetcooldown,
 };
 
@@ -7069,6 +7070,12 @@ static void HandleTerrainMove(u32 moveEffect)
         statusFlag = STATUS_FIELD_PSYCHIC_TERRAIN, timer = &gFieldTimers.psychicTerrainTimer;
         gBattleCommunication[MULTISTRING_CHOOSER] = 3;
         break;
+    /*
+    case EFFECT_GHOSTLY_TERRAIN:
+        statusFlag = STATUS_FIELD_GHOSTLY_TERRAIN, timer = &gFieldTimers.ghostlyTerrainTimer;
+        gBattleCommunication[MULTISTRING_CHOOSER] = 3;
+        break;
+    */
     }
 
     if (gFieldStatuses & statusFlag || statusFlag == 0)
@@ -10882,7 +10889,7 @@ static void Cmd_maxattackhalvehp(void) // belly drum
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
     }
 }
-/*
+
 static void Cmd_maxspattackhalvehp(void) // synapse fire
 {
     u32 halfHp = gBattleMons[gBattlerAttacker].maxHP / 2;
@@ -10905,7 +10912,7 @@ static void Cmd_maxspattackhalvehp(void) // synapse fire
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
     }
 }
-*/
+
 
 static void Cmd_copyfoestats(void) // psych up
 {

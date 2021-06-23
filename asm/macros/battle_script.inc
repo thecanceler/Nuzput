@@ -1893,4 +1893,9 @@
 	jumpifsideaffecting BS_TARGET, SIDE_STATUS_SAFEGUARD, \jumpptr
 	1:
 	.endm
+	
+	.macro maxspattackhalvehp param0:req
+	.byte 0xbc
+	.4byte \param0
+	.endm
 

@@ -2266,6 +2266,21 @@ u8 DoFieldEndTurnEffects(void)
             }
             gBattleStruct->turnCountersTracker++;
             break;
+            /*
+            
+            case ENDTURN_GHOSTLY_TERRAIN:
+            if (gFieldStatuses & STATUS_FIELD_GHOSTLY_TERRAIN
+              && ((!gFieldStatuses & STATUS_FIELD_TERRAIN_PERMANENT) && --gFieldTimers.ghostlyTerrainTimer == 0))
+            {
+                gFieldStatuses &= ~(STATUS_FIELD_GHOSTLY_TERRAIN);
+                BattleScriptExecute(BattleScript_GhostlyTerrainEnds);
+                effect++;
+            }
+            gBattleStruct->turnCountersTracker++;
+            break;
+            
+            */
+            
         case ENDTURN_WATER_SPORT:
             if (gFieldStatuses & STATUS_FIELD_WATERSPORT && --gFieldTimers.waterSportTimer == 0)
             {
@@ -3928,6 +3943,9 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
                 case STATUS_FIELD_PSYCHIC_TERRAIN:
                     gBattleCommunication[MULTISTRING_CHOOSER] = 3;
                     break;
+//                case STATUS_FIELD_GHOSTLY_TERRAIN:
+//                    gBattleCommunication[MULTISTRING_CHOOSER] = 3;
+//                    break;
                 }
                 
                 BattleScriptPushCursorAndCallback(BattleScript_OverworldTerrain);
@@ -4279,6 +4297,15 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
                 effect++;
             }
             break;
+            /*
+        case ABILITY_GHOSTLY_SURGE:
+            if (TryChangeBattleTerrain(battler, STATUS_FIELD_GHOSTLY_TERRAIN, &gFieldTimers.ghostlyTerrainTimer))
+            {
+                BattleScriptPushCursorAndCallback(BattleScript_ghostlySurgeActivates);
+                effect++;
+            }
+            break;    
+            */
         case ABILITY_GRAVITATE:
         if (TrySetGravity(battler, &gFieldTimers.gravityTimer))
             {
@@ -4293,7 +4320,20 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
                 effect++;
             }
             break;
-	
+	case ABILITY_WONDER_FIELD:
+        if (TryChangeBattleRoom(battler, STATUS_FIELD_WONDER_ROOM, &gFieldTimers.wonderRoomTimer))
+            {
+                BattleScriptPushCursorAndCallback(BattleScript_WarpFieldActivates);
+                effect++;
+            }
+            break;
+        case ABILITY_MAGIC_FIELD:
+        if (TryChangeBattleRoom(battler, STATUS_FIELD_MAGIC_ROOM, &gFieldTimers.magicRoomTimer))
+            {
+                BattleScriptPushCursorAndCallback(BattleScript_WarpFieldActivates);
+                effect++;
+            }
+            break;
         case ABILITY_INTIMIDATE:
             if (!(gSpecialStatuses[battler].intimidatedMon))
             {
@@ -4845,8 +4885,7 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u16 ability, u8 special, u16 move
             }
             break;
         case ABILITY_ANGER_POINT:
-        
-           bestStat = STAT_ATK;//GetHighestStatId(battler);//change this by figuring out where gethigheststatid comes from
+            bestStat = STAT_ATK > STAT_SPATK ? STAT_ATK : STAT_SPATK;//GetHighestStatId(battler);//change this by figuring out where gethigheststatid comes from
             if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
              && gIsCriticalHit
              && TARGET_TURN_DAMAGED
@@ -7714,7 +7753,10 @@ static u32 CalcMoveBasePowerAfterModifiers(u16 move, u8 battlerAtk, u8 battlerDe
         MulModifier(&modifier, (B_TERRAIN_TYPE_BOOST >= GEN_8) ? UQ_4_12(1.3) : UQ_4_12(1.5));
     if (gFieldStatuses & STATUS_FIELD_PSYCHIC_TERRAIN && moveType == TYPE_PSYCHIC && IsBattlerGrounded(battlerAtk) && !(gStatuses3[battlerAtk] & STATUS3_SEMI_INVULNERABLE))
         MulModifier(&modifier, (B_TERRAIN_TYPE_BOOST >= GEN_8) ? UQ_4_12(1.3) : UQ_4_12(1.5));
-
+        /*
+    if (gFieldStatuses & STATUS_FIELD_GHOST_TERRAIN && moveType == TYPE_GHOST && IsBattlerGrounded(battlerAtk) && !(gStatuses3[battlerAtk] & STATUS3_SEMI_INVULNERABLE))
+        MulModifier(&modifier, (B_TERRAIN_TYPE_BOOST >= GEN_8) ? UQ_4_12(1.3) : UQ_4_12(1.5));
+*/
     return ApplyModifier(modifier, basePower);
 }
 
@@ -8076,6 +8118,7 @@ if (IS_BATTLER_OF_TYPE(battlerDef, TYPE_ICE) && WEATHER_HAS_EFFECT && gBattleWea
 //poison types take less damage from poisoned mons ligma
 if ( IS_BATTLER_OF_TYPE(battlerDef, TYPE_POISON) && (gBattleMons[gBattlerAttacker].status1 & STATUS1_POISON) )
         MulModifier(&modifier, UQ_4_12(1.2));
+       
 
 
     // The defensive stats of a Player's Pokémon are boosted by x1.1 (+10%) if they have the 5th badge and 7th badges.
@@ -8114,6 +8157,16 @@ static u32 CalcFinalDmg(u32 dmg, u16 move, u8 battlerAtk, u8 battlerDef, u8 move
         dmg = ApplyModifier(UQ_4_12(0.5), dmg);
 
     // check sunny/rain weather
+    //CHECK ACID RAIN
+     /*
+    if (WEATHER_HAS_EFFECT && gBattleWeather & WEATHER_ACID_RAIN)
+    {
+        if (moveType == TYPE_POISON)
+            dmg = ApplyModifier(UQ_4_12(1.2), dmg);
+        else if (moveType == TYPE_FAIRY)
+            dmg = ApplyModifier(UQ_4_12(0.8), dmg);
+    } else 
+    */
     if (WEATHER_HAS_EFFECT && gBattleWeather & WEATHER_RAIN_ANY)
     {
         if (moveType == TYPE_FIRE)
@@ -8128,6 +8181,7 @@ static u32 CalcFinalDmg(u32 dmg, u16 move, u8 battlerAtk, u8 battlerDef, u8 move
         else if (moveType == TYPE_WATER)
             dmg = ApplyModifier(UQ_4_12(0.5), dmg);
     }
+    
 
     // check stab
     if (IS_BATTLER_OF_TYPE(battlerAtk, moveType) && move != MOVE_STRUGGLE)
