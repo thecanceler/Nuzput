@@ -2517,6 +2517,7 @@ static void DrawPagination(void) // Updates the pagination dots at the top of th
 
 static void ChangeTilemap(const struct TilemapCtrl *unkStruct, u16 *dest, u8 c, bool8 d)
 {
+
     u16 i;
     u16 *alloced = Alloc(unkStruct->field_6 * 2 * unkStruct->field_7);
     CpuFill16(unkStruct->field_4, alloced, unkStruct->field_6 * 2 * unkStruct->field_7);
@@ -2538,6 +2539,7 @@ static void ChangeTilemap(const struct TilemapCtrl *unkStruct, u16 *dest, u8 c, 
         CpuCopy16(&alloced[unkStruct->field_6 * i], &dest[(unkStruct->field_9 + i) * 32 + unkStruct->field_8], unkStruct->field_6 * 2);
 
     Free(alloced);
+    
 }
 
 static void HandlePowerAccTilemap(u16 a, s16 b)
@@ -3471,6 +3473,7 @@ static void PrintHeldItemName(void)
 
 static void PrintRibbonCount(void)
 {
+/*
     const u8 *text;
     int x;
 
@@ -3487,6 +3490,7 @@ static void PrintRibbonCount(void)
 
     x = GetStringCenterAlignXOffset(1, text, 70) + 6;
     PrintTextOnWindow(AddWindowFromTemplateList(sPageSkillsTemplate, PSS_DATA_WINDOW_SKILLS_RIBBON_COUNT), text, x, 1, 0, 0);
+    */
 }
 
 static void BufferStat(u8 *dst, s8 natureMod, u32 stat, u32 strId, u32 n)
