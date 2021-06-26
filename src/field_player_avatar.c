@@ -45,6 +45,8 @@ static void MovePlayerAvatarUsingKeypadInput(u8, u16, u16);
 static void PlayerAllowForcedMovementIfMovingSameDirection();
 static bool8 TryDoMetatileBehaviorForcedMovement();
 static u8 GetForcedMovementByMetatileBehavior();
+static bool8 IsSidewaysStairToRight(s16, s16, u8);
+static bool8 IsSidewaysStairToLeft(s16, s16, u8);
 
 static bool8 ForcedMovement_None(void);
 static bool8 ForcedMovement_Slip(void);
@@ -92,6 +94,8 @@ static bool8 sub_808B618(void);
 static bool8 PlayerIsAnimActive(void);
 static bool8 PlayerCheckIfAnimFinishedOrInactive(void);
 
+static void PlayerGoSlow(u8 direction);
+static void PlayerRunSlow(u8 direction);
 static void PlayerRun(u8);
 static void PlayerNotOnBikeCollide(u8);
 static void PlayerNotOnBikeCollideWithFarawayIslandMew(u8);
@@ -419,7 +423,7 @@ static u8 GetForcedMovementByMetatileBehavior(void)
     {
         u8 metatileBehavior = gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior;
 
-        for (i = 0; i < 18; i++)
+        for (i = 0; i < NELEMS(sForcedMovementTestFuncs); i++)
         {
             if (sForcedMovementTestFuncs[i](metatileBehavior))
                 return i + 1;
@@ -628,7 +632,7 @@ static bool8 IsPlayerTryingToRun(u16 heldKeys)
 static void PlayerNotOnBikeMoving(u8 direction, u16 heldKeys)
 {
     u8 collision = CheckForPlayerAvatarCollision(direction);
-
+    
     if (collision)
     {
         if (collision == COLLISION_LEDGE_JUMP)
@@ -650,30 +654,23 @@ static void PlayerNotOnBikeMoving(u8 direction, u16 heldKeys)
         }
     }
     
-    //gPlayerAvatar.creeping = FALSE;
     if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_SURFING)
     {
-    /*
-        if (FlagGet(FLAG_SYS_DEXNAV_SEARCH) && (heldKeys & A_BUTTON))
-        {
-            gPlayerAvatar.creeping = TRUE;
-            PlayerGoSpeed1(direction);
-        }
-        else
-        {
-        */
-		if (IsPlayerTryingToRun(heldKeys))
+if (IsPlayerTryingToRun(heldKeys))
     PlayerGoSpeed4(direction);
 else
     PlayerGoSpeed2(direction);
-        //}
         return;
     }
 
     if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_UNDERWATER) && (IsPlayerTryingToRun(heldKeys)) 
      && IsRunningDisallowed(gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior) == 0)
     {
-        PlayerRun(direction);
+        if (ObjectMovingOnRockStairs(&gObjectEvents[gPlayerAvatar.objectEventId], direction))
+            PlayerRunSlow(direction);
+        else
+            PlayerRun(direction);
+        
         gPlayerAvatar.flags |= PLAYER_AVATAR_FLAG_DASH;
         return;
     }
@@ -686,7 +683,10 @@ else
     */
     else
     {
-        PlayerGoSpeed1(direction);
+        if (ObjectMovingOnRockStairs(&gObjectEvents[gPlayerAvatar.objectEventId], direction))
+            PlayerGoSlow(direction);
+        else
+            PlayerGoSpeed1(direction);
     }
 }
 
@@ -697,6 +697,7 @@ static u8 CheckForPlayerAvatarCollision(u8 direction)
 
     x = playerObjEvent->currentCoords.x;
     y = playerObjEvent->currentCoords.y;
+    
     MoveCoords(direction, &x, &y);
     return CheckForObjectEventCollision(playerObjEvent, x, y, direction, MapGridGetMetatileBehaviorAt(x, y));
 }
@@ -715,6 +716,8 @@ static u8 sub_808B028(u8 direction)
 u8 CheckForObjectEventCollision(struct ObjectEvent *objectEvent, s16 x, s16 y, u8 direction, u8 metatileBehavior)
 {
     u8 collision = GetCollisionAtCoords(objectEvent, x, y, direction);
+    u8 currentBehavior = MapGridGetMetatileBehaviorAt(objectEvent->currentCoords.x, objectEvent->currentCoords.y);
+    
     if (collision == COLLISION_ELEVATION_MISMATCH && CanStopSurfing(x, y, direction))
         return COLLISION_STOP_SURFING;
         
@@ -735,6 +738,22 @@ u8 CheckForObjectEventCollision(struct ObjectEvent *objectEvent, s16 x, s16 y, u
             return COLLISION_ROTATING_GATE;
         CheckAcroBikeCollision(x, y, metatileBehavior, &collision);
     }
+    
+    //sideways stairs logic
+    /*
+    if (MetatileBehavior_IsSidewaysStairsLeftSideTop(metatileBehavior) && direction == DIR_EAST)
+        return COLLISION_IMPASSABLE;    //moving onto left-side top edge east from ground -> cannot move
+    else if (MetatileBehavior_IsSidewaysStairsRightSideTop(metatileBehavior) && direction == DIR_WEST)
+        return COLLISION_IMPASSABLE;    //moving onto left-side top edge east from ground -> cannot move
+    else if (MetatileBehavior_IsSidewaysStairsRightSideBottom(metatileBehavior) && (direction == DIR_EAST || direction == DIR_SOUTH))
+        return COLLISION_IMPASSABLE;
+    else if (MetatileBehavior_IsSidewaysStairsLeftSideBottom(metatileBehavior) && (direction == DIR_WEST || direction == DIR_SOUTH))
+        return COLLISION_IMPASSABLE;
+    else if ((MetatileBehavior_IsSidewaysStairsLeftSideTop(currentBehavior) || MetatileBehavior_IsSidewaysStairsRightSideTop(currentBehavior))
+     && direction == DIR_NORTH && collision == COLLISION_NONE)
+        return COLLISION_IMPASSABLE;    //trying to move north off of top-most tile onto same level doesn't work
+    */
+        
     return collision;
 }
 
@@ -1003,6 +1022,11 @@ static void PlayerGoSlow(u8 direction)
     PlayerSetAnimId(GetWalkSlowMovementAction(direction), 2);
 }
 
+static void PlayerRunSlow(u8 direction)
+{
+    PlayerSetAnimId(GetPlayerRunSlowMovementAction(direction), 2);
+}
+
 // normal speed (1 speed)
 void PlayerGoSpeed1(u8 a)
 {
@@ -1015,6 +1039,7 @@ void PlayerGoSpeed2(u8 a)
     PlayerSetAnimId(GetWalkFastMovementAction(a), 2);
 }
 
+// acro bike speed
 void PlayerRideWaterCurrent(u8 a)
 {
     PlayerSetAnimId(GetRideWaterCurrentMovementAction(a), 2);
@@ -1679,7 +1704,7 @@ static void CreateStopSurfingTask(u8 direction)
     ScriptContext2_Enable();
     Overworld_ClearSavedMusic();
     Overworld_ChangeMusicToDefault();
-    gPlayerAvatar.flags &= ~PLAYER_AVATAR_FLAG_SURFING;
+    gPlayerAvatar.flags ^= PLAYER_AVATAR_FLAG_SURFING;
     gPlayerAvatar.flags |= PLAYER_AVATAR_FLAG_ON_FOOT;
     gPlayerAvatar.preventStep = TRUE;
     taskId = CreateTask(Task_StopSurfingInit, 0xFF);
@@ -2339,39 +2364,71 @@ static void Task_WaitStartSurfing(u8 taskId)
         DestroyTask(taskId);
     }
 } 
-/*
-//flying
-    void (*const sFlyLFieldEffectFuncs[])(struct Task *) = {
-    FlyOutFieldEffect_FieldMovePose,
-    FlyOutFieldEffect_BirdSwoopDown,
-    FlyOutFieldEffect_JumpOnBird,
-    FlyOutFieldEffect_FlyOffWithBird,
-    FlyOutFieldEffect_WaitFlyOff,
-    FlyOutFieldEffect_End,
-};
-static bool8 CanStartFlight(s16 x, s16 y, u8 direction)
+//sideways stairs
+u8 GetRightSideStairsDirection(u8 direction)
 {
-    if (CheckBagHasItem(ITEM_HM02_FLY, 1) == FALSE)
+    switch (direction)
     {
-        return FALSE;
-    }
+    case DIR_WEST:
+        return DIR_NORTHWEST;
+    case DIR_EAST:
+        return DIR_SOUTHEAST;
+    default:
+        if (direction > DIR_EAST)
+            direction -= DIR_EAST;
+        
+        return direction;
+    }           
+}
 
-    if ((gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_ON_FOOT)
-     && MapGridGetZCoordAt(x, y) == 1
-     && GetObjectEventIdByXYZ(x, y, 1) == OBJECT_EVENTS_COUNT)
+u8 GetLeftSideStairsDirection(u8 direction)
+{
+    switch (direction)
     {
-        CreateStartSurfingTask(direction);
-        return TRUE;
+    case DIR_WEST:
+        return DIR_SOUTHWEST;
+    case DIR_EAST:
+        return DIR_NORTHEAST;
+    default:
+        if (direction > DIR_EAST)
+            direction -= DIR_EAST;
+        
+        return direction;
     }
-    else
-    {
-        return FALSE;
-    }
-   
-    //gPartyMenu.exitCallback = CB2_OpenFlyMap;
-      //          Task_ClosePartyMenu(taskId);
-      SetMainCallback2(CB2_OpenFlyMap);
-                
-    
+}
 
-} */
+bool8 ObjectMovingOnRockStairs(struct ObjectEvent *objectEvent, u8 direction)
+{
+    #if SLOW_MOVEMENT_ON_STAIRS
+        s16 x = objectEvent->currentCoords.x;
+        s16 y = objectEvent->currentCoords.y;
+        
+        #if FOLLOW_ME_IMPLEMENTED
+            if (PlayerHasFollower() && (objectEvent->isPlayer || objectEvent->localId == GetFollowerLocalId()))
+                return FALSE;
+        #endif
+        
+        switch (direction)
+        {
+        case DIR_NORTH:
+            return MetatileBehavior_IsRockStairs(MapGridGetMetatileBehaviorAt(x,y));
+        case DIR_SOUTH:
+            MoveCoords(DIR_SOUTH, &x, &y);
+            return MetatileBehavior_IsRockStairs(MapGridGetMetatileBehaviorAt(x,y));
+        case DIR_WEST:
+        case DIR_EAST:
+        case DIR_NORTHEAST:
+        case DIR_NORTHWEST:
+        case DIR_SOUTHWEST:
+        case DIR_SOUTHEAST:
+            // directionOverwrite is only used for sideways stairs motion
+            if (objectEvent->directionOverwrite)
+                return TRUE;
+        default:
+            return FALSE;
+        }
+    #else
+        return FALSE;
+    #endif
+}
+
