@@ -95,9 +95,10 @@ static bool8 CheckFeebas(void)
     s16 y;
     u8 route119Section = 0;
     u16 waterTileNum;
-
+/*
     if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ROUTE119)
      && gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE119))
+     */
     {
         GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
         x -= 7;
@@ -270,6 +271,10 @@ static u8 ChooseWildMonLevel(const struct WildPokemon *wildPokemon)
 /*
 static u8 ChooseWildAreaLevel(const struct WildPokemon *wildPokemon)
 {
+if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(ROUTE119)
+     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(ROUTE119))
+^
+use this ... 
     u8 min;
     u8 max;
     u8 range;

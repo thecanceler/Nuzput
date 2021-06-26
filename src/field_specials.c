@@ -277,7 +277,7 @@ u16 GetRecordedCyclingRoadResults(void) {
     return TRUE;
 }
 
-void UpdateCyclingRoadState(void) {
+void UpdateCyclingRoadState(void) {/*
     if (gLastUsedWarp.mapNum == MAP_NUM(ROUTE110_SEASIDE_CYCLING_ROAD_SOUTH_ENTRANCE) && gLastUsedWarp.mapGroup == MAP_GROUP(ROUTE110_SEASIDE_CYCLING_ROAD_SOUTH_ENTRANCE))
     {
         return;
@@ -287,8 +287,9 @@ void UpdateCyclingRoadState(void) {
     {
         VarSet(VAR_CYCLING_CHALLENGE_STATE, 0);
         Overworld_SetSavedMusic(MUS_DUMMY);
-    }
+    }*/
 }
+
 
 void SetSSTidalFlag(void)
 {

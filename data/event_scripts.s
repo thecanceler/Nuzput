@@ -1064,3 +1064,107 @@ Common_EventScript_LegendaryFlewAway:: @ 8273776
     .include "data/scripts/dexnav.inc"
 
 
+
+	.include "data/maps/FrostdewTown/scripts.inc"
+
+	.include "data/maps/RimeroseCity/scripts.inc"
+
+	.include "data/maps/HinterleafCity/scripts.inc"
+
+	.include "data/maps/MaribudTown/scripts.inc"
+
+	.include "data/maps/SeasproutTown/scripts.inc"
+
+	.include "data/maps/CragstenCity/scripts.inc"
+
+	.include "data/maps/VallerootTown/scripts.inc"
+
+	.include "data/maps/MetroluxCity/scripts.inc"
+
+	.include "data/maps/DraftvineCity/scripts.inc"
+
+	.include "data/maps/AvalornTown/scripts.inc"
+
+	.include "data/maps/HarthpeakCity/scripts.inc"
+
+	.include "data/maps/Monstery/scripts.inc"
+
+	.include "data/maps/Badlands1/scripts.inc"
+
+	.include "data/maps/Badlands2/scripts.inc"
+
+	.include "data/maps/Badlands3/scripts.inc"
+
+	.include "data/maps/Badlands4/scripts.inc"
+
+	.include "data/maps/Badlands5/scripts.inc"
+
+	.include "data/maps/Mountains1/scripts.inc"
+
+	.include "data/maps/Mountains2/scripts.inc"
+
+	.include "data/maps/Mountains3/scripts.inc"
+
+	.include "data/maps/Mountains4/scripts.inc"
+
+	.include "data/maps/Mountains5/scripts.inc"
+
+	.include "data/maps/Marsh1/scripts.inc"
+
+	.include "data/maps/Marsh2/scripts.inc"
+
+	.include "data/maps/Marsh3/scripts.inc"
+
+	.include "data/maps/Marsh4/scripts.inc"
+
+	.include "data/maps/Marsh5/scripts.inc"
+
+	.include "data/maps/Forest1/scripts.inc"
+
+	.include "data/maps/Forest2/scripts.inc"
+
+	.include "data/maps/Forest3/scripts.inc"
+
+	.include "data/maps/Forest4/scripts.inc"
+
+	.include "data/maps/Forest5/scripts.inc"
+
+	.include "data/maps/Route1/scripts.inc"
+
+	.include "data/maps/Route2/scripts.inc"
+
+	.include "data/maps/Route3/scripts.inc"
+
+	.include "data/maps/Route4/scripts.inc"
+
+	.include "data/maps/Route5/scripts.inc"
+
+	.include "data/maps/Route6A/scripts.inc"
+
+	.include "data/maps/Route6B/scripts.inc"
+
+	.include "data/maps/Route6C/scripts.inc"
+
+	.include "data/maps/Route7/scripts.inc"
+
+	.include "data/maps/Route8/scripts.inc"
+
+	.include "data/maps/Route9/scripts.inc"
+
+	.include "data/maps/Route10/scripts.inc"
+
+	.include "data/maps/Route11/scripts.inc"
+
+	.include "data/maps/Route12/scripts.inc"
+
+	.include "data/maps/Route13/scripts.inc"
+
+	.include "data/maps/Route14/scripts.inc"
+
+	.include "data/maps/Route15/scripts.inc"
+
+	.include "data/maps/Route16/scripts.inc"
+
+	.include "data/maps/Route17/scripts.inc"
+
+	.include "data/maps/Route18/scripts.inc"

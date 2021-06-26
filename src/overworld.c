@@ -1060,6 +1060,7 @@ static bool16 NoMusicInSotopolisWithLegendaries(struct WarpData *warp)
 
 static bool16 IsInfiltratedWeatherInstitute(struct WarpData *warp)
 {
+/*
     if (VarGet(VAR_WEATHER_INSTITUTE_STATE))
         return FALSE;
     else if (warp->mapGroup != MAP_GROUP(ROUTE119_WEATHER_INSTITUTE_1F))
@@ -1068,11 +1069,13 @@ static bool16 IsInfiltratedWeatherInstitute(struct WarpData *warp)
      || warp->mapNum == MAP_NUM(ROUTE119_WEATHER_INSTITUTE_2F))
         return TRUE;
     else
+    */
         return FALSE;
 }
 
 static bool16 IsInflitratedSpaceCenter(struct WarpData *warp)
 {
+/*
     if (VarGet(VAR_MOSSDEEP_CITY_STATE) == 0)
         return FALSE;
     else if (VarGet(VAR_MOSSDEEP_CITY_STATE) > 2)
@@ -1082,6 +1085,7 @@ static bool16 IsInflitratedSpaceCenter(struct WarpData *warp)
     else if (warp->mapNum == MAP_NUM(MOSSDEEP_CITY_SPACE_CENTER_1F)
      || warp->mapNum == MAP_NUM(MOSSDEEP_CITY_SPACE_CENTER_2F))
         return TRUE;
+        */
     return FALSE;
 }
 

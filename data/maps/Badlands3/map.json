@@ -1,0 +1,49 @@
+{
+  "id": "MAP_BADLANDS3",
+  "name": "Badlands3",
+  "layout": "LAYOUT_BADLANDS3",
+  "music": "MUS_ABANDONED_SHIP",
+  "region_map_section": "MAPSEC_WILD_AREA_BADLANDS2",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_ROUTE",
+  "allow_cycling": false,
+  "allow_escaping": false,
+  "allow_running": false,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": [
+    {
+      "direction": "down",
+      "offset": 0,
+      "map": "MAP_BADLANDS4"
+    },
+    {
+      "direction": "right",
+      "offset": -20,
+      "map": "MAP_BADLANDS2"
+    },
+    {
+      "direction": "up",
+      "offset": -20,
+      "map": "MAP_BADLANDS1"
+    },
+    {
+      "direction": "left",
+      "offset": 20,
+      "map": "MAP_ROUTE4"
+    }
+  ],
+  "object_events": [
+
+  ],
+  "warp_events": [
+
+  ],
+  "coord_events": [
+
+  ],
+  "bg_events": [
+
+  ]
+}
