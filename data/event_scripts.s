@@ -1168,3 +1168,63 @@ Common_EventScript_LegendaryFlewAway:: @ 8273776
 	.include "data/maps/Route17/scripts.inc"
 
 	.include "data/maps/Route18/scripts.inc"
+
+	.include "data/maps/FrostdewLake/scripts.inc"
+
+	.include "data/maps/WyrmwoodForest1/scripts.inc"
+
+	.include "data/maps/WyrmwoodForest2/scripts.inc"
+
+	.include "data/maps/CragstenRange/scripts.inc"
+
+	.include "data/maps/CragstenLake/scripts.inc"
+
+	.include "data/maps/GustLagoon/scripts.inc"
+
+	.include "data/maps/DraftvineGrove/scripts.inc"
+
+	.include "data/maps/NorthAyoranSea1/scripts.inc"
+
+	.include "data/maps/NorthAyoranSea2/scripts.inc"
+
+	.include "data/maps/NorthAyoranSea3/scripts.inc"
+
+	.include "data/maps/NorthAyoranSea4/scripts.inc"
+
+	.include "data/maps/EastAyoranSea1/scripts.inc"
+
+	.include "data/maps/EastAyoranSea2/scripts.inc"
+
+	.include "data/maps/EastAyoranSea3/scripts.inc"
+
+	.include "data/maps/EastAyoran4/scripts.inc"
+
+	.include "data/maps/EastAyoranSea5/scripts.inc"
+
+	.include "data/maps/EastAyoranSea6/scripts.inc"
+
+	.include "data/maps/SouthAyoranSea1/scripts.inc"
+
+	.include "data/maps/SouthAyoranSea2/scripts.inc"
+
+	.include "data/maps/SouthAyoranSea3/scripts.inc"
+
+	.include "data/maps/WestAyoranSea1/scripts.inc"
+
+	.include "data/maps/WestAyoranSea2/scripts.inc"
+
+	.include "data/maps/WestAyoranSea3/scripts.inc"
+
+	.include "data/maps/WestAyoranSea4/scripts.inc"
+
+	.include "data/maps/WestAyoranSea5/scripts.inc"
+
+	.include "data/maps/WestAyoranSea6/scripts.inc"
+
+	.include "data/maps/WestAyoranSea7/scripts.inc"
+
+	.include "data/maps/CloysterCove/scripts.inc"
+
+	.include "data/maps/OutcastIsland/scripts.inc"
+
+	.include "data/maps/ApexIsland/scripts.inc"

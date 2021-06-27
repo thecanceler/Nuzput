@@ -10,7 +10,7 @@
   "allow_cycling": false,
   "allow_escaping": false,
   "allow_running": false,
-  "show_map_name": true,
+  "show_map_name": false,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": [
     {
@@ -22,6 +22,16 @@
       "direction": "right",
       "offset": 0,
       "map": "MAP_MARSH3"
+    },
+    {
+      "direction": "up",
+      "offset": 40,
+      "map": "MAP_EAST_AYORAN_SEA1"
+    },
+    {
+      "direction": "down",
+      "offset": 40,
+      "map": "MAP_EAST_AYORAN_SEA6"
     }
   ],
   "object_events": [

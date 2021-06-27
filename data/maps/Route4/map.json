@@ -22,6 +22,11 @@
       "direction": "left",
       "offset": 0,
       "map": "MAP_MARIBUD_TOWN"
+    },
+    {
+      "direction": "down",
+      "offset": -40,
+      "map": "MAP_WEST_AYORAN_SEA3"
     }
   ],
   "object_events": [

@@ -4814,7 +4814,7 @@
     {
       "id": "LAYOUT_ROUTE6C",
       "name": "Route6C_Layout",
-      "width": 40,
+      "width": 60,
       "height": 20,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Petalburg",
@@ -4940,6 +4940,306 @@
       "secondary_tileset": "gTileset_Petalburg",
       "border_filepath": "data/layouts/Route18/border.bin",
       "blockdata_filepath": "data/layouts/Route18/map.bin"
+    },
+    {
+      "id": "LAYOUT_FROSTDEW_LAKE",
+      "name": "FrostdewLake_Layout",
+      "width": 32,
+      "height": 32,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/FrostdewLake/border.bin",
+      "blockdata_filepath": "data/layouts/FrostdewLake/map.bin"
+    },
+    {
+      "id": "LAYOUT_WYRMWOOD_FOREST1",
+      "name": "WyrmwoodForest1_Layout",
+      "width": 32,
+      "height": 32,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/WyrmwoodForest1/border.bin",
+      "blockdata_filepath": "data/layouts/WyrmwoodForest1/map.bin"
+    },
+    {
+      "id": "LAYOUT_WYRMWOOD_FOREST2",
+      "name": "WyrmwoodForest2_Layout",
+      "width": 32,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/WyrmwoodForest2/border.bin",
+      "blockdata_filepath": "data/layouts/WyrmwoodForest2/map.bin"
+    },
+    {
+      "id": "LAYOUT_CRAGSTEN_RANGE",
+      "name": "CragstenRange_Layout",
+      "width": 60,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/CragstenRange/border.bin",
+      "blockdata_filepath": "data/layouts/CragstenRange/map.bin"
+    },
+    {
+      "id": "LAYOUT_CRAGSTEN_LAKE",
+      "name": "CragstenLake_Layout",
+      "width": 32,
+      "height": 32,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/CragstenLake/border.bin",
+      "blockdata_filepath": "data/layouts/CragstenLake/map.bin"
+    },
+    {
+      "id": "LAYOUT_GUST_LAGOON",
+      "name": "GustLagoon_Layout",
+      "width": 32,
+      "height": 32,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/GustLagoon/border.bin",
+      "blockdata_filepath": "data/layouts/GustLagoon/map.bin"
+    },
+    {
+      "id": "LAYOUT_DRAFTVINE_GROVE",
+      "name": "DraftvineGrove_Layout",
+      "width": 32,
+      "height": 32,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/DraftvineGrove/border.bin",
+      "blockdata_filepath": "data/layouts/DraftvineGrove/map.bin"
+    },
+    {
+      "id": "LAYOUT_NORTH_AYORAN_SEA1",
+      "name": "NorthAyoranSea1_Layout",
+      "width": 40,
+      "height": 40,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/NorthAyoranSea1/border.bin",
+      "blockdata_filepath": "data/layouts/NorthAyoranSea1/map.bin"
+    },
+    {
+      "id": "LAYOUT_NORTH_AYORAN_SEA2",
+      "name": "NorthAyoranSea2_Layout",
+      "width": 40,
+      "height": 40,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/NorthAyoranSea2/border.bin",
+      "blockdata_filepath": "data/layouts/NorthAyoranSea2/map.bin"
+    },
+    {
+      "id": "LAYOUT_NORTH_AYORAN_SEA3",
+      "name": "NorthAyoranSea3_Layout",
+      "width": 60,
+      "height": 60,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/NorthAyoranSea3/border.bin",
+      "blockdata_filepath": "data/layouts/NorthAyoranSea3/map.bin"
+    },
+    {
+      "id": "LAYOUT_NORTH_AYORAN_SEA4",
+      "name": "NorthAyoranSea4_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/NorthAyoranSea4/border.bin",
+      "blockdata_filepath": "data/layouts/NorthAyoranSea4/map.bin"
+    },
+    {
+      "id": "LAYOUT_EAST_AYORAN_SEA1",
+      "name": "EastAyoranSea1_Layout",
+      "width": 80,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/EastAyoranSea1/border.bin",
+      "blockdata_filepath": "data/layouts/EastAyoranSea1/map.bin"
+    },
+    {
+      "id": "LAYOUT_EAST_AYORAN_SEA2",
+      "name": "EastAyoranSea2_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/EastAyoranSea2/border.bin",
+      "blockdata_filepath": "data/layouts/EastAyoranSea2/map.bin"
+    },
+    {
+      "id": "LAYOUT_EAST_AYORAN_SEA3",
+      "name": "EastAyoranSea3_Layout",
+      "width": 20,
+      "height": 80,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/EastAyoranSea3/border.bin",
+      "blockdata_filepath": "data/layouts/EastAyoranSea3/map.bin"
+    },
+    {
+      "id": "LAYOUT_EAST_AYORAN4",
+      "name": "EastAyoran4_Layout",
+      "width": 20,
+      "height": 40,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/EastAyoran4/border.bin",
+      "blockdata_filepath": "data/layouts/EastAyoran4/map.bin"
+    },
+    {
+      "id": "LAYOUT_EAST_AYORAN_SEA5",
+      "name": "EastAyoranSea5_Layout",
+      "width": 40,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/EastAyoranSea5/border.bin",
+      "blockdata_filepath": "data/layouts/EastAyoranSea5/map.bin"
+    },
+    {
+      "id": "LAYOUT_EAST_AYORAN_SEA6",
+      "name": "EastAyoranSea6_Layout",
+      "width": 20,
+      "height": 40,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/EastAyoranSea6/border.bin",
+      "blockdata_filepath": "data/layouts/EastAyoranSea6/map.bin"
+    },
+    {
+      "id": "LAYOUT_SOUTH_AYORAN_SEA1",
+      "name": "SouthAyoranSea1_Layout",
+      "width": 80,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/SouthAyoranSea1/border.bin",
+      "blockdata_filepath": "data/layouts/SouthAyoranSea1/map.bin"
+    },
+    {
+      "id": "LAYOUT_SOUTH_AYORAN_SEA2",
+      "name": "SouthAyoranSea2_Layout",
+      "width": 80,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/SouthAyoranSea2/border.bin",
+      "blockdata_filepath": "data/layouts/SouthAyoranSea2/map.bin"
+    },
+    {
+      "id": "LAYOUT_SOUTH_AYORAN_SEA3",
+      "name": "SouthAyoranSea3_Layout",
+      "width": 80,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/SouthAyoranSea3/border.bin",
+      "blockdata_filepath": "data/layouts/SouthAyoranSea3/map.bin"
+    },
+    {
+      "id": "LAYOUT_WEST_AYORAN_SEA1",
+      "name": "WestAyoranSea1_Layout",
+      "width": 40,
+      "height": 80,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/WestAyoranSea1/border.bin",
+      "blockdata_filepath": "data/layouts/WestAyoranSea1/map.bin"
+    },
+    {
+      "id": "LAYOUT_WEST_AYORAN_SEA2",
+      "name": "WestAyoranSea2_Layout",
+      "width": 60,
+      "height": 60,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/WestAyoranSea2/border.bin",
+      "blockdata_filepath": "data/layouts/WestAyoranSea2/map.bin"
+    },
+    {
+      "id": "LAYOUT_WEST_AYORAN_SEA3",
+      "name": "WestAyoranSea3_Layout",
+      "width": 60,
+      "height": 40,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/WestAyoranSea3/border.bin",
+      "blockdata_filepath": "data/layouts/WestAyoranSea3/map.bin"
+    },
+    {
+      "id": "LAYOUT_WEST_AYORAN_SEA4",
+      "name": "WestAyoranSea4_Layout",
+      "width": 20,
+      "height": 40,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/WestAyoranSea4/border.bin",
+      "blockdata_filepath": "data/layouts/WestAyoranSea4/map.bin"
+    },
+    {
+      "id": "LAYOUT_WEST_AYORAN_SEA5",
+      "name": "WestAyoranSea5_Layout",
+      "width": 60,
+      "height": 60,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/WestAyoranSea5/border.bin",
+      "blockdata_filepath": "data/layouts/WestAyoranSea5/map.bin"
+    },
+    {
+      "id": "LAYOUT_WEST_AYORAN_SEA6",
+      "name": "WestAyoranSea6_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/WestAyoranSea6/border.bin",
+      "blockdata_filepath": "data/layouts/WestAyoranSea6/map.bin"
+    },
+    {
+      "id": "LAYOUT_WEST_AYORAN_SEA7",
+      "name": "WestAyoranSea7_Layout",
+      "width": 20,
+      "height": 40,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/WestAyoranSea7/border.bin",
+      "blockdata_filepath": "data/layouts/WestAyoranSea7/map.bin"
+    },
+    {
+      "id": "LAYOUT_CLOYSTER_COVE",
+      "name": "CloysterCove_Layout",
+      "width": 32,
+      "height": 32,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/CloysterCove/border.bin",
+      "blockdata_filepath": "data/layouts/CloysterCove/map.bin"
+    },
+    {
+      "id": "LAYOUT_OUTCAST_ISLAND",
+      "name": "OutcastIsland_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/OutcastIsland/border.bin",
+      "blockdata_filepath": "data/layouts/OutcastIsland/map.bin"
+    },
+    {
+      "id": "LAYOUT_APEX_ISLAND",
+      "name": "ApexIsland_Layout",
+      "width": 40,
+      "height": 40,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Petalburg",
+      "border_filepath": "data/layouts/ApexIsland/border.bin",
+      "blockdata_filepath": "data/layouts/ApexIsland/map.bin"
     }
   ]
 }

@@ -22,6 +22,11 @@
       "direction": "right",
       "offset": 0,
       "map": "MAP_RIMEROSE_CITY"
+    },
+    {
+      "direction": "down",
+      "offset": -14,
+      "map": "MAP_FROSTDEW_LAKE"
     }
   ],
   "object_events": [

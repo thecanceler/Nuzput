@@ -10,7 +10,7 @@
   "allow_cycling": false,
   "allow_escaping": false,
   "allow_running": false,
-  "show_map_name": true,
+  "show_map_name": false,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": [
     {
@@ -27,6 +27,11 @@
       "direction": "up",
       "offset": 20,
       "map": "MAP_ROUTE3"
+    },
+    {
+      "direction": "left",
+      "offset": 0,
+      "map": "MAP_NORTH_AYORAN_SEA1"
     }
   ],
   "object_events": [

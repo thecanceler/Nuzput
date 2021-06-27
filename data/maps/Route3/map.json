@@ -22,6 +22,11 @@
       "direction": "down",
       "offset": -20,
       "map": "MAP_BADLANDS1"
+    },
+    {
+      "direction": "left",
+      "offset": 12,
+      "map": "MAP_WYRMWOOD_FOREST1"
     }
   ],
   "object_events": [

@@ -22,6 +22,11 @@
       "direction": "down",
       "offset": 0,
       "map": "MAP_METROLUX_CITY"
+    },
+    {
+      "direction": "left",
+      "offset": 0,
+      "map": "MAP_CRAGSTEN_RANGE"
     }
   ],
   "object_events": [

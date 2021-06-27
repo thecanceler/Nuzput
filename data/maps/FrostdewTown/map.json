@@ -22,11 +22,6 @@
       "direction": "left",
       "offset": -20,
       "map": "MAP_ROUTE18"
-    },
-    {
-      "direction": "down",
-      "offset": 0,
-      "map": "MAP_LITTLEROOT_TOWN"
     }
   ],
   "object_events": [

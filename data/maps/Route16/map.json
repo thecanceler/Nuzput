@@ -22,6 +22,16 @@
       "direction": "right",
       "offset": 0,
       "map": "MAP_ROUTE17"
+    },
+    {
+      "direction": "up",
+      "offset": 9,
+      "map": "MAP_NORTH_AYORAN_SEA2"
+    },
+    {
+      "direction": "down",
+      "offset": 0,
+      "map": "MAP_EAST_AYORAN_SEA2"
     }
   ],
   "object_events": [
